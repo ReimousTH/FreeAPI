@@ -987,9 +987,9 @@ luabridge:
 
 	void GlobalInstall(){
 		CommonLua.DoFile(true);
-		const int stackSize = 65536;
-		HANDLE Thr = CreateThread( NULL, stackSize, ThreadProcX, (VOID *)0, CREATE_SUSPENDED, NULL );
-		ResumeThread(Thr);
+	//	const int stackSize = 65536;
+	//	HANDLE Thr = CreateThread( NULL, stackSize, ThreadProcX, (VOID *)0, CREATE_SUSPENDED, NULL );
+	//	ResumeThread(Thr);
 	}
 }
 
@@ -1359,19 +1359,15 @@ int __fastcall sub_824578F0(struct_a11* a1, int a2, int a3){
 				auto r =  m[RingElement->Tag1];
 				auto it = find(r.begin(),r.end(),(DWORD)RingElement);
 				int index = it - r.begin();
-				if (m[RingElement->Tag1].size() == 2 && index == 1 ){
+				if (m[RingElement->Tag1].size() >= 2 && (index == 1 || index == 3) ){
 					if (gc2P->wPressedButtons & XINPUT_GAMEPAD_DPAD_LEFT)	{	
-						
-			
-
-
-
+					
 						RingElement->MoveDirectionAHowMuch +=-1;}
 					if (gc2P->wPressedButtons & XINPUT_GAMEPAD_DPAD_RIGHT)			RingElement->MoveDirectionAHowMuch +=1;
 					for ( int j = RingElement->dword12C; j != RingElement->dword130; j += 8 ){
 						auto NR = *(ItemNRElement**)j;
 						DWORD result = NR->dword11C;
-						if (gc2P->wPressedButtons & XINPUT_GAMEPAD_X){
+						if (gc2P->wPressedButtons & XINPUT_GAMEPAD_A){
 							if ((NR->ItemState & 0xF) == 0){
 
 								*(_DWORD *)(4 * (((*(_DWORD *)(NR->dword11C + 0x140) >> 4) & 1) + 0x20) + NR->ParentOrMainMenuNRInstance) = (DWORD)NR;
@@ -1384,7 +1380,7 @@ int __fastcall sub_824578F0(struct_a11* a1, int a2, int a3){
 						}
 					}
 				}
-				if (m[RingElement->Tag1].size() == 2 && index == 0 ){
+				if (m[RingElement->Tag1].size() >= 2 && (index == 0 || index == 2) ){
 					for ( int j = RingElement->dword12C; j != RingElement->dword130; j += 8 ){
 						auto NR = *(ItemNRElement**)j;
 						DWORD result = NR->dword11C;
@@ -1582,6 +1578,7 @@ struct NukFakeDeviceHelpers{
 	float StickForceX;
 	float StickForceY;
 	float BackHoldTime;
+	float SelectHoldTime;
 };
 
 
@@ -1714,6 +1711,10 @@ NuiFakeDevice->field_284 = 0.0;
 NuiFakeDevice->field_2E4 = 0;
 NuiFakeDevice->field_2F4 = 0;
 
+
+*(int*)&NuiFakeDevice->dword300->gapex[0]=id;
+
+
 return 0;
 
 }
@@ -1722,7 +1723,24 @@ DWORD  ProcessSingleInput(struct_v35* NuiFakeDevice,struct_dword300 * NuiFakeDev
 
 
 	auto t = (int)(int*)&KinnectNuiBox::Instance->dword78;
+	auto t1 = (int)(int*)&KinnectNuiBox::Instance->floatA0;
 	auto z = (struct_v35**)(t+(index*4));
+
+	auto z1 = (float*)(t1+(index*4));
+
+
+	if (gc->wLastButtons & XINPUT_GAMEPAD_BACK){
+		HP->SelectHoldTime += 1.0 * MBKinnectInput->dword18->GameSpeed;
+		if (HP->SelectHoldTime > 2.0){
+			*z = 0;
+			HP->SelectHoldTime = 0.0;
+		}
+		return 0 ;
+	}
+	else{
+		HP->SelectHoldTime = 0.0;
+	}
+
 
 	if (gc->bConnected == false){
 		if (*z != 0){
@@ -1730,6 +1748,10 @@ DWORD  ProcessSingleInput(struct_v35* NuiFakeDevice,struct_dword300 * NuiFakeDev
 		}
 		return 0;
 	}
+
+
+
+
 	else if  (*z != NuiFakeDevice){
 
 
@@ -1738,7 +1760,6 @@ DWORD  ProcessSingleInput(struct_v35* NuiFakeDevice,struct_dword300 * NuiFakeDev
 		//KinnectNuiBox::Instance->dwordB8 = 3;
 		NuiFakeDevice->dword300 = NuiFakeDeviceExtra;
 		ResetInputParams(NuiFakeDevice,index);
-		
 
 	}
 
@@ -1810,6 +1831,9 @@ DWORD  ProcessSingleInput(struct_v35* NuiFakeDevice,struct_dword300 * NuiFakeDev
 		if (NuiFakeDevice->field_10 != gc->fX2){
 			NuiFakeDevice->field_10 = gc->fX2;
 		}
+
+
+
 
 
 		if (gc->bLastRightTrigger){
@@ -1942,6 +1966,7 @@ return 0;
 }
 
 bool once = false;
+DWORD seg_83E52F84Fake[1000];
 
 HOOK(int,__fastcall,SelfViewUpdate,0x82438930,int a1){
 	
@@ -1963,6 +1988,27 @@ HOOK(int,__fastcall,SelfViewUpdate,0x82438930,int a1){
 		ProcessSingleInput(&NuiFakeDevice,&NuiFakeDeviceExtra,&NuiFakeDeviceHP1,&ATG::Input::m_Gamepads[0],0);
 
 		ProcessSingleInput(&NuiFakeDeviceP2,&NuiFakeDeviceExtraP2,&NuiFakeDeviceHP2,&ATG::Input::m_Gamepads[1],1);
+
+
+
+
+
+		//WriteVirtualBytes("0x8229A6D4","60000000")
+	    //WriteVirtualBytes("0x8229A6EC","60000000")
+		if (seg_83E52F84){
+//			*(_DWORD *)(4 * 0 + *(_DWORD *)(seg_83E52F84 + 4)) = (DWORD)&seg_83E52F84Fake;
+//			*(_DWORD *)(4 * 1 + *(_DWORD *)(seg_83E52F84 + 4)) = (DWORD)&seg_83E52F84Fake;
+
+
+//			DWORD v5 = *(_DWORD *)(4 * 0 + *(_DWORD *)(seg_83E52F84 + 4));
+//			DWORD v6 = *(_DWORD *)(4 * 1 + *(_DWORD *)(seg_83E52F84 + 4));
+
+//			*(_DWORD **)(v5 + 0x4C) = (DWORD*)&seg_83E52F84Fake;
+//			*(_DWORD **)(v6 + 0x4C) = (DWORD*)&seg_83E52F84Fake;
+
+
+		}
+	
 	
 		//*(byte*)((int)MainTitlev144Actions + 0x1558)=1; //GlobalInputLock
 
@@ -2343,10 +2389,11 @@ int __fastcall ChargeStateAddaptive(int a1, StateA2P *a2, _DWORD *a3){
 	 struct_v35* _R3 = a2->pdword0->dword0->pfunc4(a2->pdword0);
 	 DWORD* v22;
 	 DWORD result = 0;
-    ShowXenonMessage(L"CROUSH","CR");
+ 
 	 if ( _R3->field_8 >= 1.0)
 	 {
 		
+		 DebugLogRestore::log.push_back(new std::string("test"));
 		 v22 = (_DWORD *)(84 * a3[2] + *a3 + 4);
 		 *v22 |= 0x7000u;
 		 return 1;
@@ -2415,7 +2462,7 @@ int __fastcall KickDashStateAddaptive(int a1, StateA2P *a2, _DWORD *a3){
 	DWORD result = 0;
 
 	int v19 = 0x54 * a3[2] + *a3;
-	int v9 = *(_DWORD *)(a1 + 0x48);
+
 
 	DWORD v12 = a2->field_64->dword14;
 	DWORD v13 = a2->field_60->dword14;
@@ -2427,16 +2474,19 @@ int __fastcall KickDashStateAddaptive(int a1, StateA2P *a2, _DWORD *a3){
 	v15 = 0x54 * a3[2] + *a3;
 
 
+	int v8 = a2->field_64->dword14;
+	int v9 = a2->field_60->dword14;
 
+	*(&_R3->field_2B0 + v8) = 2;
+	*(&_R3->field_2B0 + v9) = 2;
 
-	if (_R3->field_30 == 1.0 ) {
+	if (_R3->field_30 == 1.0){
 
 		*(_BYTE *)(a1 + 0x48)=1;
-		*(_DWORD *)(v15 + 4)= *(_DWORD *)(v15 + 4) | 0x800000; //Preapare	
+		*(_DWORD *)(v15 + 4)= *(_DWORD *)(v15 + 4) | 0x800000u; //Preapare	
 		*(_DWORD *)(v15 + 4)= *(_DWORD *)(v15 + 4) | 0x400000u; // Do Fake Side
-		result = 1;
+		result = 0;
 	}
-
 	else if (_R3->field_34 == 1.0){
 
 		*(_BYTE *)(a1 + 0x48) = 0;
@@ -2445,6 +2495,7 @@ int __fastcall KickDashStateAddaptive(int a1, StateA2P *a2, _DWORD *a3){
 		result = 1;
 	}
 	else{
+		*(_BYTE *)(a1 + 0x48)  = 0;
 		result = 2;
 	}
 
@@ -2503,12 +2554,17 @@ int __fastcall SideStateAddaptive(int a1, StateA2P *a2, _DWORD *a3){
 
 	auto v4 = a2->pdword0->dword0->pfunc4(a2->pdword0);
 
+	DWORD* v16;
 	DWORD* v17;
 	DWORD result;
 	
+
+
 	result = 2;
+	v16 = (_DWORD *)(0x54 * a3[2] + *a3 + 4);
 	v17 = (_DWORD *)(0x54 * a3[2] + *a3 + 20);
-	*v17 |= 0x400000u;
+	//*v16 |= 0x400000u;
+	*v17 |= 0x2000u;
 
 	return result;
 
@@ -2565,7 +2621,8 @@ int __fastcall StanceStateAddaptive(int a1, StateA2P *a2, _DWORD *a3){
 	if (v4->field_48 == 0){
 
 
-		return 2;
+	
+		return 0;
 	}
 	DWORD v11 = a2->field_68;
 
@@ -2578,23 +2635,22 @@ int __fastcall StanceStateAddaptive(int a1, StateA2P *a2, _DWORD *a3){
 	*(_DWORD *)(0x54 * a3[2] + *a3 + 0x48)= va;
 
 	DWORD Side = 0;
-	if (a2->field_64 == (struct_field_64*)ST1[0] && a2->field_60 == (struct_field_60*)ST1[1]){
+	if (va == 0){
 
 		Side = 1;
 		a2->field_64 = (struct_field_64*)ST1[1];
 		a2->field_60 = (struct_field_60*)ST1[0];
 		result = 0;
 	}
-	else if (a2->field_64 == (struct_field_64*)ST1[1] && a2->field_60 == (struct_field_60*)ST1[0]){
+	else if ( va == 1){
 		Side = 2;
 		a2->field_64 = (struct_field_64*)ST1[0];
 		a2->field_60 = (struct_field_60*)ST1[1];
 		result = 0;
 	}
-	else{
-		return 0;
-	}
+	
 
+	result = 1;
 	 a2->field_68  = va;
 	*(_DWORD *)(0x54 * a3[2] + *a3 + 0x48) = va;
 	v27 = (_DWORD *)(0x54 * a3[2] + *a3 + 4);
@@ -2905,20 +2961,25 @@ int __fastcall SteamWipeAddaptive(int a1, StateA2P *a2, int a3){
 	{
 
 
-		result = 1;
+	 //  *(_DWORD *)(0x54 * *(_DWORD *)(a3 + 8) + *(_DWORD *)a3 + 0x14) |= 0x8000u;
+	   *(_DWORD *)(0x54 * *(_DWORD *)(a3 + 8) + *(_DWORD *)a3 + 0x14) |= 0x10000u;
+		if (v4->field_60 != 0.0){
+			_WORD v = *(_WORD *)(a3 + 0x4E);
+			*(_WORD *)(a3 + 0x4E) = clamp( v + (int)(-v4->field_60 * 14.0 *MBKinnectInput->dword18->GameSpeed),-640,640);
 
+		}
+		if (v4->field_10 != 0.0){
+			_WORD v = *(_WORD *)(a3 + 0x4C);
+			*(_WORD *)(a3 + 0x4C) = clamp( v + (int)(v4->field_10 * 14.0 *MBKinnectInput->dword18->GameSpeed),-480,480);
 
-		*(float *)(a1 + 0x44) +=  v4->field_5C;
+		}
 
-	     *(_DWORD *)(0x54 * *(_DWORD *)(a3 + 8) + *(_DWORD *)a3 + 0x14) |= 0x10000u;
+		result = 0;
 
+	
+	//	*(_WORD *)(a3 + 0x4A) = 100;
+		//*(_WORD *)(a3 + 0x48) = 100;
 
-		*(float *)(a1 + 0x4E) = 240;
-
-		*(float *)(a1 + 0x4C) = 320;
-
-		*(float *)(a1 + 0x4A) = 320;
-		*(float *)(a1 + 0x48) = 320;
 
 	}
 
@@ -3660,14 +3721,123 @@ HOOK(int,__fastcall,sub_824A3398,0x824A3398,unsigned int MainHeapX, int a2, unsi
 
 	return sub_824A3398H(MainHeapX,a2,a3,a4);
 }
+DWORD Expo[1000];
+DWORD Expo1[1000];
 
 
+
+
+
+int __declspec( naked ) sub_8229FD40H(int a1,int a2,int* a3){
+	__asm{
+		mflr r12
+			std       r25, -0x30(r1)
+			std       r26, -0x38(r1)
+			std       r27, -0x30(r1)
+			std       r28, -0x28(r1)
+			std       r29, -0x20(r1)
+			std       r30, -0x18(r1)
+			std       r31, -0x10(r1)
+			stw       r12, -0x8(r1)
+			stwu      r1, -0xA0(r1)
+			lwz       r30, 4(r3)
+			lis r11,0x8229
+			ori r11,r11,0xFD50 
+			mtctr r11
+			lbz       r11, 0x7FB(r3)
+			bctr
+	}
+}
+
+HOOK(int,__fastcall,sub_8229FD40,0x8229FD40,int a1, int a2, int *a3){
+
+
+
+	if (*(_DWORD *)(a1 + 0x690) == 0){
+
+		*(DWORD*)(((int)&Expo)+0x4) = (DWORD)&Expo;
+		*(DWORD*)(((int)&Expo)+0xC) = (DWORD)&Expo;
+		*(DWORD*)(((int)&Expo)+0x8) = (DWORD)&Expo;
+		*(DWORD*)(((int)&Expo)+0x4C) = (DWORD)&Expo;
+		*(DWORD*)(((int)&Expo)+0xC8) = (DWORD)&Expo;
+		*(DWORD*)(((int)&Expo)+0x74) = (DWORD)&Expo;
+
+	
+		*(_DWORD *)(a1 + 0x690) = (DWORD)&Expo;
+	}
+
+	if (*(_DWORD *)(a1 + 0x144) == 0){
+		*(_DWORD *)(a1 + 0x144) = (DWORD)&Expo1;
+		*(DWORD*)(((int)&Expo1)+0x5C) = (DWORD)&Expo1;
+
+	}
+
+
+	return sub_8229FD40H(a1,a2,a3);
+
+}
+
+
+HOOK(int,__fastcall,sub_8229A650,0x8229A650,unsigned int a1){
+
+	int v1; // r10
+	int v3; // r10
+	int v4; // r9
+	int v5; // r11
+	_DWORD *v6; // r9
+
+	if ( *((_DWORD *)NearKinnectNuiBox::Instance + 0x27) == 3 )
+	{
+		v1 = *(_DWORD *)(*((_DWORD *)off_83E53128 + 0x17) + 0x10 * a1 + 4);
+		if ( v1 < *(_DWORD *)(InputSomeUnkStatic + 0x14)
+			&& *(_DWORD *)(InputSomeUnkStatic + 0x24) != *(_DWORD *)(InputSomeUnkStatic + 0x28) )
+		{
+			return *(_DWORD *)(4 * v1 + *(_DWORD *)(InputSomeUnkStatic + 0x24));
+		}
+	}
+	else
+	{
+		v3 = *(_DWORD *)(seg_83E52F84 + 8);
+		v4 = *(_DWORD *)(seg_83E52F84 + 4);
+		if ( ((v3 - v4) & 0xFFFFFFFC) != 0 && (v3 - v4) >> 2 > a1 )
+			v5 = *(_DWORD *)(4 * a1 + *(_DWORD *)(seg_83E52F84 + 4));
+		else
+			v5 = (int)&Expo;
+		v6 = *(_DWORD **)(v5 + 0x4C);
+		if ( *v6 < *(_DWORD *)(InputSomeUnkStatic + 0x14)
+			&& *(_DWORD *)(InputSomeUnkStatic + 0x24) != *(_DWORD *)(InputSomeUnkStatic + 0x28) )
+		{
+			return *(_DWORD *)(4 * *v6 + *(_DWORD *)(InputSomeUnkStatic + 0x24));
+		}
+	}
+	return 0;
+}
 
 
 void GlobalInstall(){
 
-	INSTALL_HOOK(sub_824A3398);
-	INSTALL_HOOK(sub_82ACC28C);
+	
+	// Make a littble stable (useles because softlock still there ( )
+//	INSTALL_HOOK(sub_8229A650);
+
+	//INSTALL_HOOK(sub_8229FD40);
+
+
+
+
+
+
+
+
+
+	//WRITE_DWORD(0X8229A650,0x4E800020);
+	//INSTALL_HOOK(sub_823B75D8); //make stable
+
+
+
+	//INSTALL_HOOK(sub_824A3398);
+
+//	INSTALL_HOOK(sub_82ACC28C);
 	//INSTALL_HOOK(sub_822A3B30);
 	//INSTALL_HOOK(sub_82494E18);
 	//INSTALL_HOOK(sub_82494A68);
@@ -3703,11 +3873,11 @@ void GlobalInstall(){
 	//WRITE_DWORD(0x821A2454,Dummy);
 	WRITE_DWORD(0x821A245C,BrakeVStateAdaptive);
 	//WRITE_DWORD(0x821A246C,CatchStateAddaptive);
-	////WRITE_DWORD(0x821A247C,ChargeStateAddaptive); //Not this Real (it not charge jump and this some)
+	WRITE_DWORD(0x821A247C,ChargeStateAddaptive); //Not this Real (it not charge jump and this some)
 	//WRITE_DWORD(0x821A2484,Dummy);
 	//WRITE_DWORD(0x821A2484,Dummy);
-	//WRITE_DWORD(0x821A2494,Dummy); Dash
-	//WRITE_DWORD(0x821A249C,Dummy);
+	WRITE_DWORD(0x821A2494,KickDashStateAddaptive); // Bike
+	WRITE_DWORD(0x821A249C,SkillPowerNormalGear);
 	//WRITE_DWORD(0x821A2428,SideStateAddaptive); //Requires To DO 
 	WRITE_DWORD(0x821A244C,StanceStateAddaptive);
 	WRITE_DWORD(0x821A2418,KickDashStateAddaptive);
@@ -3724,7 +3894,7 @@ void GlobalInstall(){
 	WRITE_DWORD(0x821A24D4,ShakeStateAddaptive);
 	WRITE_DWORD(0x821A2548,InflatorAddaptive);
 
-	WRITE_DWORD(0x821A2510,FrontCurveStateAddaptive);
+//	WRITE_DWORD(0x821A2510,FrontCurveStateAddaptive);
 
 
 	WRITE_DWORD(0x821A2524,FrontLeverAddaptive);
@@ -3757,6 +3927,7 @@ void GlobalInstall(){
 //	WRITE_DWORD(0x821A2368,sub_822CA518);
 //	WRITE_DWORD(0x821A2494,sub_822CA518X);
 	INSTALL_HOOK(SelfViewUpdate);
+
 	INSTALL_HOOK(XamShowNuiDeviceSelectorUI);
 	INSTALL_HOOK(sub_824D0CE8);
 	INSTALL_HOOK(sub_82494658);
@@ -3940,6 +4111,22 @@ int ZLua::GetGlobalInt(const char* string){
 
 }
 
+void Errors(){
+
+}
+
+
+static int report (lua_State *L, int status) {
+	const char *msg;
+	if (status) {
+		msg = lua_tostring(L, -1);
+		if (msg == NULL) msg = "(error with no message)";
+		fprintf(stderr, "status=%d, %s\n", status, msg);
+		lua_pop(L, 1);
+	}
+	return status;
+}
+
 
 void ZLua::DoFile(bool ignore){
 
@@ -3953,7 +4140,35 @@ void ZLua::DoFile(bool ignore){
 	}
 	
 
-	if (!executed) {luaL_dofile (L,FilePath.c_str()) ; executed = true;
+	if (!executed) {
+		
+		
+		if (luaL_loadfile(L, FilePath.c_str()) == LUA_ERRSYNTAX ){
+			ShowXenonMessage(L"ERROR",lua_tostring(L,-1));
+			lua_close(L);
+			Sleep(10000);
+			exit(0);
+			return;
+		}
+	     else{
+		  lua_pcall(L, 0,0,0);
+		}
+
+	//	   ShowXenonMessage(L"DUMBY",luaL_loadfile(L, FilePath.c_str()),0);
+		
+
+	
+		
+
+
+
+
+	
+	
+	
+	
+	
+	   executed = true;
 
 
 

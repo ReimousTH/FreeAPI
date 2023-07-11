@@ -357,13 +357,13 @@ struct struct_v1
 
 struct  struct_dword300
 {
-	int gap0;
-	_DWORD dwTrackingID;
-	_DWORD ConnectionStatus;	
+	int gap0; //0 
+	_DWORD dwTrackingID; //4
+	_DWORD ConnectionStatus; //8	
 	//Index(Icon Color,Human) 
 	//17C Cursor(int32) (2)
 	//17C + 0x20 , +0x24 able to move cursor but only with pause maybe requres additional value also RightStuckUP Currently Able to reset position
-	_BYTE gapex[4000];
+	_BYTE gapex[4000]; //C
 	
 };
 
@@ -1048,6 +1048,12 @@ DataPointer(int*, off_83E52F8C, 0x83E52F8C);
 DataPointer(struct_MBKinnectInput*, MBKinnectInput, 0x83E516A0);
 DataPointer(int *, MainTitleAudioTableMbX, 0x83E536C0);
 DataPointer(int , InputSomeUnkStatic, 0x83E52FDC);
+DataPointer(int,seg_83E52F84, 0x83E52F84);
+
+namespace NearKinnectNuiBox{
+DataPointer(int,Instance, 0x83E52F8C);
+}
+DataPointer(int,off_83E53128, 0x83E53128);
 
 
 FastcallFunctionPointer(int,sub_824573A8,(int a1),0x824573A8);

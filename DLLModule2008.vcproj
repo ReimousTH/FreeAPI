@@ -622,6 +622,10 @@
 			RelativePath=".\PatchData.cpp"
 			>
 		</File>
+		<File
+			RelativePath="..\boostLib\ReadMe.txt"
+			>
+		</File>
 	</Files>
 	<Globals>
 	</Globals>
