@@ -782,7 +782,43 @@ luabridge:
 	extern "C" static int WriteVirtialBytes(lua_State* L){
 
 
-		const char* offsetS = lua_tostring(L,1);
+
+		int nargs = lua_gettop(L);
+		if (nargs < 2) return 0;
+		std::stringstream conv;
+		DWORD StartOffset,LastOffset;
+		const char* StartOffsetS = lua_tostring(L,1);
+		const char* ByteArrayString = lua_tostring(L,2);
+		conv << std::hex << StartOffsetS; conv >> StartOffset; conv.clear(); 	conv.str("");
+		std::string ByteArrayStringR = std::string(ByteArrayString);
+
+		ByteArrayStringR.erase(std::remove( ByteArrayStringR.begin(),
+                                ByteArrayStringR.end(),
+                                ' '),
+                    ByteArrayStringR.end());
+
+
+		int len  = ByteArrayStringR.length();
+		if (len % 2 != 0){ //Add Extra Zero
+			ByteArrayStringR.append("0");
+		}
+		const char* cu = ByteArrayStringR.c_str();
+		byte* bt = new byte[strlen(cu)/2];
+		char buff[2] = {0,0};
+		for (int i =0 ;i<strlen(cu)/2;i++){
+			memcpy((void*)&buff,(void*)((uint)cu + (i*2)),2);
+			bt[i] = (uint)(strtoul(buff,NULL,16));
+	
+		}	
+		DWORD dw;
+		VirtualProtectEx(GetModuleHandle(NULL),(void*)(ADDR(StartOffset)),strlen(cu)/2,1,&dw);
+		memcpy((void*)ADDR(StartOffset),bt,strlen(cu)/2);
+		VirtualProtectEx(GetModuleHandle(NULL),(void*)(ADDR(StartOffset)),strlen(cu)/2,dw,&dw);
+
+	
+		return 0;
+
+	/*	const char* offsetS = lua_tostring(L,1);
 		std::stringstream ss;
 		ss << std::hex << offsetS;
 		DWORD offset = 0;
@@ -800,13 +836,12 @@ luabridge:
 			ss >> x1;
 			BYTE byte3 = x<< 4 | x1;
 			Hook::WriteByte((void*)(offset+(i/2)),byte3);
-
-
 		}
 
 
 
 		return 0;
+		*/
 	}
 	extern "C" static int WriteVirtualString(lua_State* L){
 
@@ -1967,6 +2002,8 @@ return 0;
 
 bool once = false;
 DWORD seg_83E52F84Fake[1000];
+DWORD InputSomeUnkStaticA0Fake[100];
+DWORD dword_83E53144Fake[100];
 
 HOOK(int,__fastcall,SelfViewUpdate,0x82438930,int a1){
 	
@@ -1986,7 +2023,6 @@ HOOK(int,__fastcall,SelfViewUpdate,0x82438930,int a1){
 
 	
 		ProcessSingleInput(&NuiFakeDevice,&NuiFakeDeviceExtra,&NuiFakeDeviceHP1,&ATG::Input::m_Gamepads[0],0);
-
 		ProcessSingleInput(&NuiFakeDeviceP2,&NuiFakeDeviceExtraP2,&NuiFakeDeviceHP2,&ATG::Input::m_Gamepads[1],1);
 
 
@@ -2025,6 +2061,18 @@ HOOK(int,__fastcall,SelfViewUpdate,0x82438930,int a1){
 	}
 	
 
+	if (InputSomeUnkStatic){
+
+		if (*(int*)(InputSomeUnkStatic + 0xA0) == 0){
+
+		//	*(int*)(InputSomeUnkStatic + 0xA0)  = (int)&InputSomeUnkStaticA0Fake;
+
+		}
+	}
+
+	if (dword_83E53144 == 0){
+		//dword_83E53144 = (int)&dword_83E53144Fake;
+	}
 
 
 
@@ -3488,7 +3536,7 @@ int __fastcall BrakeStateAdaptive(int a1, StateA2P *a2, _DWORD *a3){
 
 		*(float *)(a1 + 0x48) +=MBKinnectInput->dword18->GameSpeed;
 		
-		if (*(float *)(a1 + 0x48) > 60.0){
+		if (*(float *)(a1 + 0x48) > 1.0){
 
 		//	std::stringstream ss;
 		//	ss << std::hex << (0x54 * a3[2] + *a3 + 4);
@@ -3814,8 +3862,67 @@ HOOK(int,__fastcall,sub_8229A650,0x8229A650,unsigned int a1){
 }
 
 
+HOOK(int,__fastcall,sub_82306F00,0x82306F00,int a1){
+
+	return 5 + ( std::rand() % ( 0x15 - 5 + 1 ) );
+}
+
+
+
+int __declspec( naked ) sub_824E96C8H(int* a1,int* a2){
+	__asm{
+
+		    mflr      r12
+		    stw       r12, -8(r1)
+		    stwu      r1, -0x70(r1)
+		    lwz       r9, 0xC(r4)
+			lis r11,0x824E
+			ori r11,r11,0x96D8 
+			mtctr r11
+			bctr r11
+	}
+}
+
+DWORD FakedData[8] = {1280,720,0,0,3840,2160,1065353216,0};
+
+HOOK(int,__fastcall,sub_824E96C8,0x824E96C8,int* a1,int* a2){
+
+
+
+
+	return sub_824E96C8H(a1,(int*)&FakedData[2]);
+}
+
 void GlobalInstall(){
 
+
+
+
+	WRITE_DWORD(0x8226086C,0x60000000); //fix free hand timer
+	WRITE_DWORD(0x8226086C,0x4E800020); //other
+
+	WRITE_DWORD(0x82456B14,0x4800004C);
+
+
+
+	//Others Fixes (fro input)
+	WRITE_DWORD(0x82222B80,0x4E800020); 
+	WRITE_DWORD(0x8222302C,0x60000000);
+	WRITE_DWORD(0x82223084,0x60000000);
+
+	
+	
+	WRITE_DWORD(0x821A2484,0x822C8958);// Bike Move Fix
+
+
+
+
+
+
+//INSTALL_HOOK(sub_824E96C8);
+
+
+	//INSTALL_HOOK(sub_82306F00);
 	
 	// Make a littble stable (useles because softlock still there ( )
 //	INSTALL_HOOK(sub_8229A650);
@@ -3842,6 +3949,7 @@ void GlobalInstall(){
 	//INSTALL_HOOK(sub_82494E18);
 	//INSTALL_HOOK(sub_82494A68);
 	INSTALL_HOOK(sub_8224A500); // Disable Pause Later MB i just pausing ????
+
 	INSTALL_HOOK(sub_82ACB43C); //Fake XamNuiGetDeviceStatus
 	//INSTALL_HOOK(sub_82A54518); //fixall
 	INSTALL_HOOK(sub_823DC2D0);

@@ -1050,6 +1050,9 @@ DataPointer(int *, MainTitleAudioTableMbX, 0x83E536C0);
 DataPointer(int , InputSomeUnkStatic, 0x83E52FDC);
 DataPointer(int,seg_83E52F84, 0x83E52F84);
 
+
+DataPointer(int,dword_83E53144, 0x83E53144);
+
 namespace NearKinnectNuiBox{
 DataPointer(int,Instance, 0x83E52F8C);
 }
