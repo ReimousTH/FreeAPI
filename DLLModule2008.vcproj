@@ -12,6 +12,9 @@
 		<Platform
 			Name="Xbox 360"
 		/>
+		<Platform
+			Name="Pocket PC 2003 (ARMV4)"
+		/>
 	</Platforms>
 	<ToolFiles>
 	</ToolFiles>
@@ -106,6 +109,98 @@
 			/>
 		</Configuration>
 		<Configuration
+			Name="Debug|Pocket PC 2003 (ARMV4)"
+			OutputDirectory="Pocket PC 2003 (ARMV4)\$(ConfigurationName)"
+			IntermediateDirectory="Pocket PC 2003 (ARMV4)\$(ConfigurationName)"
+			ConfigurationType="2"
+			UseOfMFC="-1"
+			UseOfATL="0"
+			CharacterSet="2"
+			>
+			<Tool
+				Name="VCPreBuildEventTool"
+				CommandLine=""
+			/>
+			<Tool
+				Name="VCCustomBuildTool"
+			/>
+			<Tool
+				Name="VCXMLDataGeneratorTool"
+			/>
+			<Tool
+				Name="VCWebServiceProxyGeneratorTool"
+			/>
+			<Tool
+				Name="VCMIDLTool"
+				TargetEnvironment="1"
+			/>
+			<Tool
+				Name="VCCLCompilerTool"
+				ExecutionBucket="7"
+				AdditionalOptions="/MP "
+				Optimization="0"
+				EnableIntrinsicFunctions="true"
+				AdditionalIncludeDirectories="..\..\Common;..\..\..\Modules;Lua500\src;ATG"
+				PreprocessorDefinitions="_DEBUG;_XBOX;XBOX;XBOX_SAMPLE;_XBOX_CRT_DEPRECATE_INSECURE;"
+				ExceptionHandling="0"
+				RuntimeLibrary="1"
+				BufferSecurityCheck="false"
+				ForceConformanceInForLoopScope="true"
+				RuntimeTypeInfo="false"
+				UsePrecompiledHeader="0"
+				AssemblerOutput="0"
+				ProgramDataBaseFileName="$(IntDir)\vc80.pdb"
+				WarningLevel="0"
+				DebugInformationFormat="3"
+			/>
+			<Tool
+				Name="VCManagedResourceCompilerTool"
+			/>
+			<Tool
+				Name="VCResourceCompilerTool"
+			/>
+			<Tool
+				Name="VCPreLinkEventTool"
+			/>
+			<Tool
+				Name="VCLinkerTool"
+				AdditionalOptions="/dll /entry:&quot;_DllMainCRTStartup&quot; /include:&quot;XboxKrnlBuildNumber&quot;"
+				AdditionalDependencies="d3d9d.lib d3dx9d.lib xgraphicsd.lib xapilibd.lib xaudiod2.lib x3daudiod.lib xmcored.lib xboxkrnl.lib xbdm.lib libcmt.lib"
+				OutputFile="$(OutDir)/$(ProjectName).dll"
+				LinkIncremental="2"
+				ModuleDefinitionFile="DllModule.def"
+				GenerateDebugInformation="true"
+				TargetMachine="0"
+			/>
+			<Tool
+				Name="VCALinkTool"
+			/>
+			<Tool
+				Name="VCXDCMakeTool"
+			/>
+			<Tool
+				Name="VCBscMakeTool"
+			/>
+			<Tool
+				Name="VCFxCopTool"
+			/>
+			<Tool
+				Name="VCCodeSignTool"
+			/>
+			<Tool
+				Name="VCPostBuildEventTool"
+				CommandLine=""
+			/>
+			<DeploymentTool
+				ForceDirty="-1"
+				RemoteDirectory=""
+				RegisterOutput="0"
+				AdditionalFiles=""
+			/>
+			<DebuggerTool
+			/>
+		</Configuration>
+		<Configuration
 			Name="CodeAnalysis|Xbox 360"
 			OutputDirectory="CodeAnalysis"
 			IntermediateDirectory="CodeAnalysis"
@@ -191,6 +286,98 @@
 			<Tool
 				Name="VCPostBuildEventTool"
 				CommandLine=""
+			/>
+			<DebuggerTool
+			/>
+		</Configuration>
+		<Configuration
+			Name="CodeAnalysis|Pocket PC 2003 (ARMV4)"
+			OutputDirectory="Pocket PC 2003 (ARMV4)\$(ConfigurationName)"
+			IntermediateDirectory="Pocket PC 2003 (ARMV4)\$(ConfigurationName)"
+			ConfigurationType="2"
+			UseOfMFC="-1"
+			UseOfATL="0"
+			CharacterSet="2"
+			>
+			<Tool
+				Name="VCPreBuildEventTool"
+				CommandLine=""
+			/>
+			<Tool
+				Name="VCCustomBuildTool"
+			/>
+			<Tool
+				Name="VCXMLDataGeneratorTool"
+			/>
+			<Tool
+				Name="VCWebServiceProxyGeneratorTool"
+			/>
+			<Tool
+				Name="VCMIDLTool"
+				TargetEnvironment="1"
+			/>
+			<Tool
+				Name="VCCLCompilerTool"
+				ExecutionBucket="7"
+				AdditionalOptions=""
+				Optimization="0"
+				EnableIntrinsicFunctions="true"
+				AdditionalIncludeDirectories="..\..\Common;..\..\..\Modules"
+				PreprocessorDefinitions="_DEBUG;_XBOX;XBOX;XBOX_SAMPLE;_XBOX_CRT_DEPRECATE_INSECURE;"
+				ExceptionHandling="0"
+				RuntimeLibrary="1"
+				BufferSecurityCheck="false"
+				ForceConformanceInForLoopScope="true"
+				RuntimeTypeInfo="false"
+				UsePrecompiledHeader="0"
+				AssemblerOutput="0"
+				ProgramDataBaseFileName="$(IntDir)\vc80.pdb"
+				WarningLevel="4"
+				DebugInformationFormat="3"
+			/>
+			<Tool
+				Name="VCManagedResourceCompilerTool"
+			/>
+			<Tool
+				Name="VCResourceCompilerTool"
+			/>
+			<Tool
+				Name="VCPreLinkEventTool"
+			/>
+			<Tool
+				Name="VCLinkerTool"
+				AdditionalOptions="/dll /entry:&quot;_DllMainCRTStartup&quot; /include:&quot;XboxKrnlBuildNumber&quot;"
+				AdditionalDependencies="d3d9d.lib d3dx9d.lib xgraphicsd.lib xapilibd.lib xaudiod2.lib x3daudiod.lib xmcored.lib xboxkrnl.lib xbdm.lib libcmt.lib"
+				OutputFile="$(OutDir)/$(ProjectName).dll"
+				LinkIncremental="2"
+				ModuleDefinitionFile="DllModule.def"
+				GenerateDebugInformation="true"
+				TargetMachine="0"
+			/>
+			<Tool
+				Name="VCALinkTool"
+			/>
+			<Tool
+				Name="VCXDCMakeTool"
+			/>
+			<Tool
+				Name="VCBscMakeTool"
+			/>
+			<Tool
+				Name="VCFxCopTool"
+			/>
+			<Tool
+				Name="VCCodeSignTool"
+			/>
+			<Tool
+				Name="VCPostBuildEventTool"
+				CommandLine=""
+			/>
+			<DeploymentTool
+				ForceDirty="-1"
+				RemoteDirectory=""
+				RegisterOutput="0"
+				AdditionalFiles=""
 			/>
 			<DebuggerTool
 			/>
@@ -292,6 +479,105 @@
 			/>
 		</Configuration>
 		<Configuration
+			Name="Profile|Pocket PC 2003 (ARMV4)"
+			OutputDirectory="Pocket PC 2003 (ARMV4)\$(ConfigurationName)"
+			IntermediateDirectory="Pocket PC 2003 (ARMV4)\$(ConfigurationName)"
+			ConfigurationType="2"
+			UseOfMFC="-1"
+			UseOfATL="0"
+			CharacterSet="2"
+			>
+			<Tool
+				Name="VCPreBuildEventTool"
+				CommandLine=""
+			/>
+			<Tool
+				Name="VCCustomBuildTool"
+			/>
+			<Tool
+				Name="VCXMLDataGeneratorTool"
+			/>
+			<Tool
+				Name="VCWebServiceProxyGeneratorTool"
+			/>
+			<Tool
+				Name="VCMIDLTool"
+				TargetEnvironment="1"
+			/>
+			<Tool
+				Name="VCCLCompilerTool"
+				ExecutionBucket="7"
+				AdditionalOptions="/MP "
+				Optimization="3"
+				InlineFunctionExpansion="1"
+				EnableIntrinsicFunctions="true"
+				FavorSizeOrSpeed="2"
+				AdditionalIncludeDirectories="..\..\Common;..\..\..\Modules"
+				PreprocessorDefinitions="NDEBUG;_XBOX;XBOX;XBOX_SAMPLE;_XBOX_CRT_DEPRECATE_INSECURE;PROFILE;"
+				StringPooling="true"
+				ExceptionHandling="0"
+				RuntimeLibrary="0"
+				BufferSecurityCheck="false"
+				EnableFunctionLevelLinking="true"
+				ForceConformanceInForLoopScope="true"
+				RuntimeTypeInfo="false"
+				UsePrecompiledHeader="0"
+				AssemblerOutput="0"
+				ProgramDataBaseFileName="$(IntDir)\vc80.pdb"
+				WarningLevel="4"
+				DebugInformationFormat="3"
+			/>
+			<Tool
+				Name="VCManagedResourceCompilerTool"
+			/>
+			<Tool
+				Name="VCResourceCompilerTool"
+			/>
+			<Tool
+				Name="VCPreLinkEventTool"
+			/>
+			<Tool
+				Name="VCLinkerTool"
+				AdditionalOptions="/ignore:4089 /dll /entry:&quot;_DllMainCRTStartup&quot; /include:&quot;XboxKrnlBuildNumber&quot;"
+				AdditionalDependencies="d3d9i.lib d3dx9i.lib xgraphics.lib xapilibi.lib xaudio2.lib x3daudioi.lib xmcorei.lib xboxkrnl.lib xbdm.lib libcmt.lib"
+				OutputFile="$(OutDir)/$(ProjectName).dll"
+				IgnoreDefaultLibraryNames="xapilib.lib"
+				ModuleDefinitionFile="DllModule.def"
+				GenerateDebugInformation="true"
+				OptimizeReferences="2"
+				EnableCOMDATFolding="1"
+				SetChecksum="true"
+				TargetMachine="0"
+			/>
+			<Tool
+				Name="VCALinkTool"
+			/>
+			<Tool
+				Name="VCXDCMakeTool"
+			/>
+			<Tool
+				Name="VCBscMakeTool"
+			/>
+			<Tool
+				Name="VCFxCopTool"
+			/>
+			<Tool
+				Name="VCCodeSignTool"
+			/>
+			<Tool
+				Name="VCPostBuildEventTool"
+				CommandLine=""
+			/>
+			<DeploymentTool
+				ForceDirty="-1"
+				RemoteDirectory=""
+				RegisterOutput="0"
+				AdditionalFiles=""
+			/>
+			<DebuggerTool
+			/>
+		</Configuration>
+		<Configuration
 			Name="Profile_FastCap|Xbox 360"
 			OutputDirectory="Profile_FastCap"
 			IntermediateDirectory="Profile_FastCap"
@@ -382,6 +668,104 @@
 			<Tool
 				Name="VCPostBuildEventTool"
 				CommandLine=""
+			/>
+			<DebuggerTool
+			/>
+		</Configuration>
+		<Configuration
+			Name="Profile_FastCap|Pocket PC 2003 (ARMV4)"
+			OutputDirectory="Pocket PC 2003 (ARMV4)\$(ConfigurationName)"
+			IntermediateDirectory="Pocket PC 2003 (ARMV4)\$(ConfigurationName)"
+			ConfigurationType="2"
+			UseOfMFC="-1"
+			UseOfATL="0"
+			CharacterSet="2"
+			>
+			<Tool
+				Name="VCPreBuildEventTool"
+				CommandLine=""
+			/>
+			<Tool
+				Name="VCCustomBuildTool"
+			/>
+			<Tool
+				Name="VCXMLDataGeneratorTool"
+			/>
+			<Tool
+				Name="VCWebServiceProxyGeneratorTool"
+			/>
+			<Tool
+				Name="VCMIDLTool"
+				TargetEnvironment="1"
+			/>
+			<Tool
+				Name="VCCLCompilerTool"
+				ExecutionBucket="7"
+				AdditionalOptions="/MP "
+				Optimization="3"
+				InlineFunctionExpansion="1"
+				EnableIntrinsicFunctions="true"
+				FavorSizeOrSpeed="2"
+				AdditionalIncludeDirectories="..\..\Common;..\..\..\Modules"
+				PreprocessorDefinitions="NDEBUG;_XBOX;XBOX;XBOX_SAMPLE;_XBOX_CRT_DEPRECATE_INSECURE;PROFILE;FASTCAP;"
+				StringPooling="true"
+				ExceptionHandling="0"
+				RuntimeLibrary="0"
+				BufferSecurityCheck="false"
+				EnableFunctionLevelLinking="true"
+				ForceConformanceInForLoopScope="true"
+				RuntimeTypeInfo="false"
+				UsePrecompiledHeader="0"
+				AssemblerOutput="0"
+				ProgramDataBaseFileName="$(IntDir)\vc80.pdb"
+				WarningLevel="4"
+				DebugInformationFormat="3"
+			/>
+			<Tool
+				Name="VCManagedResourceCompilerTool"
+			/>
+			<Tool
+				Name="VCResourceCompilerTool"
+			/>
+			<Tool
+				Name="VCPreLinkEventTool"
+			/>
+			<Tool
+				Name="VCLinkerTool"
+				AdditionalOptions="/ignore:4089 /dll /entry:&quot;_DllMainCRTStartup&quot; /include:&quot;XboxKrnlBuildNumber&quot;"
+				AdditionalDependencies="d3d9.lib d3dx9.lib xgraphics.lib xapilib.lib xaudio2.lib x3daudio.lib xmcore.lib xboxkrnl.lib xbdm.lib libcmt.lib"
+				OutputFile="$(OutDir)/$(ProjectName).dll"
+				ModuleDefinitionFile="DllModule.def"
+				GenerateDebugInformation="true"
+				OptimizeReferences="2"
+				EnableCOMDATFolding="1"
+				SetChecksum="true"
+				TargetMachine="0"
+			/>
+			<Tool
+				Name="VCALinkTool"
+			/>
+			<Tool
+				Name="VCXDCMakeTool"
+			/>
+			<Tool
+				Name="VCBscMakeTool"
+			/>
+			<Tool
+				Name="VCFxCopTool"
+			/>
+			<Tool
+				Name="VCCodeSignTool"
+			/>
+			<Tool
+				Name="VCPostBuildEventTool"
+				CommandLine=""
+			/>
+			<DeploymentTool
+				ForceDirty="-1"
+				RemoteDirectory=""
+				RegisterOutput="0"
+				AdditionalFiles=""
 			/>
 			<DebuggerTool
 			/>
@@ -482,6 +866,104 @@
 			/>
 		</Configuration>
 		<Configuration
+			Name="Release|Pocket PC 2003 (ARMV4)"
+			OutputDirectory="Pocket PC 2003 (ARMV4)\$(ConfigurationName)"
+			IntermediateDirectory="Pocket PC 2003 (ARMV4)\$(ConfigurationName)"
+			ConfigurationType="2"
+			UseOfMFC="-1"
+			UseOfATL="0"
+			CharacterSet="2"
+			>
+			<Tool
+				Name="VCPreBuildEventTool"
+				CommandLine=""
+			/>
+			<Tool
+				Name="VCCustomBuildTool"
+			/>
+			<Tool
+				Name="VCXMLDataGeneratorTool"
+			/>
+			<Tool
+				Name="VCWebServiceProxyGeneratorTool"
+			/>
+			<Tool
+				Name="VCMIDLTool"
+				TargetEnvironment="1"
+			/>
+			<Tool
+				Name="VCCLCompilerTool"
+				ExecutionBucket="7"
+				AdditionalOptions="/MP "
+				Optimization="3"
+				InlineFunctionExpansion="2"
+				EnableIntrinsicFunctions="true"
+				FavorSizeOrSpeed="2"
+				AdditionalIncludeDirectories="..\..\Common;..\..\..\Modules;ATG;..\Lua500\src;Lua500\src;D:\boost_1_66_0\boost_1_66_0"
+				PreprocessorDefinitions="NDEBUG;_XBOX;XBOX;XBOX_SAMPLE;_XBOX_CRT_DEPRECATE_INSECURE;LUA_BUILD_AS_DLL;_WIN32;BOOST_USE_WINDOWS_H"
+				StringPooling="true"
+				ExceptionHandling="1"
+				RuntimeLibrary="0"
+				BufferSecurityCheck="false"
+				EnableFunctionLevelLinking="true"
+				ForceConformanceInForLoopScope="true"
+				RuntimeTypeInfo="false"
+				UsePrecompiledHeader="0"
+				AssemblerOutput="0"
+				ProgramDataBaseFileName="$(IntDir)\vc80.pdb"
+				WarningLevel="0"
+				DebugInformationFormat="3"
+			/>
+			<Tool
+				Name="VCManagedResourceCompilerTool"
+			/>
+			<Tool
+				Name="VCResourceCompilerTool"
+			/>
+			<Tool
+				Name="VCPreLinkEventTool"
+			/>
+			<Tool
+				Name="VCLinkerTool"
+				AdditionalOptions="/ignore:4089 /dll /entry:&quot;_DllMainCRTStartup&quot; /include:&quot;XboxKrnlBuildNumber&quot;&#x0D;&#x0A;/FORCE:MULTIPLE"
+				AdditionalDependencies="d3d9.lib d3dx9.lib xgraphics.lib xapilib.lib xaudio2.lib x3daudio.lib xmcore.lib xboxkrnl.lib xbdm.lib libcmt.lib"
+				OutputFile="$(ProjectDir)\..\..\TEST.dll"
+				ModuleDefinitionFile="DllModule.def"
+				GenerateDebugInformation="true"
+				OptimizeReferences="2"
+				EnableCOMDATFolding="2"
+				SetChecksum="true"
+				TargetMachine="0"
+			/>
+			<Tool
+				Name="VCALinkTool"
+			/>
+			<Tool
+				Name="VCXDCMakeTool"
+			/>
+			<Tool
+				Name="VCBscMakeTool"
+			/>
+			<Tool
+				Name="VCFxCopTool"
+			/>
+			<Tool
+				Name="VCCodeSignTool"
+			/>
+			<Tool
+				Name="VCPostBuildEventTool"
+				CommandLine=""
+			/>
+			<DeploymentTool
+				ForceDirty="-1"
+				RemoteDirectory=""
+				RegisterOutput="0"
+				AdditionalFiles=""
+			/>
+			<DebuggerTool
+			/>
+		</Configuration>
+		<Configuration
 			Name="Release_LTCG|Xbox 360"
 			OutputDirectory="Release_LTCG"
 			IntermediateDirectory="Release_LTCG"
@@ -574,6 +1056,104 @@
 			<DebuggerTool
 			/>
 		</Configuration>
+		<Configuration
+			Name="Release_LTCG|Pocket PC 2003 (ARMV4)"
+			OutputDirectory="Pocket PC 2003 (ARMV4)\$(ConfigurationName)"
+			IntermediateDirectory="Pocket PC 2003 (ARMV4)\$(ConfigurationName)"
+			ConfigurationType="2"
+			UseOfMFC="-1"
+			UseOfATL="0"
+			CharacterSet="2"
+			WholeProgramOptimization="1"
+			>
+			<Tool
+				Name="VCPreBuildEventTool"
+				CommandLine=""
+			/>
+			<Tool
+				Name="VCCustomBuildTool"
+			/>
+			<Tool
+				Name="VCXMLDataGeneratorTool"
+			/>
+			<Tool
+				Name="VCWebServiceProxyGeneratorTool"
+			/>
+			<Tool
+				Name="VCMIDLTool"
+				TargetEnvironment="1"
+			/>
+			<Tool
+				Name="VCCLCompilerTool"
+				ExecutionBucket="7"
+				AdditionalOptions="/MP "
+				Optimization="3"
+				InlineFunctionExpansion="2"
+				EnableIntrinsicFunctions="true"
+				FavorSizeOrSpeed="2"
+				AdditionalIncludeDirectories="..\..\Common;..\..\..\Modules"
+				PreprocessorDefinitions="NDEBUG;_XBOX;XBOX;XBOX_SAMPLE;_XBOX_CRT_DEPRECATE_INSECURE;LTCG;"
+				StringPooling="true"
+				ExceptionHandling="0"
+				RuntimeLibrary="0"
+				BufferSecurityCheck="false"
+				EnableFunctionLevelLinking="true"
+				ForceConformanceInForLoopScope="true"
+				RuntimeTypeInfo="false"
+				UsePrecompiledHeader="0"
+				ProgramDataBaseFileName="$(IntDir)\vc80.pdb"
+				WarningLevel="4"
+				DebugInformationFormat="3"
+			/>
+			<Tool
+				Name="VCManagedResourceCompilerTool"
+			/>
+			<Tool
+				Name="VCResourceCompilerTool"
+			/>
+			<Tool
+				Name="VCPreLinkEventTool"
+			/>
+			<Tool
+				Name="VCLinkerTool"
+				AdditionalOptions="/ignore:4089 /dll /entry:&quot;_DllMainCRTStartup&quot; /include:&quot;XboxKrnlBuildNumber&quot;"
+				AdditionalDependencies="d3d9ltcg.lib d3dx9.lib xgraphics.lib xapilib.lib xaudio2.lib x3daudioltcg.lib xmcoreltcg.lib xboxkrnl.lib xbdm.lib libcmt.lib"
+				OutputFile="$(OutDir)/$(ProjectName).dll"
+				ModuleDefinitionFile="DllModule.def"
+				GenerateDebugInformation="true"
+				OptimizeReferences="2"
+				EnableCOMDATFolding="2"
+				SetChecksum="true"
+				TargetMachine="0"
+			/>
+			<Tool
+				Name="VCALinkTool"
+			/>
+			<Tool
+				Name="VCXDCMakeTool"
+			/>
+			<Tool
+				Name="VCBscMakeTool"
+			/>
+			<Tool
+				Name="VCFxCopTool"
+			/>
+			<Tool
+				Name="VCCodeSignTool"
+			/>
+			<Tool
+				Name="VCPostBuildEventTool"
+				CommandLine=""
+			/>
+			<DeploymentTool
+				ForceDirty="-1"
+				RemoteDirectory=""
+				RegisterOutput="0"
+				AdditionalFiles=""
+			/>
+			<DebuggerTool
+			/>
+		</Configuration>
 	</Configurations>
 	<References>
 		<ProjectReference
@@ -595,6 +1175,70 @@
 			</File>
 			<File
 				RelativePath=".\RidersFree.h"
+				>
+			</File>
+		</Filter>
+		<Filter
+			Name="math"
+			>
+			<File
+				RelativePath=".\math\aabbox3d.h"
+				>
+			</File>
+			<File
+				RelativePath=".\math\dimension2d.h"
+				>
+			</File>
+			<File
+				RelativePath=".\math\irrAllocator.h"
+				>
+			</File>
+			<File
+				RelativePath=".\math\IrrCompileConfig.h"
+				>
+			</File>
+			<File
+				RelativePath=".\math\irrMath.h"
+				>
+			</File>
+			<File
+				RelativePath=".\math\irrString.h"
+				>
+			</File>
+			<File
+				RelativePath=".\math\irrTypes.h"
+				>
+			</File>
+			<File
+				RelativePath=".\math\line3d.h"
+				>
+			</File>
+			<File
+				RelativePath=".\math\matrix4.h"
+				>
+			</File>
+			<File
+				RelativePath=".\math\plane3d.h"
+				>
+			</File>
+			<File
+				RelativePath=".\math\position2d.h"
+				>
+			</File>
+			<File
+				RelativePath=".\math\quaternion.h"
+				>
+			</File>
+			<File
+				RelativePath=".\math\rect.h"
+				>
+			</File>
+			<File
+				RelativePath=".\math\vector2d.h"
+				>
+			</File>
+			<File
+				RelativePath=".\math\vector3d.h"
 				>
 			</File>
 		</Filter>

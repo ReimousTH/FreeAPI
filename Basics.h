@@ -2,7 +2,92 @@
 #define Basics_H
 
 
+#define BranchTo(offset,rtype,...) \
+	((rtype (__fastcall *)(...))offset)(__VA_ARGS__) \
 
+
+#define qASMBranch(reg,of1,of2) \
+	lis reg,of1 \
+	ori reg,reg,of2 \
+	mtctr reg \
+	bctrl \
+
+#define qASMJump(reg,of1,of2) \
+	lis reg,of1 \
+	ori reg,reg,of2 \
+	mtctr reg \
+	bctr \
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+void __declspec( naked ) savegprl_H(){
+	__asm{
+		    std       r14, -0x98(r1)
+			std       r15, -0x90(r1)
+			std       r16, -0x88(r1)
+			std       r17, -0x80(r1)
+			std       r18, -0x78(r1)
+			std       r19, -0x70(r1)
+			std       r20, -0x68(r1)
+			std       r21, -0x60(r1)
+			std       r22, -0x58(r1)
+			std       r23, -0x50(r1)
+			std       r24, -0x48(r1)
+			std       r25, -0x40(r1)
+			std       r26, -0x38(r1)
+			std       r27, -0x30(r1)
+			std       r28, -0x28(r1)
+			std       r29, -0x20(r1)
+			std       r30, -0x18(r1)
+			blr
+	}
+}
+
+void __declspec( naked ) restgprl_H(){
+	__asm{
+		std       r14, -0x98(r1)
+			std       r15, -0x90(r1)
+			std       r16, -0x88(r1)
+			std       r17, -0x80(r1)
+			std       r18, -0x78(r1)
+			std       r19, -0x70(r1)
+			std       r20, -0x68(r1)
+			std       r21, -0x60(r1)
+			std       r22, -0x58(r1)
+			std       r23, -0x50(r1)
+			std       r24, -0x48(r1)
+			std       r25, -0x40(r1)
+			std       r26, -0x38(r1)
+			std       r27, -0x30(r1)
+			std       r28, -0x28(r1)
+			std       r29, -0x20(r1)
+			std       r30, -0x18(r1)
+			blr
+	}
+}
+
+#define savegprl(index) BranchTo((DWORD)(savegprl_H) + (index *4) ,void)
+
+
+
+
+
+
+
+
+	
 
 
 #include <stdlib.h>
@@ -25,6 +110,9 @@
 #include "AtgSignIn.h"
 #include <map>
 #include <Xboxmath.h>
+
+#include "math/quaternion.h"
+#include "math/matrix4.h"
 
 // first unsigned macros:
 
@@ -166,8 +254,6 @@ typedef short _WORD;
 
 
 
-#define BranchTo(offset,rtype,...) \
-	((rtype (__fastcall *)(...))offset)(__VA_ARGS__) \
 
 
 #define DataPointer(type, name, address) \
@@ -241,6 +327,8 @@ public:
 	const char* ZLua::GetGlobalString(const char* string);
 	int ZLua::GetGlobalBool(const char* string);
 	int ZLua::GetGlobalInt(const char* string);
+	int ZLua::GetGlobalIntNew(char* str,bool useglobal  = false);
+
 
 	static void UseBaseLibsEx(lua_State* L);
 
@@ -259,7 +347,8 @@ void ShowXenonMessage(LPCWSTR Title,LPCWSTR wTitle){
 
 	MESSAGEBOX_RESULT result;
 	XOVERLAPPED m_Overlapped; 
-	XShowMessageBoxUI(0,Title,wTitle,1,g_pwstrButtonsX,1,XMB_ALERTICON,&result,&m_Overlapped);
+	XShowMessageBoxUI(ATG::SignIn::GetSignedInUser(),Title,wTitle,1,g_pwstrButtonsX,1,XMB_ALERTICON,&result,&m_Overlapped);
+	
 }
 
 wchar_t *convertCharArrayToLPCWSTR(const char* charArray)
@@ -276,14 +365,15 @@ void ShowXenonMessage(LPCWSTR Title,char* wTitle){
 
 
 
-	XShowMessageBoxUI(0,Title,convertCharArrayToLPCWSTR(wTitle),1,g_pwstrButtonsX,1,XMB_ALERTICON,&result,&m_Overlapped);
+	XShowMessageBoxUI(ATG::SignIn::GetSignedInUser(),Title,convertCharArrayToLPCWSTR(wTitle),1,g_pwstrButtonsX,1,XMB_ALERTICON,&result,&m_Overlapped);
 }
 
 MESSAGEBOX_RESULT* ShowXenonMessage(LPCWSTR Title,const char* wTitle){
 
 	MESSAGEBOX_RESULT result;
 	XOVERLAPPED m_Overlapped; 
-	XShowMessageBoxUI(0,Title,convertCharArrayToLPCWSTR(wTitle),1,g_pwstrButtonsX,1,XMB_ALERTICON,&result,&m_Overlapped);
+	
+	XShowMessageBoxUI(ATG::SignIn::GetSignedInUser(),Title,convertCharArrayToLPCWSTR(wTitle),1,g_pwstrButtonsX,1,XMB_ALERTICON,&result,&m_Overlapped);
 	return &result;
 }
 

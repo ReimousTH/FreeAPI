@@ -18,7 +18,7 @@
 #define SECTION_RDATA 0xFFCF000
 #define SECTION_DATA 0xFFCF000
 
-
+//#define KinectTEST
 //#define TEST
 #ifndef TEST
 #define HOOK_VALUE 0xFFCF000
@@ -29,7 +29,7 @@
 
 #endif
 
-#define ADDR(val) ((UINT64)val + (UINT64)TRUE_START_XENIA)
+#define ADDR(val) ((UINT64)val + (UINT64)(HOOK_VALUE+XEX_PC_HEADER))
 
 
 

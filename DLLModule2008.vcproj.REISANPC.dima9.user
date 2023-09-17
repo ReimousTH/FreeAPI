@@ -40,6 +40,41 @@
 			/>
 		</Configuration>
 		<Configuration
+			Name="Debug|Pocket PC 2003 (ARMV4)"
+			>
+			<DebugSettings
+				Command=""
+				WorkingDirectory=""
+				CommandArguments=""
+				Attach="false"
+				DebuggerType="3"
+				Remote="1"
+				RemoteMachine="REISANPC"
+				RemoteCommand=""
+				HttpUrl=""
+				PDBPath=""
+				SQLDebugging=""
+				Environment=""
+				EnvironmentMerge="true"
+				DebuggerFlavor=""
+				MPIRunCommand=""
+				MPIRunArguments=""
+				MPIRunWorkingDirectory=""
+				ApplicationCommand=""
+				ApplicationArguments=""
+				ShimCommand=""
+				MPIAcceptMode=""
+				MPIAcceptFilter=""
+			/>
+			<DeploymentTool
+				DeploymentDevice="E282E6BE-C7C3-4ece-916A-88FB1CF8AF3C"
+			/>
+			<DebuggerTool
+				RemoteExecutable=""
+				Arguments=""
+			/>
+		</Configuration>
+		<Configuration
 			Name="CodeAnalysis|Xbox 360"
 			>
 			<DebugSettings
@@ -71,6 +106,41 @@
 				CommandArguments=""
 				MapDVDDrive="false"
 				RemoteMachine="$(DefaultConsole)"
+			/>
+		</Configuration>
+		<Configuration
+			Name="CodeAnalysis|Pocket PC 2003 (ARMV4)"
+			>
+			<DebugSettings
+				Command=""
+				WorkingDirectory=""
+				CommandArguments=""
+				Attach="false"
+				DebuggerType="3"
+				Remote="1"
+				RemoteMachine="REISANPC"
+				RemoteCommand=""
+				HttpUrl=""
+				PDBPath=""
+				SQLDebugging=""
+				Environment=""
+				EnvironmentMerge="true"
+				DebuggerFlavor=""
+				MPIRunCommand=""
+				MPIRunArguments=""
+				MPIRunWorkingDirectory=""
+				ApplicationCommand=""
+				ApplicationArguments=""
+				ShimCommand=""
+				MPIAcceptMode=""
+				MPIAcceptFilter=""
+			/>
+			<DeploymentTool
+				DeploymentDevice="E282E6BE-C7C3-4ece-916A-88FB1CF8AF3C"
+			/>
+			<DebuggerTool
+				RemoteExecutable=""
+				Arguments=""
 			/>
 		</Configuration>
 		<Configuration
@@ -108,6 +178,41 @@
 			/>
 		</Configuration>
 		<Configuration
+			Name="Profile|Pocket PC 2003 (ARMV4)"
+			>
+			<DebugSettings
+				Command=""
+				WorkingDirectory=""
+				CommandArguments=""
+				Attach="false"
+				DebuggerType="3"
+				Remote="1"
+				RemoteMachine="REISANPC"
+				RemoteCommand=""
+				HttpUrl=""
+				PDBPath=""
+				SQLDebugging=""
+				Environment=""
+				EnvironmentMerge="true"
+				DebuggerFlavor=""
+				MPIRunCommand=""
+				MPIRunArguments=""
+				MPIRunWorkingDirectory=""
+				ApplicationCommand=""
+				ApplicationArguments=""
+				ShimCommand=""
+				MPIAcceptMode=""
+				MPIAcceptFilter=""
+			/>
+			<DeploymentTool
+				DeploymentDevice="E282E6BE-C7C3-4ece-916A-88FB1CF8AF3C"
+			/>
+			<DebuggerTool
+				RemoteExecutable=""
+				Arguments=""
+			/>
+		</Configuration>
+		<Configuration
 			Name="Profile_FastCap|Xbox 360"
 			>
 			<DebugSettings
@@ -139,6 +244,41 @@
 				CommandArguments=""
 				MapDVDDrive="false"
 				RemoteMachine="$(DefaultConsole)"
+			/>
+		</Configuration>
+		<Configuration
+			Name="Profile_FastCap|Pocket PC 2003 (ARMV4)"
+			>
+			<DebugSettings
+				Command=""
+				WorkingDirectory=""
+				CommandArguments=""
+				Attach="false"
+				DebuggerType="3"
+				Remote="1"
+				RemoteMachine="REISANPC"
+				RemoteCommand=""
+				HttpUrl=""
+				PDBPath=""
+				SQLDebugging=""
+				Environment=""
+				EnvironmentMerge="true"
+				DebuggerFlavor=""
+				MPIRunCommand=""
+				MPIRunArguments=""
+				MPIRunWorkingDirectory=""
+				ApplicationCommand=""
+				ApplicationArguments=""
+				ShimCommand=""
+				MPIAcceptMode=""
+				MPIAcceptFilter=""
+			/>
+			<DeploymentTool
+				DeploymentDevice="E282E6BE-C7C3-4ece-916A-88FB1CF8AF3C"
+			/>
+			<DebuggerTool
+				RemoteExecutable=""
+				Arguments=""
 			/>
 		</Configuration>
 		<Configuration
@@ -176,6 +316,41 @@
 			/>
 		</Configuration>
 		<Configuration
+			Name="Release|Pocket PC 2003 (ARMV4)"
+			>
+			<DebugSettings
+				Command=""
+				WorkingDirectory=""
+				CommandArguments=""
+				Attach="false"
+				DebuggerType="3"
+				Remote="1"
+				RemoteMachine="REISANPC"
+				RemoteCommand=""
+				HttpUrl=""
+				PDBPath=""
+				SQLDebugging=""
+				Environment=""
+				EnvironmentMerge="true"
+				DebuggerFlavor=""
+				MPIRunCommand=""
+				MPIRunArguments=""
+				MPIRunWorkingDirectory=""
+				ApplicationCommand=""
+				ApplicationArguments=""
+				ShimCommand=""
+				MPIAcceptMode=""
+				MPIAcceptFilter=""
+			/>
+			<DeploymentTool
+				DeploymentDevice="E282E6BE-C7C3-4ece-916A-88FB1CF8AF3C"
+			/>
+			<DebuggerTool
+				RemoteExecutable=""
+				Arguments=""
+			/>
+		</Configuration>
+		<Configuration
 			Name="Release_LTCG|Xbox 360"
 			>
 			<DebugSettings
@@ -207,6 +382,41 @@
 				CommandArguments=""
 				MapDVDDrive="false"
 				RemoteMachine="$(DefaultConsole)"
+			/>
+		</Configuration>
+		<Configuration
+			Name="Release_LTCG|Pocket PC 2003 (ARMV4)"
+			>
+			<DebugSettings
+				Command=""
+				WorkingDirectory=""
+				CommandArguments=""
+				Attach="false"
+				DebuggerType="3"
+				Remote="1"
+				RemoteMachine="REISANPC"
+				RemoteCommand=""
+				HttpUrl=""
+				PDBPath=""
+				SQLDebugging=""
+				Environment=""
+				EnvironmentMerge="true"
+				DebuggerFlavor=""
+				MPIRunCommand=""
+				MPIRunArguments=""
+				MPIRunWorkingDirectory=""
+				ApplicationCommand=""
+				ApplicationArguments=""
+				ShimCommand=""
+				MPIAcceptMode=""
+				MPIAcceptFilter=""
+			/>
+			<DeploymentTool
+				DeploymentDevice="E282E6BE-C7C3-4ece-916A-88FB1CF8AF3C"
+			/>
+			<DebuggerTool
+				RemoteExecutable=""
+				Arguments=""
 			/>
 		</Configuration>
 	</Configurations>

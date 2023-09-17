@@ -39,7 +39,7 @@ struct __declspec(align(8)) struct_a11
 };
 
 
-struct  struct_GameRootStateController
+struct  __declspec(align(2)) struct_GameRootStateController
 {
 	int field_0;
 	int field_4;
@@ -67,17 +67,39 @@ struct  struct_GameRootStateController
 	int field_5C;
 	int field_60;
 	int GameRootState;
-	_BYTE gap68;
+	char field_68;
 	int field_69;
 	int field_6D;
 	int field_71;
 	int field_75;
-	_BYTE gap79[23];
+	char field_79;
+	char field_7A;
+	char field_7B;
+	char field_7C;
+	char field_7D;
+	char field_7E;
+	char field_7F;
+	char field_80;
+	char field_81;
+	char field_82;
+	char field_83;
+	char field_84;
+	char field_85;
+	char field_86;
+	char field_87;
+	char field_88;
+	char field_89;
+	char field_8A;
+	char field_8B;
+	char field_8C;
+	char field_8D;
+	char field_8E;
+	char field_8F;
 	_DWORD dword90;
 	_BYTE gap94[4];
 	char char98;
 	_BYTE gap99[19];
-	short wordAC;
+	_WORD wordAC;
 };
 
 struct struct_v51
@@ -565,7 +587,7 @@ struct  struct_v35
 	int field_2F8;
 	int field_2FC;
 	struct_dword300 *dword300;
-	int field_304;
+	float field_304;
 	int field_308;
 	int field_30C;
 	int dword310;
@@ -1059,6 +1081,20 @@ DataPointer(int,Instance, 0x83E52F8C);
 DataPointer(int,off_83E53128, 0x83E53128);
 
 
+DataPointer(int,MessageBoxInputMB, 0x83E52F7C);
+DataPointer(int,off_83E52FA0, 0x83E52FA0);
+DataPointer(float,flt_82B34BD8, 0x82B34BD8);
+
+DataPointer(int,XNLiveSomeStatic, 0x83E53138);
+DataPointer(float,flt_83E519F0, 0x83E519F0);
+DataPointer(float,flt_82B3BCE0, 0x82B3BCE0);
+
+DataPointer(int*,dword_82B3FFF8, 0x82B3FFF8);
+DataPointer(int*,dword_8218FFB4, 0x8218FFB4);
+
+
+
+
 FastcallFunctionPointer(int,sub_824573A8,(int a1),0x824573A8);
 FastcallFunctionPointer(int,MessageBoxInpuResult,(int a1,int a2),0x823EF348);
 FastcallFunctionPointer(int,sub_82487E80,(int a1, int a2, int a3),0x82487E80);
@@ -1089,6 +1125,21 @@ FastcallFunctionPointer(int*,IsThatSelector_,(_DWORD *a1, int a2),0x824573A8);
 
 
 FastcallFunctionPointer(int*,sub_82A54330,(int *a1, int* a2,__int64 a3),0x82A54330);	
+
+
+
+FastcallFunctionPointer(int,sub_824D1B98,(int a1),0x824D1B98);	
+
+FastcallFunctionPointer(int*,sub_8270CDD8,(int a1),0x8270CDD8);	
+FastcallFunctionPointer(int*,boostsomex,(int* a1),0x822111D8);	
+FastcallFunctionPointer(int*,sub_82230F38,(_DWORD *result, int a2),0x82230F38);	
+FastcallFunctionPointer(int*,sub_82408998,(int result,int a2,int a3),0x82408998);	
+FastcallFunctionPointer(int*,sub_8249F9C8,(int result, unsigned int a2, int a3),0x8249F9C8);	
+FastcallFunctionPointer(int*,sub_8248B948,(int a1,int a2),0x8248B948);	
+FastcallFunctionPointer(int*,sub_82299420,(int a1, int a2, int a3, int a4, int a5, int a6, int a7, int a8, double a9, double a10),0x82299420);	
+
+	
+
 
 
 

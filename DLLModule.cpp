@@ -69,11 +69,19 @@ extern "C" void OnDllStart(){
 
 	val+=100;
 
-ShowXenonMessage(L"MSG","FREE RIDERS API");
+	ShowXenonMessage(L"MSG","Sonic Free Riders[No Kinect Patch] V1.1");
 
-DebugLogRestore::GlobalInstall();
-GlobalInstall();
 
+#ifdef KinectTEST
+	KinectTESTEX::GlobalInstall();
+		DebugLogRestore::GlobalInstall();
+#else
+//	DebugLogRestore::GlobalInstall();
+	GlobalInstall();
+	//ModLoaderTest::GlobalInstall();
+	
+
+#endif
 
 
 
