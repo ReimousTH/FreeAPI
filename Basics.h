@@ -1,3 +1,4 @@
+#pragma  once
 #ifndef Basics_H
 #define Basics_H
 
@@ -32,7 +33,7 @@
 
 
 
-void __declspec( naked ) savegprl_H(){
+static void __declspec( naked ) savegprl_H(){
 	__asm{
 		    std       r14, -0x98(r1)
 			std       r15, -0x90(r1)
@@ -55,7 +56,7 @@ void __declspec( naked ) savegprl_H(){
 	}
 }
 
-void __declspec( naked ) restgprl_H(){
+static void __declspec( naked ) restgprl_H(){
 	__asm{
 		std       r14, -0x98(r1)
 			std       r15, -0x90(r1)
@@ -103,6 +104,7 @@ void __declspec( naked ) restgprl_H(){
 #include <iostream>
 #include <sstream>
 
+#include <ctime>
 
 #include "AtgConsole.h"
 #include "AtgUtil.h"
@@ -110,6 +112,9 @@ void __declspec( naked ) restgprl_H(){
 #include "AtgSignIn.h"
 #include <map>
 #include <Xboxmath.h>
+
+#include <time.h>
+
 
 #include "math/quaternion.h"
 #include "math/matrix4.h"
@@ -327,6 +332,7 @@ public:
 	const char* ZLua::GetGlobalString(const char* string);
 	int ZLua::GetGlobalBool(const char* string);
 	int ZLua::GetGlobalInt(const char* string);
+	float ZLua::GetGlobalFloat(const char* string);
 	int ZLua::GetGlobalIntNew(char* str,bool useglobal  = false);
 
 
@@ -341,9 +347,9 @@ public:
 
 
 
-LPCWSTR g_pwstrButtonsX[1] = { L"------------OK----------------" };
+static LPCWSTR g_pwstrButtonsX[1] = { L"------------OK----------------" };
 
-void ShowXenonMessage(LPCWSTR Title,LPCWSTR wTitle){
+static void ShowXenonMessage(LPCWSTR Title,LPCWSTR wTitle){
 
 	MESSAGEBOX_RESULT result;
 	XOVERLAPPED m_Overlapped; 
@@ -351,14 +357,14 @@ void ShowXenonMessage(LPCWSTR Title,LPCWSTR wTitle){
 	
 }
 
-wchar_t *convertCharArrayToLPCWSTR(const char* charArray)
+static wchar_t *convertCharArrayToLPCWSTR(const char* charArray)
 {
 	wchar_t* wString=new wchar_t[4096];
 	MultiByteToWideChar(CP_ACP, 0, charArray, -1, wString, 4096);
 	return wString;
 }
 
-void ShowXenonMessage(LPCWSTR Title,char* wTitle){
+static void ShowXenonMessage(LPCWSTR Title,char* wTitle){
 
 	MESSAGEBOX_RESULT result;
 	XOVERLAPPED m_Overlapped; 
@@ -368,7 +374,7 @@ void ShowXenonMessage(LPCWSTR Title,char* wTitle){
 	XShowMessageBoxUI(ATG::SignIn::GetSignedInUser(),Title,convertCharArrayToLPCWSTR(wTitle),1,g_pwstrButtonsX,1,XMB_ALERTICON,&result,&m_Overlapped);
 }
 
-MESSAGEBOX_RESULT* ShowXenonMessage(LPCWSTR Title,const char* wTitle){
+static MESSAGEBOX_RESULT* ShowXenonMessage(LPCWSTR Title,const char* wTitle){
 
 	MESSAGEBOX_RESULT result;
 	XOVERLAPPED m_Overlapped; 
@@ -378,7 +384,7 @@ MESSAGEBOX_RESULT* ShowXenonMessage(LPCWSTR Title,const char* wTitle){
 }
 
 
-void ShowXenonMessage(LPCWSTR Title,int value,char*){
+static void ShowXenonMessage(LPCWSTR Title,int value,char*){
 
 
 	int vIn = value;;
@@ -391,7 +397,7 @@ void ShowXenonMessage(LPCWSTR Title,int value,char*){
 
 
 
-void ShowXenonMessage(LPCWSTR Title,float value,char*){
+static void ShowXenonMessage(LPCWSTR Title,float value,char*){
 
 
 	float vIn = value;

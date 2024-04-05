@@ -14,7 +14,7 @@
 
 struct __declspec(align(8)) struct_a11
 {
-	_BYTE gap0[4];
+
 	_DWORD MainMenuState;
 	_BYTE gap8[12];
 	_DWORD *pdword14;
@@ -189,192 +189,385 @@ struct __declspec(align(4)) XGuidMenu
 	_BYTE byte4A0;
 };
 
-struct struct_v1
+
+
+struct __declspec(align(4)) struct_pfloat690
 {
-  float float0;
-  _BYTE gap4[140];
-  float float90;
-  float float94;
-  float float98;
-  float float9C;
-  _BYTE gapA0[32];
-  float PositionX;
-  float PositionY;
-  float PositionZ;
-  float floatCC;
-  _BYTE gapD0[4];
-  float floatD4;
-  _BYTE gapD8[8];
-  _QWORD qwordE0;
-  _QWORD qwordE8;
-  float floatF0;
-  float floatF4;
-  float floatF8;
-  float floatFC;
-  float float100;
-  float float104;
-  float float108;
-  _BYTE gap10C[4];
-  _QWORD qword110;
-  _QWORD qword118;
-  _BYTE gap120[16];
-  float float130;
-  float float134;
-  float float138;
-  float float13C;
-  float float140;
-  float float144;
-  float float148;
-  float float14C;
-  _BYTE gap150[48];
-  float float180;
-  float float184;
-  float float188;
-  _BYTE gap18C[4];
-  _QWORD qword190;
-  _QWORD qword198;
-  _BYTE gap1A0[48];
-  _QWORD qword1D0;
-  float float1D8;
-  float float1DC;
-  _QWORD qword1E0;
-  _QWORD qword1E8;
-  _BYTE gap1F0[16];
-  float float200;
-  _BYTE gap204[12];
-  _QWORD qword210;
-  _QWORD qword218;
-  _BYTE gap220[224];
-  _QWORD qword300;
-  _QWORD qword308;
-  _BYTE gap310[322];
-  unsigned __int16 unsigned452;
-  _BYTE gap454[28];
-  _QWORD qword470;
-  _QWORD qword478;
-  _BYTE gap480[16];
-  _QWORD qword490;
-  _QWORD qword498;
-  _BYTE gap4A0[40];
-  _QWORD qword4C8;
-  float float4D0;
-  float float4D4;
-  float float4D8;
-  float float4DC;
-  _BYTE gap4E0[32];
-  _WORD word500;
-  _BYTE gap502[2];
-  unsigned __int16 unsigned504;
-  unsigned __int16 unsigned506;
-  unsigned __int16 unsigned508;
-  unsigned __int16 unsigned50A;
-  _BYTE gap50C[4];
-  float float510;
-  _BYTE gap514[4];
-  _QWORD qword518;
-  _BYTE gap520[288];
-  __int16 int16640;
-  _BYTE gap642;
-  unsigned __int8 unsigned643;
-  _BYTE byte644;
-  _BYTE byte645;
-  _BYTE byte646;
-  _BYTE gap647[4];
-  _BYTE byte64B;
-  _BYTE byte64C;
-  _BYTE gap64D;
-  _BYTE byte64E;
-  _BYTE gap64F[65];
-  float *pfloat690;
-  _BYTE gap694[4];
-  _DWORD dword698;
-  _BYTE gap69C[48];
-  _DWORD dword6CC;
-  _DWORD dword6D0;
-  _DWORD dword6D4;
-  _BYTE gap6D8[56];
-  float ConstantZForce;
-  int PreZForceBuggy;
-  int field_718;
-  float ForceZ;
-  int gap720;
-  int field_724;
-  int field_728;
-  int field_72C;
-  int field_730;
-  int field_734;
-  float float738;
-  _BYTE gap73C[12];
-  float float748;
-  int gap74C;
-  int field_750;
-  int field_754;
-  int field_758;
-  int field_75C;
-  int field_760;
-  int field_764;
-  int field_768;
-  int field_76C;
-  int field_770;
-  int field_774;
-  int field_778;
-  int field_77C;
-  int RotationZ;
-  int RotationY;
-  int RotationX;
-  int field_78C;
-  int field_790;
-  int field_794;
-  int field_798;
-  int field_79C;
-  int field_7A0;
-  int field_7A4;
-  int field_7A8;
-  int field_7AC;
-  int field_7B0;
-  int field_7B4;
-  int field_7B8;
-  int field_7BC;
-  int field_7C0;
-  int field_7C4;
-  int field_7C8;
-  int field_7CC;
-  int field_7D0;
-  int field_7D4;
-  int field_7D8;
-  int field_7DC;
-  _BYTE gap7E0[88];
-  _DWORD dword838;
-  _DWORD dword83C;
-  _DWORD dword840;
-  _BYTE gap844[4];
-  _DWORD dword848;
-  _DWORD dword84C;
-  _DWORD dword850;
-  _DWORD dword854;
-  _BYTE gap858[28];
-  unsigned __int16 unsigned874;
-  _WORD word876;
-  _WORD word878;
-  unsigned __int16 unsigned87A;
-  _DWORD dword87C;
-  _BYTE gap880[156];
-  _DWORD dword91C;
-  _BYTE gap920[4];
-  float float924;
-  _BYTE gap928[12];
-  _DWORD dword934;
-  float float938;
-  _DWORD dword93C;
-  _BYTE gap940[8];
-  _DWORD ChrState;
-  _BYTE gap94C[8];
-  _DWORD dword954;
-  _DWORD dword958;
-  _BYTE gap95C[246];
-  _BYTE byteA52;
+	float float0;
+	int gap4;
+	int field_8;
+	int field_C;
+	int field_10;
+	int field_14;
+	int field_18;
+	int field_1C;
+	int field_20;
+	int field_24;
+	int field_28;
+	int field_2C;
+	int field_30;
+	int field_34;
+	int field_38;
+	int field_3C;
+	int field_40;
+	int field_44;
+	int field_48;
+	int field_4C;
+	int field_50;
+	int field_54;
+	int field_58;
+	int field_5C;
+	_BYTE gap60[3044];
+	float floatC44;
+	float float_C48;
 };
 
+struct __declspec(align(8)) struct_v1
+{
+	float float0;
+	int gap4;
+	int field_8;
+	int field_C;
+	int field_10;
+	int field_14;
+	int field_18;
+	int field_1C;
+	int field_20;
+	int field_24;
+	int field_28;
+	int field_2C;
+	int field_30;
+	int field_34;
+	int field_38;
+	int field_3C;
+	int field_40;
+	int field_44;
+	int field_48;
+	int field_4C;
+	int field_50;
+	int field_54;
+	int field_58;
+	int field_5C;
+	int field_60;
+	int field_64;
+	int field_68;
+	int field_6C;
+	int ChrModelPositionRelativeX;
+	int ChrModelPositionRelativeY;
+	int ChrModelPositionRelativeZ;
+	int field_7C;
+	_BYTE gap80[16];
+	float float90;
+	float float94;
+	float float98;
+	float float9C;
+	_BYTE gapA0[32];
+	float PositionX;
+	float PositionY;
+	float PositionZ;
+	float floatCC;
+	_BYTE gapD0[4];
+	float floatD4;
+	_BYTE gapD8[8];
+	_QWORD qwordE0;
+	_QWORD qwordE8;
+	float floatF0;
+	float floatF4;
+	float floatF8;
+	float floatFC;
+	float float100;
+	float float104;
+	float float108;
+	_BYTE gap10C[4];
+	_QWORD qword110;
+	_QWORD qword118;
+	_BYTE gap120[16];
+	float float130;
+	float float134;
+	float float138;
+	float float13C;
+	float float140;
+	float float144;
+	float float148;
+	float float14C;
+	_BYTE gap150[48];
+	float float180;
+	float float184;
+	float float188;
+	_BYTE gap18C[4];
+	_QWORD qword190;
+	_QWORD qword198;
+	_BYTE gap1A0[48];
+	_QWORD qword1D0;
+	float float1D8;
+	float float1DC;
+	_QWORD qword1E0;
+	_QWORD qword1E8;
+	_BYTE gap1F0[16];
+	float float200;
+	_BYTE gap204[12];
+	_QWORD qword210;
+	_QWORD qword218;
+	_BYTE gap220[224];
+	_QWORD qword300;
+	_QWORD qword308;
+	_BYTE gap310[322];
+	unsigned __int16 unsigned452;
+	_BYTE gap454[28];
+	_QWORD qword470;
+	_QWORD qword478;
+	_BYTE gap480[16];
+	_QWORD qword490;
+	_QWORD qword498;
+	_BYTE gap4A0[40];
+	_QWORD qword4C8;
+	float float4D0;
+	float float4D4;
+	float float4D8;
+	float float4DC;
+	_BYTE gap4E0[32];
+	_WORD word500;
+	_BYTE gap502[2];
+	unsigned __int16 unsigned504;
+	unsigned __int16 unsigned506;
+	unsigned __int16 unsigned508;
+	unsigned __int16 unsigned50A;
+	_BYTE gap50C[4];
+	float float510;
+	_BYTE gap514[4];
+	_QWORD qword518;
+	_BYTE gap520[288];
+	__int16 int16640;
+	_BYTE gap642;
+	unsigned __int8 unsigned643;
+	_BYTE byte644;
+	_BYTE byte645;
+	_BYTE byte646;
+	_BYTE gap647[4];
+	_BYTE byte64B;
+	_BYTE byte64C;
+	_BYTE gap64D;
+	_BYTE byte64E;
+	_BYTE gap64F[65];
+	struct_pfloat690 *pfloat690;
+	_BYTE gap694[4];
+	_DWORD dword698;
+	_BYTE gap69C[48];
+	_DWORD dword6CC;
+	_DWORD dword6D0;
+	_DWORD dword6D4;
+	_BYTE gap6D8[56];
+	float ConstantZForce;
+	int PreZForceBuggy;
+	int field_718;
+	float ForceZ;
+	int gap720;
+	int field_724;
+	int field_728;
+	int field_72C;
+	int field_730;
+	int field_734;
+	float float738;
+	_BYTE gap73C[12];
+	float float748;
+	int gap74C;
+	int field_750;
+	int field_754;
+	int field_758;
+	int field_75C;
+	int field_760;
+	int field_764;
+	int field_768;
+	int field_76C;
+	int field_770;
+	int field_774;
+	int field_778;
+	int field_77C;
+	int RotationZ;
+	int RotationY;
+	int RotationX;
+	int field_78C;
+	int field_790;
+	int field_794;
+	int field_798;
+	int field_79C;
+	int field_7A0;
+	int field_7A4;
+	int field_7A8;
+	int field_7AC;
+	int field_7B0;
+	int field_7B4;
+	int field_7B8;
+	int field_7BC;
+	int field_7C0;
+	int field_7C4;
+	int field_7C8;
+	int field_7CC;
+	int field_7D0;
+	int field_7D4;
+	int field_7D8;
+	int field_7DC;
+	int field_7E0;
+	int field_7E4;
+	int field_7E8;
+	int field_7EC;
+	int field_7F0;
+	int field_7F4;
+	int field_7F8;
+	int field_7FC;
+	int field_800;
+	int field_804;
+	int field_808;
+	int field_80C;
+	int field_810;
+	int field_814;
+	int field_818;
+	int field_81C;
+	int field_820;
+	int field_824;
+	int field_828;
+	int field_82C;
+	int field_830;
+	int field_834;
+	_DWORD dword838;
+	_DWORD dword83C;
+	_DWORD dword840;
+	int gap844;
+	_DWORD dword848;
+	_DWORD dword84C;
+	_DWORD dword850;
+	_DWORD dword854;
+	int gap858;
+	int field_85C;
+	int field_860;
+	int field_864;
+	int field_868;
+	int field_86C;
+	int field_870;
+	unsigned __int16 unsigned874;
+	_WORD word876;
+	_WORD word878;
+	unsigned __int16 unsigned87A;
+	_DWORD dword87C;
+	int gap880;
+	int field_884;
+	int field_888;
+	int field_88C;
+	int field_890;
+	int field_894;
+	int field_898;
+	int field_89C;
+	int field_8A0;
+	int field_8A4;
+	int field_8A8;
+	int field_8AC;
+	int field_8B0;
+	int field_8B4;
+	int field_8B8;
+	int field_8BC;
+	int field_8C0;
+	int field_8C4;
+	int field_8C8;
+	int field_8CC;
+	int field_8D0;
+	int field_8D4;
+	int field_8D8;
+	int field_8DC;
+	int field_8E0;
+	int field_8E4;
+	int field_8E8;
+	int field_8EC;
+	int field_8F0;
+	int field_8F4;
+	int field_8F8;
+	int field_8FC;
+	int field_900;
+	int field_904;
+	int field_908;
+	int field_90C;
+	int field_910;
+	int field_914;
+	int field_918;
+	_DWORD dword91C;
+	int gap920;
+	float float924;
+	int gap928;
+	int field_92C;
+	int field_930;
+	_DWORD dword934;
+	float float938;
+	_DWORD dword93C;
+	int gap940;
+	int field_944;
+	_DWORD ChrState;
+	int gap94C;
+	int field_950;
+	_DWORD dword954;
+	_DWORD dword958;
+	int gap95C;
+	int field_960;
+	int field_964;
+	int field_968;
+	int field_96C;
+	int field_970;
+	int field_974;
+	int field_978;
+	int field_97C;
+	int field_980;
+	int field_984;
+	int field_988;
+	int field_98C;
+	int field_990;
+	int field_994;
+	int field_998;
+	int field_99C;
+	int field_9A0;
+	int field_9A4;
+	int field_9A8;
+	int field_9AC;
+	int field_9B0;
+	int field_9B4;
+	int field_9B8;
+	int field_9BC;
+	int field_9C0;
+	int field_9C4;
+	int field_9C8;
+	int field_9CC;
+	int field_9D0;
+	int field_9D4;
+	int field_9D8;
+	int field_9DC;
+	int field_9E0;
+	int field_9E4;
+	int field_9E8;
+	int field_9EC;
+	int field_9F0;
+	int field_9F4;
+	int field_9F8;
+	int field_9FC;
+	int field_A00;
+	int field_A04;
+	int field_A08;
+	int field_A0C;
+	int field_A10;
+	int field_A14;
+	int field_A18;
+	int field_A1C;
+	int field_A20;
+	int field_A24;
+	int field_A28;
+	int field_A2C;
+	int field_A30;
+	int field_A34;
+	int field_A38;
+	int field_A3C;
+	int field_A40;
+	int field_A44;
+	int field_A48;
+	int field_A4C;
+	__int16 field_A50;
+	_BYTE byteA52;
+};
 
 
 struct  struct_dword300
@@ -665,17 +858,29 @@ struct  struct_a1_4
 {
 	_BYTE gap0[4];
 	float GameSpeed;
-	_BYTE gap8[12];
+	int gap8;
+	float MaxFpsFloat;
+	float MaxFixedFps;
 	float CameraSpeed;
-	_BYTE gap18[4];
-	_DWORD dword1C;
+	float gap18;
+	_DWORD TicksLimit;
 	float float20;
 	float float24;
 	float SpeedSome;
 	float float2C;
 	float float30;
 	float float34;
-	_BYTE gap38[35];
+	int gap38;
+	int field_3C;
+	int field_40;
+	int field_44;
+	int field_48;
+	int field_4C;
+	int field_50;
+	int field_54;
+	char FpsMaxInt;
+	char field_59;
+	char field_5A;
 	_BYTE byte5B;
 	_BYTE byte5C;
 };
@@ -696,7 +901,7 @@ struct struct_field_34
 struct struct_MBKinnectInput
 {
 	_BYTE gap0[24];
-	struct_a1_4 *dword18;
+	struct_a1_4 *PclsXbox360System;
 	struct_field_1C *field_1C;
 	int field_20;
 	int field_24;
@@ -821,13 +1026,62 @@ struct __declspec(align(4)) struct_a2
 	_DWORD dword22C;
 };
 
+struct struct_UIRingController;
+
+struct ItemNRElementSub01
+{
+	int field_0;
+	int field_4;
+	int field_8;
+	int field_C;
+	int (__fastcall *ResultMethod)(char *);
+	float SomeTime;
+	int field_18;
+	int field_1C;
+	int field_20;
+	int field_24;
+	int field_28;
+	int field_2C;
+	int field_30;
+	int field_34;
+	int field_38;
+};
+
+
+
+
+
+#define IsUnk1 0x80000 //Type,Active,Status??? Move Back button to middle and disables it
+#define IsUNK2 0x4000
+#define IsUNK3 0x2000
+#define IsUNK4 0x800
+#define NR_IsButtonPressed 0x200
+#define IsUNK6 0x8
+
+
 struct __declspec(align(8)) ItemNRElement
 {
-	_BYTE gap0[64];
+	int vft;
+	int ItemNRBaseFlag1;
+	int ItemNRBaseFlag2;
+	int field_C;
+	int field_10;
+	int field_14;
+	int field_18;
+	int field_1C;
+	int field_20;
+	int field_24;
+	int field_28;
+	int field_2C;
+	int field_30;
+	int field_34;
+	int field_38;
+	int field_3C;
 	float float40;
 	float float44;
 	float float48;
-	__declspec(align(8)) float float50;
+	int field_4C;
+	float float50;
 	float float54;
 	float float58;
 	_DWORD dword5C;
@@ -878,12 +1132,28 @@ struct __declspec(align(8)) ItemNRElement
 	int gap110;
 	int field_114;
 	int ParentOrMainMenuNRInstance;
-	_DWORD dword11C;
-	_DWORD dword120;
-	_BYTE gap124[16];
-	DWORD ItemState;
-	__int16 field_138;
-	_BYTE field_13A[54];
+	struct_UIRingController *ParentUIRingController;
+	_DWORD ButtonIconID;
+	int gap124;
+	int UnkOnOffFlag;
+	int field_12C;
+	int field_130;
+	int ItemState;
+	int ItemFlag;
+	int field_13C;
+	int field_140;
+	XMVECTOR* SursorVectorPTR;
+	int UnkSelectedIndexFlag;
+	int field_14C;
+	int field_150;
+	int field_154;
+	int UnKItemFlag1;
+	int field_15C;
+	int field_160;
+	int field_164;
+	int field_168;
+	__int16 field_16C;
+	__int16 field_16E;
 	float float170;
 	float float174;
 	float float178;
@@ -904,17 +1174,24 @@ struct __declspec(align(8)) ItemNRElement
 	float float1B4;
 	float float1B8;
 	float float1BC;
-	_BYTE gap1C0[4];
+	int SelectedUnkFlag;
 	float float1C4;
 	float float1C8;
 	float float1CC;
 	float float1D0;
-	_BYTE gap1D4[76];
-	float float220;
-	float float224;
+	int gap1D4;
+	int field_1D8;
+	int field_1DC;
+	int field_1E0;
+	int field_1E4;
+	int field_1E8;
+	ItemNRElementSub01 SubStruct;
+	float TargetTimeDelta;
+	int ItemIndexPos;
 };
 
-struct __declspec(align(4)) struct_UIRingController
+
+struct  struct_UIRingController
 {
 	_DWORD vtable;
 	int gap4;
@@ -1041,6 +1318,74 @@ struct __declspec(align(4)) struct_UIRingController
 	_DWORD dword1E8;
 };
 
+struct __declspec(align(4)) struct_dword2C
+{
+	_BYTE gap0[4];
+	_DWORD TickCount;
+};
+
+
+struct __declspec(align(4)) struct_v2
+{
+	_BYTE gap0[44];
+	struct_dword2C *dword2C;
+};
+
+
+struct NUIP_RUNTIME_STATE
+{
+	unsigned int InitializationFlags;
+	unsigned int HardwareThreadSkeleton;
+	int RunningST;
+	unsigned int ThreadId;
+	unsigned int *Thread;
+	void *TerminateThreadEvent;
+	volatile int TerminateThread;
+	D3DDevice *pDevice;
+	unsigned int VideoRefreshRate;
+	unsigned char BeginPreprocessingEvent[0x10];
+	unsigned char GPUWorkCompletionEvent[0x10];
+	unsigned char PresentNoGPUWorkEvent[0x10];
+	unsigned int LastFence;
+	int CameraPresent;
+	int CameraReady;
+	int SystemUIPresent;
+	unsigned __int8 *ColorRawBufferMemory;
+	unsigned __int8 *DepthRawBufferMemory;
+	unsigned int BufferLock;
+	int DepthTransferOutstanding;
+	unsigned int FrameNumberBase;
+	int RebaseFrameNumbers;
+	int *LastCompletedDepthBuffer;
+	char DepthBuffers[4*0x80];
+	int ColorTransferOutstanding;
+	int *LastCompletedColorBuffer;
+	char ColorBuffers[4*0x80];
+	char CameraSync[0x190];
+	char OutstandingTransferCompleteEvent[0x10];
+	char ColorBuffersTexture[0x34];
+	char DepthBuffersTexture[0x34];
+	char Camera[0x3B0];
+	int SkeletonTrackingEnabled;
+	char SkeletonCompletionEvent[0x10];
+	char *UserSkeletonCompletionEvent;
+	unsigned int SkeletonTrackingFlags;
+	unsigned int InProgressFrameIndex;
+	unsigned int LatestFrameIndex;
+	char Frame[2*0xAE0];
+	char SkeletonFrameReportingData[0xB0];
+	volatile int TitleSetsTrackedSkeletons;
+	int EtxProducer[0x40];
+	int *StreamObjects[6];
+	int *pAllFramesReadyEvent;
+	int SuppressNoProcessForAllFramesReadyEvent;
+	int RunningIdentity;
+	int IdentityCompletionEvent[0x10];
+	
+};
+
+
+
 DataPointer(XGuidMenu*,KinnectGuidInstanceSome,0x83E52F80);
 DataPointer(char,byte_83E515E7,0x83E515E7);
 DataPointer(char,MainMenuCursorSome,0x83E515F6);
@@ -1055,6 +1400,9 @@ DataPointer(int,IsCanGoBackOrSome,0x82B05698);
 DataPointer(int,dword_82B05694,0x82B05694);
 
 DataPointer(int,MainGameRooOrEnginetStaticInstance,0x83E52F6C);
+
+DataPointer(int,Static_8219FB14,0x83E52FC4);
+
 DataPointer(int,ChangeMenuNextMenuStartConst,0x82B05690);
 DataPointer(int*,MainHeap,0x83E5160C);
 
@@ -1071,6 +1419,8 @@ DataPointer(struct_MBKinnectInput*, MBKinnectInput, 0x83E516A0);
 DataPointer(int *, MainTitleAudioTableMbX, 0x83E536C0);
 DataPointer(int , InputSomeUnkStatic, 0x83E52FDC);
 DataPointer(int,seg_83E52F84, 0x83E52F84);
+DataPointer(int,NuipInitialized, 0X82B5D2AC);
+DataPointer(NUIP_RUNTIME_STATE,NuipRuntimeState, 0x82B5D2B0);
 
 
 DataPointer(int,dword_83E53144, 0x83E53144);
@@ -1119,9 +1469,9 @@ FastcallFunctionPointer(int*,sub_82240838,(int a1, int a2, __int64 a3),0x8224083
 FastcallFunctionPointer(int*,sub_82211440,(),0x82211440);	
 FastcallFunctionPointer(int*,RidersMemAlloc,(size_t a1),0x82497D68 );	
 FastcallFunctionPointer(int*,ChrChangeState,(struct_v1 *a1, int a2),0x822B1818);	
-FastcallFunctionPointer(int*,MAINMENUBIGSUB,(int a1, struct_a2 *a2, int a3),0x82460668);	
-FastcallFunctionPointer(int*,IsUIRingCanBeChanged,(int a1),0x824573A8);	
-FastcallFunctionPointer(int*,IsThatSelector_,(_DWORD *a1, int a2),0x824573A8);	
+FastcallFunctionPointer(int*,MAINMENUBIGSUB,(int a1, ItemNRElement *a2, int a3),0x82460668);	
+FastcallFunctionPointer(bool,IsUIRingCanBeChanged,(int a1),0x824573A8);	
+FastcallFunctionPointer(int*,IsThatSelector_,(_DWORD *a1, int a2),0x824790C8);	
 
 
 FastcallFunctionPointer(int*,sub_82A54330,(int *a1, int* a2,__int64 a3),0x82A54330);	
@@ -1140,10 +1490,58 @@ FastcallFunctionPointer(int*,sub_82299420,(int a1, int a2, int a3, int a4, int a
 
 	
 
+const struct _ETX_DATA_FIELD
+{
+	unsigned __int8 Ordinal;
+	unsigned __int8 DataFieldType;
+};
+struct _ETX_EVENT_STATISTICS
+{
+	volatile unsigned int LoggedEvents;
+	volatile unsigned int DroppedEvents;
+};
+
+
+struct _ETX_EVENT_DESCRIPTOR
+{
+	unsigned int Reserved1;
+	unsigned int EventFlags;
+	const _ETX_DATA_FIELD *DataFieldArray;
+	unsigned int ExplicitDataFieldCount;
+	unsigned int ImplicitDataFieldCount;
+	const char *LogStringId;
+	unsigned int OmnitureFlags;
+	_ETX_EVENT_STATISTICS Statistics;
+	unsigned int Reserved2[2];
+};
+
+struct _ETX_COMPONENT_ID
+{
+	unsigned __int8 Data[16];
+};
+
+
+struct __declspec(align(8)) _ETX_PRODUCER
+{
+	unsigned int Size;
+	unsigned int Flags;
+	unsigned __int64 Keyword;
+	_ETX_EVENT_DESCRIPTOR *EventDescriptorArray;
+	unsigned int EventDescriptorCount;
+	unsigned __int32 Reserved1 : 22;
+	unsigned __int32 SlotIndex : 10;
+	const _ETX_COMPONENT_ID *ComponentId;
+	void *Reserved2;
+	unsigned __int8 XwppTargetId;
+	unsigned __int8 Reserved3[3];
+	void *Reserved4[5];
+};
 
 
 
-void*  RidersAlloc(size_t size){
+
+
+static void*  RidersAlloc(size_t size){
 
 	return (*(void* (__fastcall **)(void *, int, int))(*(_DWORD *)MainHeap + 16))(MainHeap, size, 16);
 }
@@ -1188,7 +1586,7 @@ namespace Riders
 
 	namespace Sound{
 		DataPointer(void*,Instance,0x83E52E18);
-		FastcallFunctionPointer(int,PlaySound,(int a1, int a2, int SoundID),0x824636A8);
+		FastcallFunctionPointer(int,PlaySound,(int a1, int a2, int SoundID),0x8222FA18);
 		FastcallFunctionPointer(int,StopSound,(int a1, int a2),0x8222FAF8);
 
 	};

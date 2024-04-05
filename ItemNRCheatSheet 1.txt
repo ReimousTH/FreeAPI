@@ -1,0 +1,39 @@
+00 00 88 20 - Selected (Plus->Minus) 
+
+00 00 08 28 - Not Selected (Plus->Minus)
+
+00 01 88 A5 - Selected (Dragging Cursor, Plus->Minus)
+
+ItemFlag == 2
+
+00 04 88 20 - Selected (ON)
+
+00 04 08 28 - Not Selected (ON)
+
+00 05 88 28 - Selected (Dragging Cursor, ON) 00000000 00000101 00001000 00101000
+
+00 00 88 20 - Selected (OFF)
+
+00 00 08 28 - Not Selected (OFF)
+
+00 01 88 A5 - Selected (Dragging Cursor, OFF)
+
+ItemFlag == 2
+
+00001000
+08 80 88 28  - Selected (NButton)         00001000 10000000 10001000 00101000
+
+08 80 08 28 - Not Selected (NButton)      00001000 10000000 00001000 00101000
+
+08 81 88 A5 - Selected (NButton,Dragging) 00001000 10000001 10001000 10100101
+
+ItemFlag == 0
+
+#define IsSelected 0x00008000
+#define IsButtonHold 0x00010000
+
+
+
+
+
+

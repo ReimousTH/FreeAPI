@@ -835,7 +835,7 @@
 				OutputFile="$(ProjectDir)\..\..\TEST.dll"
 				ModuleDefinitionFile="DllModule.def"
 				GenerateDebugInformation="true"
-				OptimizeReferences="2"
+				OptimizeReferences="1"
 				EnableCOMDATFolding="2"
 				SetChecksum="true"
 			/>
@@ -1167,18 +1167,6 @@
 	</References>
 	<Files>
 		<Filter
-			Name="FreeRiders"
-			>
-			<File
-				RelativePath=".\RidersFree.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\RidersFree.h"
-				>
-			</File>
-		</Filter>
-		<Filter
 			Name="math"
 			>
 			<File
@@ -1242,6 +1230,118 @@
 				>
 			</File>
 		</Filter>
+		<Filter
+			Name="Patches"
+			>
+			<File
+				RelativePath=".\Patches\Characters_IStateActions.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Patches\Characters_IStateActions.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Patches\DeltaTimerUpdate.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Patches\DeltaTimerUpdate.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Patches\DLL_LUA.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Patches\DLL_LUA.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Patches\InputData.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Patches\InputData.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Patches\InputData_Actions.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Patches\InputData_Actions.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Patches\InputData_CommonActions.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Patches\InputData_CommonActions.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Patches\InputData_CutSceneActions.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Patches\InputData_CutSceneActions.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Patches\InputData_MenuActions.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Patches\InputData_MenuActions.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Patches\InputData_TitleActions.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Patches\InputData_TitleActions.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Patches\KernelReplacement.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Patches\KernelReplacement.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Patches\ModLoader.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Patches\ModLoader.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Patches\NetPlayFiX.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Patches\NetPlayFiX.h"
+				>
+			</File>
+			<Filter
+				Name="FreeRiders"
+				>
+				<File
+					RelativePath=".\RidersFree.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\RidersFree.h"
+					>
+				</File>
+			</Filter>
+		</Filter>
 		<File
 			RelativePath=".\Basics.h"
 			>
@@ -1263,7 +1363,19 @@
 			>
 		</File>
 		<File
+			RelativePath=".\HookV2.cpp"
+			>
+		</File>
+		<File
+			RelativePath=".\HookV2.h"
+			>
+		</File>
+		<File
 			RelativePath=".\PatchData.cpp"
+			>
+		</File>
+		<File
+			RelativePath=".\PatchData.h"
 			>
 		</File>
 		<File

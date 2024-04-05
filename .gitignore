@@ -33,3 +33,13 @@
 
 #other
 *.ncb
+
+*.dll
+
+SonicRidersDatTool
+Release
+Debug
+
+*.obj
+*.pdb
+*.idb

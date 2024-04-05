@@ -1,38 +1,12 @@
 #pragma warning(push)
 #pragma warning(disable: 4101)
-// here goes your code where the warning occurs
 #pragma warning(pop)
-//-----------------------------------------------------------------------------
-//  DLLModule.cpp
-//
-// Demonstrates the use of Dynamic Link Library (aka DLL) by
-// Using the Load/FreeLibrary API.
-//
-//
-// Xbox Advanced Technology Group.
-// Copyright (C) Microsoft Corporation. All rights reserved.
-//-----------------------------------------------------------------------------
+
+
+#include "PatchData.h"
 
 
 
-//#include "MPatches.h"
-//#include "Marathon.h"
-//#include "Patches.cpp"
-
-#include "PatchData.cpp"
-
-
-
-
-
-
-
-
-
-
-
-
-DWORD dword_82B329A0;
 //-----------------------------------------------------------------------------
 // Name: DllMain()
 // Desc: The function which is called at initialization/termination of the process
@@ -41,52 +15,9 @@ DWORD dword_82B329A0;
 //       routine that may block.
 //-----------------------------------------------------------------------------
 
-LPCWSTR g_pwstrButtons[1] = { L"FINE GO" };
-
-
-HANDLE DLLConfigFile;
-const char* buffered_string = "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA";
 
 
 
-
-
-HANDLE g_hThreads;
-
-
-char* tuxt = "FREE SUPER RIDERS";
-int val =0;
-
-extern "C" void OnDllStart(){
-
-
-
-
-
-	val = (int)(rand()*100);
-
-	tuxt="tewetwe";
-
-	val+=100;
-
-	ShowXenonMessage(L"MSG","Sonic Free Riders[No Kinect Patch] V1.1");
-
-
-#ifdef KinectTEST
-	KinectTESTEX::GlobalInstall();
-		DebugLogRestore::GlobalInstall();
-#else
-//	DebugLogRestore::GlobalInstall();
-	GlobalInstall();
-	//ModLoaderTest::GlobalInstall();
-	
-
-#endif
-
-
-
-
-}
 
 BOOL APIENTRY DllMain( HANDLE hModule, 
                        DWORD  ul_reason_for_call, 
@@ -126,6 +57,7 @@ BOOL APIENTRY DllMain( HANDLE hModule,
     case DLL_PROCESS_ATTACH:
 	
 	
+		PatchData::InstallGB();
 		//lua_Reader
 		//lua_load(L,
 		//luaL_dofile(LS,"game:\\start.lua");
@@ -146,8 +78,6 @@ BOOL APIENTRY DllMain( HANDLE hModule,
 	//w	MPatches::INSTALL_PATCH(MPatches::UITable3B);
 		//MPatches::INSTALL_PATCH(MPatches::PhysicsRestoration);
 
-		//Multiplayer4P::GlobalInstall();
-		OnDllStart();
 
 
 		

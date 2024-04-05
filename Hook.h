@@ -63,6 +63,13 @@ void DoHookR(int target,int newfunc);
 	functionName* original##functionName = (functionName*)(location+0x10); \
 	returnType callingConvention implOf##functionName(__VA_ARGS__)
 
+
+#define HOOKN(returnType, callingConvention, functionName, location, ...) \
+	int original_addr_##functionName = (int)location ;\
+	typedef returnType callingConvention functionName(__VA_ARGS__); \
+	functionName* original##functionName = (functionName*)(location+0x10); \
+	returnType __declspec( naked )  callingConvention implOf##functionName(__VA_ARGS__)
+
 #define INSTALL_HOOK(functionName) \
 	DoHook((int)original_addr_##functionName, (int)implOf##functionName); \
 
