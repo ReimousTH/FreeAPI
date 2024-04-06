@@ -35,6 +35,9 @@
 *.ncb
 *.dll
 
+ATG\Release
+ATG\Debug
+
 SonicRidersDatTool
 Release
 Debug
