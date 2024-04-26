@@ -5,8 +5,28 @@
 
 #pragma once
 
+struct LiveU1
+{
+	int count;
+	int field_4;
+	int field_8;
+	int field_C;
+	int field_10;
+};
 
 
+struct __declspec(align(4)) XNLive
+{
+	_BYTE gap0[4];
+	_DWORD dword4;
+	_BYTE gap8[48];
+	_DWORD dword38;
+	_BYTE gap3C[8];
+	LiveU1 *dword44;
+	_BYTE gap48[16];
+	_DWORD dword58;
+	XNQOS *XNQOS;
+};
 
 
 
@@ -190,6 +210,45 @@ struct __declspec(align(4)) XGuidMenu
 };
 
 
+struct struc_field10
+{
+	int field_0;
+	int flag0x4;
+	int field_8;
+	int field_C;
+	int field_10;
+	int field_14;
+	int field_18;
+	int field_1C;
+	int field_20;
+	int field_24;
+	int field_28;
+	int field_2C;
+	int field_30;
+	int field_34;
+	int field_38;
+	int field_3C;
+	int field_40;
+	int field_44;
+	int field_48;
+	int field_4C;
+	int field_50;
+};
+
+
+struct struc_C94U
+{
+	int field_0;
+	int field_4;
+	int field_8;
+	int field_C;
+	struc_field10 *field_10;
+	int field_14;
+	int field_18;
+	int field_1C;
+};
+
+
 
 struct __declspec(align(4)) struct_pfloat690
 {
@@ -217,10 +276,30 @@ struct __declspec(align(4)) struct_pfloat690
 	int field_54;
 	int field_58;
 	int field_5C;
-	_BYTE gap60[3044];
+	char field_60[3044];
 	float floatC44;
 	float float_C48;
+	int field_C4C;
+	int field_C50;
+	int field_C54;
+	int field_C58;
+	int field_C5C;
+	int field_C60;
+	int field_C64;
+	int field_C68;
+	int field_C6C;
+	int field_C70;
+	int field_C74;
+	int field_C78;
+	int field_C7C;
+	int field_C80;
+	int field_C84;
+	int field_C88;
+	int field_C8C;
+	int field_C90;
+	struc_C94U *field_C94;
 };
+
 
 struct __declspec(align(8)) struct_v1
 {
@@ -279,8 +358,7 @@ struct __declspec(align(8)) struct_v1
 	float float104;
 	float float108;
 	_BYTE gap10C[4];
-	_QWORD qword110;
-	_QWORD qword118;
+	XMVECTOR qword110;
 	_BYTE gap120[16];
 	float float130;
 	float float134;
@@ -298,28 +376,109 @@ struct __declspec(align(8)) struct_v1
 	_QWORD qword190;
 	_QWORD qword198;
 	_BYTE gap1A0[48];
-	_QWORD qword1D0;
-	float float1D8;
+	float float_1D0;
+	float field_1D4;
+	float float_1D8;
 	float float1DC;
-	_QWORD qword1E0;
-	_QWORD qword1E8;
+	float ForceVector1E0[4];
 	_BYTE gap1F0[16];
-	float float200;
+	float struct_v1_200;
 	_BYTE gap204[12];
 	_QWORD qword210;
 	_QWORD qword218;
 	_BYTE gap220[224];
 	_QWORD qword300;
 	_QWORD qword308;
-	_BYTE gap310[322];
+	int gap310;
+	int field_314;
+	int field_318;
+	int field_31C;
+	int field_320;
+	int field_324;
+	int field_328;
+	int field_32C;
+	int field_330;
+	int field_334;
+	int field_338;
+	int field_33C;
+	int field_340;
+	int field_344;
+	int field_348;
+	int field_34C;
+	int field_350;
+	int field_354;
+	int field_358;
+	int field_35C;
+	int field_360;
+	int field_364;
+	int field_368;
+	int field_36C;
+	int field_370;
+	int field_374;
+	int field_378;
+	int field_37C;
+	int field_380;
+	int field_384;
+	int field_388;
+	int field_38C;
+	int field_390;
+	int field_394;
+	int field_398;
+	int field_39C;
+	int field_3A0;
+	int field_3A4;
+	int field_3A8;
+	int field_3AC;
+	int field_3B0;
+	int field_3B4;
+	int field_3B8;
+	int field_3BC;
+	int field_3C0;
+	int field_3C4;
+	int field_3C8;
+	int field_3CC;
+	int field_3D0;
+	int field_3D4;
+	int field_3D8;
+	int field_3DC;
+	int field_3E0;
+	int field_3E4;
+	int field_3E8;
+	int field_3EC;
+	float field_3F0;
+	int field_3F4;
+	int field_3F8;
+	int field_3FC;
+	int field_400;
+	int field_404;
+	int field_408;
+	int field_40C;
+	float field_410;
+	int field_414;
+	int field_418;
+	int field_41C;
+	int field_420;
+	int field_424;
+	int field_428;
+	int field_42C;
+	float field_430;
+	int field_434;
+	int field_438;
+	int field_43C;
+	int field_440;
+	int field_444;
+	int field_448;
+	int field_44C;
+	__int16 field_450;
 	unsigned __int16 unsigned452;
 	_BYTE gap454[28];
 	_QWORD qword470;
 	_QWORD qword478;
 	_BYTE gap480[16];
-	_QWORD qword490;
-	_QWORD qword498;
-	_BYTE gap4A0[40];
+	float qword490;
+	float field_494;
+	float qword498;
+	__declspec(align(8)) _BYTE gap4A0[40];
 	_QWORD qword4C8;
 	float float4D0;
 	float float4D4;
@@ -336,7 +495,78 @@ struct __declspec(align(8)) struct_v1
 	float float510;
 	_BYTE gap514[4];
 	_QWORD qword518;
-	_BYTE gap520[288];
+	int gap520;
+	int field_524;
+	int field_528;
+	int field_52C;
+	int field_530;
+	int field_534;
+	int field_538;
+	int field_53C;
+	int field_540;
+	int field_544;
+	int field_548;
+	int field_54C;
+	int field_550;
+	int field_554;
+	int field_558;
+	int field_55C;
+	int field_560;
+	int field_564;
+	int field_568;
+	int field_56C;
+	int field_570;
+	int field_574;
+	int field_578;
+	int field_57C;
+	int field_580;
+	int field_584;
+	int field_588;
+	int field_58C;
+	int field_590;
+	int field_594;
+	int field_598;
+	int field_59C;
+	int field_5A0;
+	int field_5A4;
+	int field_5A8;
+	int field_5AC;
+	int field_5B0;
+	int field_5B4;
+	int field_5B8;
+	int field_5BC;
+	int field_5C0;
+	int field_5C4;
+	int field_5C8;
+	int field_5CC;
+	int field_5D0;
+	int field_5D4;
+	int field_5D8;
+	int field_5DC;
+	int field_5E0;
+	int field_5E4;
+	int field_5E8;
+	int field_5EC;
+	int field_5F0;
+	int field_5F4;
+	int field_5F8;
+	int field_5FC;
+	int field_600;
+	int field_604;
+	int field_608;
+	int field_60C;
+	int field_610;
+	int field_614;
+	int field_618;
+	int field_61C;
+	int field_620;
+	int field_624;
+	int field_628;
+	int field_62C;
+	int field_630;
+	int field_634;
+	int field_638;
+	int field_63C;
 	__int16 int16640;
 	_BYTE gap642;
 	unsigned __int8 unsigned643;
@@ -362,11 +592,11 @@ struct __declspec(align(8)) struct_v1
 	int field_718;
 	float ForceZ;
 	int gap720;
-	int field_724;
+	float field_724;
 	int field_728;
 	int field_72C;
-	int field_730;
-	int field_734;
+	int CurrentSpeed1;
+	int CurrentSpeed2;
 	float float738;
 	_BYTE gap73C[12];
 	float float748;
@@ -568,6 +798,7 @@ struct __declspec(align(8)) struct_v1
 	__int16 field_A50;
 	_BYTE byteA52;
 };
+
 
 
 struct  struct_dword300
@@ -1184,11 +1415,12 @@ struct __declspec(align(8)) ItemNRElement
 	int field_1DC;
 	int field_1E0;
 	int field_1E4;
-	int field_1E8;
 	ItemNRElementSub01 SubStruct;
+	int field_224;
 	float TargetTimeDelta;
 	int ItemIndexPos;
 };
+
 
 
 struct  struct_UIRingController
@@ -1268,7 +1500,7 @@ struct  struct_UIRingController
 	_DWORD dword134;
 	int gap138;
 	_DWORD dword13C;
-	_DWORD dword140;
+	_DWORD Flag0x140;
 	_DWORD dword144;
 	_DWORD Tag01;
 	_DWORD Tag02;
@@ -1315,7 +1547,7 @@ struct  struct_UIRingController
 	_BYTE gap1DC[4];
 	_DWORD dword1E0;
 	_DWORD dword1E4;
-	_DWORD dword1E8;
+	_DWORD UIRingInfoBox;
 };
 
 struct __declspec(align(4)) struct_dword2C
@@ -1597,5 +1829,40 @@ namespace Riders
 
 
 }
+
+typedef struct clsOOTimer;
+
+
+struct clsOOTimer_vtbl
+{
+	int (__fastcall *DestroyObject)(clsOOTimer *, uint);
+	int (__fastcall *func4)(clsOOTimer *);
+	int func8;
+};
+
+
+struct clsOOTimer
+{
+	clsOOTimer_vtbl *__vftable /*VFT*/;
+	int TickCount;
+	int field_8;
+	int field_C;
+	int field_10;
+	int field_14;
+	int field_18;
+	int field_1C;
+	int field_20;
+	int field_24;
+	int field_28;
+};
+
+
+struct  __declspec(align(4)) clsXbox360Timer : clsOOTimer
+{
+	float field_2C;
+	double TimerValue;
+};
+
+DataPointer(clsXbox360Timer,SclsOOTimer, 0x83E54930);
 
 #endif

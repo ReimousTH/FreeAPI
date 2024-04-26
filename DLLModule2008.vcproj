@@ -831,7 +831,7 @@
 			<Tool
 				Name="VCX360LinkerTool"
 				AdditionalOptions="/ignore:4089 /dll /entry:&quot;_DllMainCRTStartup&quot; /include:&quot;XboxKrnlBuildNumber&quot;&#x0D;&#x0A;/FORCE:MULTIPLE"
-				AdditionalDependencies="d3d9.lib d3dx9.lib xgraphics.lib xapilib.lib xaudio2.lib x3daudio.lib xmcore.lib xboxkrnl.lib xbdm.lib libcmt.lib"
+				AdditionalDependencies="d3d9.lib d3dx9.lib xgraphics.lib xapilib.lib xaudio2.lib x3daudio.lib xmcore.lib xboxkrnl.lib xbdm.lib libcmt.lib xonlined.lib"
 				OutputFile="$(ProjectDir)\..\..\TEST.dll"
 				ModuleDefinitionFile="DllModule.def"
 				GenerateDebugInformation="true"

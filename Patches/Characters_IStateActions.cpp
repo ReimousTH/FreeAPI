@@ -23,6 +23,18 @@ namespace CIStateActions{
 		 
 	}
 
+	struct_v1 *_this = (struct_v1*)a1;
+
+	struct_pfloat690 *v7 = _this->pfloat690;
+
+	char v8 = (unsigned __int8)v7->field_60[0xA48];
+
+
+
+
+
+
+
 	if (c94)
 	{
 		auto r = *(StateA2P**)(c94+0x140+0x30+0x24);

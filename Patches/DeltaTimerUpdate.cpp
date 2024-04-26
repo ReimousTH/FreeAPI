@@ -40,6 +40,7 @@ namespace DeltaTimerU{
 		struct_v2* v2; // r3
 		v2 = (struct_v2*)sub_82211440();
 
+
 		v3 = a1->GameSpeed;                           // GameSpeed
 		v4 = a1->CameraSpeed; //Base Speed 
 
@@ -59,8 +60,8 @@ namespace DeltaTimerU{
 		a1->gap18 = step * 10;
 
 
-		a1->float34 = a1->CameraSpeed;
-		a1->float30 = a1->CameraSpeed;
+		a1->float34 = a1->CameraSpeed * semi_step;
+		a1->float30 =a1->CameraSpeed * semi_step;
 		a1->float2C =  a1->CameraSpeed * semi_step * 1000.0f;
 
 
@@ -69,9 +70,9 @@ namespace DeltaTimerU{
 		a1->float20 = a1->CameraSpeed * semi_step* 1000.0f;
 
 
-		a1->byte5B = 0;
-		a1->byte5C = 1;
 
+		//SclsOOTimer.TimerValue = -0.5;
+	
 		//	a1->CameraSpeed = a1->SpeedSome;
 
 
@@ -144,7 +145,7 @@ namespace DeltaTimerU{
 			float* field_8F4 = (float*)&a1->field_8F4;
 
 
-			*field_8F4 = *field_8F4 - MBKinnectInput->PclsXbox360System->SpeedSome * 1.25;
+			*field_8F4 = *field_8F4 - MBKinnectInput->PclsXbox360System->SpeedSome * 1;
 
 
 			float field_8F4_pre = *field_8F4;
@@ -199,7 +200,7 @@ namespace DeltaTimerU{
 			float* field_8F4 = (float*)&a1->field_8F4;
 
 
-			*field_8F4 = *field_8F4 - MBKinnectInput->PclsXbox360System->SpeedSome * 1.25;
+			*field_8F4 = *field_8F4 - MBKinnectInput->PclsXbox360System->SpeedSome * 1;
 
 
 			float field_8F4_pre = *field_8F4;
@@ -266,11 +267,72 @@ namespace DeltaTimerU{
 
 	}
 
+
+
+	int __declspec( naked ) CharacterBasePhysicsMoveR(struct_v1* thus,XMVECTOR* OutVector,float* VectorS,float delta){
+		__asm{
+				mflr r12
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+				std       r28, -0x28(r1)
+				std       r29, -0x20(r1)
+				std       r30, -0x18(r1)
+				std       r31, -0x10(r1)
+				stw       r12, -0x8(r1)
+
+				stfd      fp31, -0x30(r1)
+				stwu      r1, -0xB0(r1)
+
+				lis r11,0x822A
+				ori r11,r11,0x9F68
+				mtctr r11
+				bctr r11
+
+		}
+	}
+
+	HOOK(int,__fastcall,CharacterBasePhysicsMove,0x822A9F58,struct_v1* thus,XMVECTOR* OutVector,float* VectorS,float delta){
+
+
+
+	
+		return CharacterBasePhysicsMoveR(thus,OutVector,(float*)&thus->float748,MBKinnectInput->PclsXbox360System->SpeedSome);
+	}
+
+
+	HOOK(int,__fastcall,sub_822AB3B0,0x822AB3B0,struct_v1* _this){
+	
+	
+		_this->PositionZ+=1;
+
+		return 0;
+	}
+
+
+
+
 	
 	void Install()
 	{
 
+		//INSTALL_HOOK(sub_82807008); --affec animatiosn pretty strange
+	//	INSTALL_HOOK(sub_822AB3B0);
+
+		
 	
+		INSTALL_HOOK(CharacterBasePhysicsMove);
 
 		INSTALL_HOOKR(sub_82211C08);
 		WRITE_DWORD(0x82211EE4,0x419AFD20);
@@ -280,12 +342,12 @@ namespace DeltaTimerU{
 
 		//INSTALL_HOOK(sub_8227BB98);
 
-	//	WRITE_NOP(0x822C0BE4,1);
-	//	WRITE_NOP(0x822C0A14,0x32);
+		WRITE_NOP(0x822C0BE4,1);
+		WRITE_NOP(0x822C0A14,0x32);
 
 
-	//	WRITE_NOP(0x822C11C8,1);
-	//	WRITE_NOP(0x822C0FFC,0x32);
+		WRITE_NOP(0x822C11C8,1);
+		WRITE_NOP(0x822C0FFC,0x32);
 
 
 		WRITE_DWORD(0x82B09ED4,TrickRampTypeA_360);

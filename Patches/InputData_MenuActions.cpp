@@ -6,12 +6,33 @@ namespace InputData{
 
 
 	XMVECTOR CursorCenterPos  = {854.0,453.0,-1,-1};
+	XMVECTOR CursorP1RingDefaultPos  = {510,367,-1,-1};
+	XMVECTOR CursorP2RingDefaultPos  = {755,338,-1,-1};
+	XMVECTOR* CursorPositions[]  = {&CursorP1RingDefaultPos,&CursorP2RingDefaultPos};
+
+	bool FixedCheckIsSelectedButton(ItemNRElement* PItemNRElement){
+
+		return IsUIRingCanBeChanged((int)PItemNRElement->ParentOrMainMenuNRInstance)  && IsThatSelector_((DWORD*)PItemNRElement->ParentUIRingController,PItemNRElement->ItemIndexPos) &&
+			(PItemNRElement->ItemState & 0x10) == 0;
+
+	}
+
+	bool FixedCheckIsSelectedButtonPressable(ItemNRElement* PItemNRElement){
+
+		return FixedCheckIsSelectedButton(PItemNRElement) && PItemNRElement->ItemFlag != 2;
+	}
 
 	void ProcessOKBackButtonsAlternative(int index){
 		struct_UIRingController* RingElement = (struct_UIRingController*)BranchTo(0x82457348,int,MainMenuNR::Instance,index); //Get Current Ring Elemeny By Index
+		struct_UIRingController* RingElementO = (struct_UIRingController*)BranchTo(0x82457348,int,MainMenuNR::Instance,index ^ 1); //Get Current Ring Elemeny By Index
+		
+		int last_index = -1;
 		if (!RingElement) return;
+		if (RingElementO) last_index = index ^ 1;
 
 		//0x200
+
+		bool IsShopButton =false;
 
 		int menu = (int)MainMenuNR::Instance;
 		for ( int j = (int)MainMenuNR::Instance->field_24.pint2C; j != (int)MainMenuNR::Instance->field_24.pint30; j += 8 ){
@@ -25,21 +46,52 @@ namespace InputData{
 
 						NuiFakeDevicePO[index]->MENU_BUTTON_B = false;
 						if (BranchTo(0x8245B130,int,PItemNRElement->ParentOrMainMenuNRInstance)){
-							BranchTo(0x824603B8,int,PItemNRElement->ParentOrMainMenuNRInstance,(PItemNRElement->ParentUIRingController->dword140 >> 4) & 1);
+							BranchTo(0x824603B8,int,PItemNRElement->ParentOrMainMenuNRInstance,(PItemNRElement->ParentUIRingController->Flag0x140 >> 4) & 1);
 						}
 
 						break;
 
 					}
+
+					//rule select
+				
+				}
+				//IfButtonIsVisible
+				if (  (PItemNRElement->SubStruct.field_4 & 0x01000000) != 0){
+					IsShopButton = PItemNRElement->ButtonIconID == 0x20;
+				}
+
+
+				if ( (PItemNRElement->ButtonIconID >=0x21 )  && (PItemNRElement->ButtonIconID <=0x23 ) && ((PItemNRElement->SubStruct.field_4 & 0x01000000) != 0) && NuiFakeDevicePO[index]->MENU_BUTTON_Y){
+
+					DWORD ID = 0;
+
+					switch (PItemNRElement->ButtonIconID){
+						case  0x22:
+							ID = 0x10;
+							break;;
+						case 0x21:
+							ID = 0xF;
+							break;;
+						case 0x23:
+							ID = 0x31;
+							break;
+					}
+		
+			
+						BranchTo(0x82454848,int,(_DWORD *)MainMenuNR::Instance, 0, 3,ID); 
+						Riders::Sound::PlaySound((int)Riders::Sound::Instance, 0x12,0x8);
+				
+			
+				
+					break;
 				}
 
 			}
 		}
 
 
-
-
-
+	
 		for ( int j = RingElement->dword12C; j != RingElement->dword130; j += 8 ){
 			auto PItemNRElement = *(ItemNRElement**)j;
 
@@ -47,23 +99,56 @@ namespace InputData{
 		
 			BranchTo(0x82464BD0,int,PItemNRElement); //display once more
 
-			if (NuiFakeDevicePO[index]->Menu_DPAD_UP){
 
-				if (IsUIRingCanBeChanged((int)PItemNRElement->ParentOrMainMenuNRInstance)  && IsThatSelector_((DWORD*)PItemNRElement->ParentUIRingController,PItemNRElement->ItemIndexPos) &&
+			if ((NuiFakeDevicePO[index]->Menu_DPAD_UP_HOLD || NuiFakeDevicePO[index]->Menu_DPAD_DOWN_HOLD  )  && IsUIRingCanBeChanged((int)PItemNRElement->ParentOrMainMenuNRInstance)  && IsThatSelector_((DWORD*)PItemNRElement->ParentUIRingController,PItemNRElement->ItemIndexPos) &&
+				(PItemNRElement->ItemState & 0x10) == 0 && PItemNRElement->ItemFlag == 2){
+
+
+					if (last_index == -1)
+						PItemNRElement->SursorVectorPTR = &CursorCenterPos;
+					else{
+						PItemNRElement->SursorVectorPTR = CursorPositions[index];
+					}
+					PItemNRElement->UnkSelectedIndexFlag = PItemNRElement->ItemIndexPos;
+
+					PItemNRElement->ItemState |=  1;
+
+					if (PItemNRElement->TargetTimeDelta <= -10){
+
+					}
+					else{
+						PItemNRElement->TargetTimeDelta +=  MBKinnectInput->PclsXbox360System->SpeedSome;
+					}
+
+
+					if (PItemNRElement->TargetTimeDelta > 0.1 && (RingElement->Flag0x140 & 0x80) != 0){
+
+						PItemNRElement->TargetTimeDelta = -10;
+						Riders::Sound::PlaySound((int)Riders::Sound::Instance, 0x12,0xF);
+
+					}
+
+
+				break;
+			}
+
+			if (NuiFakeDevicePO[index]->Menu_DPAD_UP_RELEASE){
+
+				if ( IsUIRingCanBeChanged((int)PItemNRElement->ParentOrMainMenuNRInstance)  && IsThatSelector_((DWORD*)PItemNRElement->ParentUIRingController,PItemNRElement->ItemIndexPos) &&
 					(PItemNRElement->ItemState & 0x10) == 0 && PItemNRElement->ItemFlag == 2){
 						BranchTo(0X824698D0,int,PItemNRElement,1,0);
-						NuiFakeDevicePO[index]->Menu_DPAD_UP = false;
+						NuiFakeDevicePO[index]->Menu_DPAD_UP_RELEASE = false;
 						break;
 
 				}
 			}
 
-			if (NuiFakeDevicePO[index]->Menu_DPAD_DOWN){
+			if (NuiFakeDevicePO[index]->Menu_DPAD_DOWN_RELEASE){
 
 				if (IsUIRingCanBeChanged((int)PItemNRElement->ParentOrMainMenuNRInstance)  && IsThatSelector_((DWORD*)PItemNRElement->ParentUIRingController,PItemNRElement->ItemIndexPos) &&
 					(PItemNRElement->ItemState & 0x10) == 0 && PItemNRElement->ItemFlag == 2){
 						BranchTo(0X824698D0,int,PItemNRElement,0,0);
-						NuiFakeDevicePO[index]->Menu_DPAD_DOWN = false;
+						NuiFakeDevicePO[index]->Menu_DPAD_DOWN_RELEASE = false;
 						break;
 
 				}
@@ -76,10 +161,14 @@ namespace InputData{
 			
 		
 				//&& PItemNRElement->ItemFlag != 6 && !PItemNRElement->ParentUIRingController->gap17C[9]
-				if (IsUIRingCanBeChanged((int)PItemNRElement->ParentOrMainMenuNRInstance)  && IsThatSelector_((DWORD*)PItemNRElement->ParentUIRingController,PItemNRElement->ItemIndexPos) &&
-					(PItemNRElement->ItemState & 0x10) == 0 && PItemNRElement->ItemFlag != 2)
+				if (FixedCheckIsSelectedButtonPressable(PItemNRElement))
 				{
-					PItemNRElement->SursorVectorPTR = &CursorCenterPos;
+
+					if (last_index == -1)
+						PItemNRElement->SursorVectorPTR = &CursorCenterPos;
+					else{
+						PItemNRElement->SursorVectorPTR = CursorPositions[index];
+					}
 					PItemNRElement->UnkSelectedIndexFlag = PItemNRElement->ItemIndexPos;
 					
 					PItemNRElement->ItemState |=  1;
@@ -92,21 +181,13 @@ namespace InputData{
 					}
 
 					
-					if (PItemNRElement->TargetTimeDelta > 0.1){
+					if (PItemNRElement->TargetTimeDelta > 0.1 && (RingElement->Flag0x140 & 0x80) != 0){
 						
 						PItemNRElement->TargetTimeDelta = -10;
 						Riders::Sound::PlaySound((int)Riders::Sound::Instance, 0x12,0xF);
 
 					}
-					/*
-
-					*(_DWORD *)(4 * (((PItemNRElement->ParentUIRingController->dword140 >> 4) & 1) + 0x20) + PItemNRElement->ParentOrMainMenuNRInstance) = (DWORD)PItemNRElement;
-					 (struct_UIRingController *)MAINMENUBIGSUB(
-						PItemNRElement->ParentOrMainMenuNRInstance,
-						PItemNRElement,
-						(PItemNRElement->ParentUIRingController->dword140 >> 4) & 1);
-						*/
-
+		
 
 
 					break;
@@ -119,25 +200,31 @@ namespace InputData{
 				//PItemNRElement->UnkSelectedIndexFlag = 1;
 
 				//&& PItemNRElement->ItemFlag != 6 && !PItemNRElement->ParentUIRingController->gap17C[9]
-				if (IsUIRingCanBeChanged((int)PItemNRElement->ParentOrMainMenuNRInstance)  && IsThatSelector_((DWORD*)PItemNRElement->ParentUIRingController,PItemNRElement->ItemIndexPos) &&
-					(PItemNRElement->ItemState & 0x10) == 0 && PItemNRElement->ItemFlag != 2)
+				if (FixedCheckIsSelectedButtonPressable(PItemNRElement))
 				{
-
-					*(_DWORD *)(4 * (((PItemNRElement->ParentUIRingController->dword140 >> 4) & 1) + 0x20) + PItemNRElement->ParentOrMainMenuNRInstance) = (DWORD)PItemNRElement;
-					(struct_UIRingController *)MAINMENUBIGSUB(
-						PItemNRElement->ParentOrMainMenuNRInstance,
-						PItemNRElement,
-						(PItemNRElement->ParentUIRingController->dword140 >> 4) & 1);
-
-
-
-
+					//buy 
+					if (IsShopButton ){
+						BranchTo(0x8245FD38,int,PItemNRElement->ParentOrMainMenuNRInstance,PItemNRElement);
+						BranchTo(0x8245FD38,int,PItemNRElement->ParentOrMainMenuNRInstance,SomeByteIGuess);
+					}
+					else{
+						*(_DWORD *)(4 * (((PItemNRElement->ParentUIRingController->Flag0x140 >> 4) & 1) + 0x20) + PItemNRElement->ParentOrMainMenuNRInstance) = (DWORD)PItemNRElement;
+						(struct_UIRingController *)MAINMENUBIGSUB(
+							PItemNRElement->ParentOrMainMenuNRInstance,
+							PItemNRElement,
+							(PItemNRElement->ParentUIRingController->Flag0x140 >> 4) & 1);
+					}
 					break;
 				}
 
 
 
 			}
+
+
+
+
+
 		}
 	}
 

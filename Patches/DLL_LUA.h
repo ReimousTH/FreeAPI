@@ -47,6 +47,8 @@ public:
 
 	int GetGlobalIntNew(const char* st,bool useglobal);
 
+	static bool EnableDebugOutput;
+
 
 };
 

@@ -15,6 +15,8 @@
 #include <xam.h>
 #include <xtl.h>
 
+#include <d3d9.h>
+#include <d3dx9.h>
 
 #include "InputData.h"
 

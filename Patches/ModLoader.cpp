@@ -380,7 +380,7 @@ ShowXenonMessage(L"MSG",full_path);
 
 	}
 
-	HOOK(HANDLE,__fastcall,CreateFileA_NEW,0x824D0F28,   __in     LPCSTR lpFileName,
+	HOOKRAW(WINBASEAPI __out HANDLE WINAPI __stdcall,CreateFileA_NEW,0x824D0F28,   __in     LPCSTR lpFileName,
 		__in     DWORD dwDesiredAccess,
 		__in     DWORD dwShareMode,
 		__in_opt LPSECURITY_ATTRIBUTES lpSecurityAttributes,
@@ -388,36 +388,66 @@ ShowXenonMessage(L"MSG",full_path);
 		__in     DWORD dwFlagsAndAttributes,
 		__in_opt HANDLE hTemplateFile){
 
+		
+
+		
 			std::string _str = std::string(lpFileName);
-			_str.insert(6,"mods\\");
+			if (_str.find("game:\\") != std::string::npos) {
+				_str.insert(_str.find("game:\\") + 6, "mods\\");
+			}
 			const char* path = _str.c_str();
-			LPCSTR _file_name = lpFileName;
+	
 
-			bool push = false;
+			if ( ZLuaN::EnableDebugOutput)InputData::DebugLog.push_back(std::string(_str));
 			
-			if ( CreateFile( path, GENERIC_READ, 0, NULL,		OPEN_EXISTING, 0, NULL ) != INVALID_HANDLE_VALUE){
-				//
-				_file_name = _str.c_str();
-				push = true;
-		
-			}
+			HANDLE handle =  CreateFile( path, dwDesiredAccess, dwShareMode, lpSecurityAttributes,		dwCreationDisposition, dwFlagsAndAttributes, hTemplateFile );
+			if ( handle != INVALID_HANDLE_VALUE){
+
+
+				CloseHandle(handle);
+
+				return sub_824D0F28H( path, dwDesiredAccess, dwShareMode, lpSecurityAttributes,		dwCreationDisposition, dwFlagsAndAttributes, hTemplateFile ) ;
 			
-		//	if (InputData::gc->wLastButtons & XINPUT_GAMEPAD_Y) ShowXenonMessage(L"MSG",lpFileName);
-		
-		    HANDLE handle =  sub_824D0F28H(_file_name,dwDesiredAccess,dwShareMode,lpSecurityAttributes,dwCreationDisposition,dwFlagsAndAttributes,hTemplateFile);
-			if (push){
-				_Files.push_back(handle);
 			}
+		
+			
+			return sub_824D0F28H( lpFileName, dwDesiredAccess, dwShareMode, lpSecurityAttributes,		dwCreationDisposition, dwFlagsAndAttributes, hTemplateFile ) ;
 
 
 
-		return handle;
 	}
+	extern "C" int VdVerifyMEInitCommand(int a1, int a2);
+
+
+	HOOK(int,__fastcall,sub_82ACBB0C,0x82ACBB0C){
+
+		DWORD v21[3];
+		v21[2] = 0;
+		v21[0] = 0xC0114800;
+		v21[1] = 0x3FF;
+		return  VdVerifyMEInitCommand((int)v21,19);
+	
+	}
+
+	HOOK(int,__fastcall,sub_824F4858,0x824F4858,D3DDevice *pDevice, _D3DPRESENT_PARAMETERS_ *pPresentationParameters){
+
+
+		BranchTo(0X82500FF0,int,pDevice);
+		BranchTo(0x82500DA0,int,pDevice,pPresentationParameters);
+
+		return 0;
+		//return pDevice->Reset(pPresentationParameters);
+	}
+
+
 
 	void Install()
 	{
+	//	INSTALL_HOOK(sub_824F4858);
+		//INSTALL_HOOK(sub_82ACBB0C);
 		INSTALL_HOOK(CreateFileA_NEW);
-		INSTALL_HOOK(ReadFile_NEW);
+		
+	//	INSTALL_HOOK(ReadFile_NEW);
 		//INSTALL_HOOK(sub_8249D028);
 		//WRITE_DWORD(0x82AD036C,NTCreateFileReplace);
 	}

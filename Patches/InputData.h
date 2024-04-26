@@ -49,11 +49,17 @@ namespace InputData{
 		short DPAD_RIGHT_RING_COUNT_PRE;
 		float DPAD_RIGHT_RING_TIME;
 
-		bool Menu_DPAD_UP;
-		bool Menu_DPAD_DOWN;
+		bool Menu_DPAD_UP_RELEASE;
+		bool Menu_DPAD_DOWN_RELEASE;
+		bool Menu_DPAD_UP_HOLD;
+		bool Menu_DPAD_DOWN_HOLD;
 
 		bool MENU_BUTTON_A_HOLD;
 		bool MENU_BUTTON_A_RELEASE;
+
+		bool MENU_BUTTON_X_HOLD;
+		bool MENU_BUTTON_X_RELEASE;
+
 		bool MENU_BUTTON_B;
 		bool MENU_BUTTON_Y;
 		bool Menu_START_BUTTON_PRESS;
@@ -91,6 +97,8 @@ namespace InputData{
 	static DWORD ShowUI;
 	static DWORD ForcePauseGame;
 	static bool once;
+
+	extern std::vector<std::string> DebugLog;
 
 
 

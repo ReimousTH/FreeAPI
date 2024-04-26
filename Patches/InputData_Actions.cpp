@@ -109,7 +109,7 @@ HOOK(int,__fastcall,sub_82494658,0x82494658,int result){
 			
 
 			if (gc->wPressedButtons & XINPUT_GAMEPAD_X){
-				*(_DWORD *)(result + 5440)=(DWORD)L"rulesetting";
+//				*(_DWORD *)(result + 5440)=(DWORD)L"rulesetting";
 
 			}
 

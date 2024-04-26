@@ -56,7 +56,8 @@ namespace InputData{
 		}
 
 
-
+	
+		memset((void*)(XNLiveSomeStatic + 0x67),0,0x54);
 
 		XINVITE_INFO* t = (XINVITE_INFO*)(XNLiveSomeStatic + 0x67);
 		memcpy((void*)t->hostInfo.sessionID.ab,bt,8);
@@ -126,37 +127,37 @@ namespace InputData{
 	DWORD ProcessSingleDpadExtra(ATG::GAMEPAD* gc,bool* DPAD_LEFT_RING,short* DPAD_LEFT_RING_COUNT,short* DPAD_LEFT_RING_COUNT_PRE,float* DPAD_LEFT_RING_TIME,bool* DPAD_LEFT_RING_RELEASED,WORD ControlDPAD){
 
 
-		if (gc->wPressedButtons & ControlDPAD){
-			*DPAD_LEFT_RING_COUNT +=1;
-			*DPAD_LEFT_RING = true;
-
-
-		}
-		if (gc->wLastButtons & ControlDPAD){
-			*DPAD_LEFT_RING_TIME += 0.1;
-			*DPAD_LEFT_RING_RELEASED = false;
-			if (        (*DPAD_LEFT_RING_TIME >= 10.0    && *DPAD_LEFT_RING_COUNT_PRE == 0) || (*DPAD_LEFT_RING_TIME >= 1.0    && *DPAD_LEFT_RING_COUNT_PRE > 0)         ) {
-				*DPAD_LEFT_RING_TIME = 0.0;
-				*DPAD_LEFT_RING_COUNT_PRE += 1;
-			}
-		}
-		else
-		{
-
-			*DPAD_LEFT_RING_TIME = 0.0;
-			*DPAD_LEFT_RING_RELEASED = true;
-		}
-
-		if (*DPAD_LEFT_RING_COUNT_PRE > 0 && *DPAD_LEFT_RING_RELEASED  == true ){
-			*DPAD_LEFT_RING_COUNT = *DPAD_LEFT_RING_COUNT_PRE;
-			*DPAD_LEFT_RING_COUNT_PRE = 0;
-
-
-		}
-		else if (*DPAD_LEFT_RING_TIME <= 0){
-			*DPAD_LEFT_RING = true;
 		
+
+		
+
+		//if HOLD
+		if ((gc->wLastButtons & ControlDPAD) != 0){
+
+			*DPAD_LEFT_RING_TIME = *DPAD_LEFT_RING_TIME +  MBKinnectInput->PclsXbox360System->GameSpeed;
+
+
+
+			//proceed only once
+			if (*DPAD_LEFT_RING_COUNT <= 0){
+				*DPAD_LEFT_RING_COUNT= *DPAD_LEFT_RING_COUNT + 1;
+				*DPAD_LEFT_RING_TIME = 0.0F;
+				
+			}
+			else if (*DPAD_LEFT_RING_TIME >  45.0f){
+				*DPAD_LEFT_RING_COUNT= *DPAD_LEFT_RING_COUNT + 1;
+				*DPAD_LEFT_RING_TIME = 0.0f;
+			}
+
 		}
+
+		//released
+		if ((gc->wLastButtons & ControlDPAD) == 0 && *DPAD_LEFT_RING_COUNT > 0){
+
+			*DPAD_LEFT_RING = true;
+		}
+
+
 
 
 		return 0;
@@ -213,9 +214,6 @@ namespace InputData{
 			return 0;
 		}
 
-
-
-
 		else if  (*z != NuiFakeDevice){
 
 
@@ -228,12 +226,6 @@ namespace InputData{
 		}
 
 
-		//	if (GameRootStateController && (GameRootStateController->GameRootState == 2 |GameRootStateController->GameRootState == 1  ))
-		//	{
-		//
-		//	}
-
-		//	else
 
 
 		{
@@ -272,16 +264,10 @@ namespace InputData{
 			if (NuiFakeDevice->field_28 != HP->StickForceY)
 			{
 				if (HP->StickForceY <= -0.75){
-					//NuiFakeDevice->field_2C0 = 2;
-					//NuiFakeDevice->field_2D0 = 2;
+
 					NuiFakeDevice->field_2E4 = 2;
 					NuiFakeDevice->field_2F4 = 2;
 
-					//	memcpy((byte*)&NuiFakeDevice->field_D0 ,(byte*)&BrakePreLoadD0,0x10);
-					//	memcpy((byte*)&NuiFakeDevice->field_E0 ,(byte*)&BrakePreLoadE0,0x10);
-					//	memcpy((byte*)&NuiFakeDevice->field_110 ,(byte*)&BrakePreLoad110,0x10);
-					//	memcpy((byte*)&NuiFakeDevice->field_210 ,(byte*)&BrakePreLoad210,0x10);
-					//	memcpy((byte*)&NuiFakeDevice->field_250 ,(byte*)&BrakePreLoad250,0x10);
 
 
 
@@ -416,9 +402,11 @@ namespace InputData{
 		HP->MENU_BUTTON_B = false;
 		HP->MENU_BUTTON_Y = false;
 		HP->Menu_START_BUTTON_PRESS = false;
-		HP->Menu_DPAD_DOWN = false;
-		HP->Menu_DPAD_UP = false;
+		HP->Menu_DPAD_DOWN_RELEASE = false;
+		HP->Menu_DPAD_UP_RELEASE = false;
 		HP->MENU_BUTTON_A_RELEASE = false;
+		HP->MENU_BUTTON_X_RELEASE = false;
+		
 
 
 
@@ -438,6 +426,20 @@ namespace InputData{
 			HP->MENU_BUTTON_A_HOLD = false;
 		}
 
+		if (gc->wLastButtons & XINPUT_GAMEPAD_X){
+			HP->MENU_BUTTON_X_HOLD = true;
+		}
+		if ((gc->wLastButtons & XINPUT_GAMEPAD_X) ==0  && HP->MENU_BUTTON_X_HOLD){
+			HP->MENU_BUTTON_X_RELEASE = true;
+			HP->MENU_BUTTON_X_HOLD = false;
+		}
+
+
+
+
+
+
+
 
 		if (gc->wPressedButtons & XINPUT_GAMEPAD_B){
 			HP->MENU_BUTTON_B = true;
@@ -456,12 +458,29 @@ namespace InputData{
 			accelle = 2.0;
 		}
 
-		if (gc->wPressedButtons & XINPUT_GAMEPAD_DPAD_UP){
-			HP->Menu_DPAD_UP = true;
+	
+		if (gc->wLastButtons & XINPUT_GAMEPAD_DPAD_UP){
+			HP->Menu_DPAD_UP_HOLD = true;
 		}
-		if (gc->wPressedButtons & XINPUT_GAMEPAD_DPAD_DOWN){
-			HP->Menu_DPAD_DOWN = true;
+		if ((gc->wLastButtons & XINPUT_GAMEPAD_DPAD_UP) ==0  && HP->Menu_DPAD_UP_HOLD){
+			HP->Menu_DPAD_UP_RELEASE = true;
+			HP->Menu_DPAD_UP_HOLD = false;
 		}
+
+
+		if (gc->wLastButtons & XINPUT_GAMEPAD_DPAD_DOWN){
+			HP->Menu_DPAD_DOWN_HOLD = true;
+		}
+		if ((gc->wLastButtons & XINPUT_GAMEPAD_DPAD_DOWN) ==0  && HP->Menu_DPAD_DOWN_HOLD){
+			HP->Menu_DPAD_DOWN_RELEASE = true;
+			HP->Menu_DPAD_DOWN_HOLD = false;
+		}
+
+
+
+
+
+
 
 
 		NuiFakeDevice->field_B0 += -gc->fX2 * MBKinnectInput->PclsXbox360System->GameSpeed /100.0 * accelle;
@@ -501,6 +520,25 @@ namespace InputData{
 	byte Gamemode690H1[0x300] = {0};
 
 
+
+	LPCWSTR XButtons[1] = { L"------------OK----------------" };
+	MESSAGEBOX_RESULT result;
+	XOVERLAPPED m_Overlapped; 
+
+	// Assuming DebugLog is your std::vector<std::string>
+	std::wstring ConcatenateStrings(const std::vector<std::string>& debugLog)
+	{
+		std::wstringstream ss;
+
+		for (std::vector<std::string>::const_iterator it = debugLog.begin(); it != debugLog.end(); ++it)
+		{
+			ss << std::wstring(it->begin(), it->end());
+			ss << "\r\n";
+		}
+
+		return ss.str();
+	}
+
 	HOOK(int,__fastcall,SelfViewUpdate,0x82438930,int a1){
 	
 		if (onceX == false && Static_8219FB14){
@@ -536,11 +574,23 @@ namespace InputData{
 		}
 
 
+
 	
 		ProcessSingleInput(&NuiFakeDevice,&NuiFakeDeviceExtra,&NuiFakeDeviceHP1,gc,0);
 
 		
 		ProcessSingleInput(&NuiFakeDeviceP2,&NuiFakeDeviceExtraP2,&NuiFakeDeviceHP2,gc2P,1);
+
+		
+
+
+		if (gc->wPressedButtons & XINPUT_GAMEPAD_Y && ZLuaN::EnableDebugOutput){
+
+			
+
+			XShowMessageBoxUI(ATG::SignIn::GetSignedInUser(),L"DebugLog V2.0",ConcatenateStrings(DebugLog).c_str(),1,XButtons,1,XMB_ALERTICON,&result,&m_Overlapped);
+
+		}
 
 	
 
@@ -564,11 +614,14 @@ namespace InputData{
 		if ((gc->wPressedButtons & XINPUT_GAMEPAD_DPAD_UP) && GameRootStateController &&GameRootStateController->GameRootState == 1){
 			 //XINVITE_INFO* t = (XINVITE_INFO*)(XNLiveSomeStatic + 0x67);
 
-			 SetSessionIP();
+			if ( *(_BYTE *)(XNLiveSomeStatic + 0x66) )
+				*(_BYTE *)(XNLiveSomeStatic + 0x61) = 1;
+				SetSessionIP();
+
+			
 
 			 *(_BYTE *)(XNLiveSomeStatic + 0x65) = 1;
-	//		 *(_BYTE *)(XNLiveSomeStatic + 0x66) = 0;
-
+			 *(_BYTE *)(XNLiveSomeStatic + 0x66) = 0;
 			 *(_BYTE *)(XNLiveSomeStatic + 0xBB) = 0;
 		}
 
@@ -734,6 +787,9 @@ struct_dword300 NuiFakeDeviceExtraP2 = struct_dword300();
 
 DWORD Expo[0x4000] = {0};
 DWORD Expo1[0x4000] = {0};
+
+std::vector<std::string>  DebugLog = std::vector<std::string>();
+
 
 
 

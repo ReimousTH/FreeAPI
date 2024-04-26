@@ -9,9 +9,10 @@
 #include "AtgSignIn.h"
 
 
-#include <string>
-#include <vector>
-
+#include <xtl.h>
+#include <d3d9.h>
+#include "xbox.h"
+#include "xonline.h"
 
 namespace NetplayRFIX{
 	

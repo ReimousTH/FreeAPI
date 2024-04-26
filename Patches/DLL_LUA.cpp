@@ -87,7 +87,7 @@ extern "C" int LUA__GLOBAL__WriteVirtualFloat(lua_State* L){
 	std::stringstream conv;
 	DWORD StartOffset,LastOffset;
 
-	if (lua_type(L,-1) == LUA_TNUMBER){
+	if (lua_type(L,1) == LUA_TNUMBER){
 		StartOffset = lua_tonumber(L,1);
 	}
 	//STRING
@@ -374,6 +374,8 @@ int ZLuaN::GetGlobalIntNew(const char* st,bool useglobal = true)
 	return result;
 
 }
+
+bool ZLuaN::EnableDebugOutput = false;
 
 ZLuaN CommonLua = ZLuaN();
 void DLL_LUA_INSTALL()

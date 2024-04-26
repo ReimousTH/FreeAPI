@@ -142,6 +142,11 @@ const DWORD JumpASMNoPreserveI[] = { /*Dont always have enough space to preserve
 	returnType callingConvention implOf##functionName(__VA_ARGS__)
 
 
+#define HOOKRAW(params,functionName, location, ...) \
+	DWORD original_addr_##functionName = (int)location ;\
+	params implOf##functionName(__VA_ARGS__)
+
+
 #define HOOKEX(returnType, callingConvention, functionName, location, ...) \
 	DWORD original_addr_##functionName = (int)location ;\
 	typedef returnType callingConvention functionName(__VA_ARGS__); \
