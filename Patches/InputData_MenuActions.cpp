@@ -117,7 +117,7 @@ namespace InputData{
 
 					}
 					else{
-						PItemNRElement->TargetTimeDelta +=  MBKinnectInput->PclsXbox360System->SpeedSome;
+						PItemNRElement->TargetTimeDelta +=  MBKinnectInput->PclsXbox360System->GameDelta;
 					}
 
 
@@ -177,7 +177,7 @@ namespace InputData{
 
 					}
 					else{
-						PItemNRElement->TargetTimeDelta +=  MBKinnectInput->PclsXbox360System->SpeedSome;
+						PItemNRElement->TargetTimeDelta +=  MBKinnectInput->PclsXbox360System->GameDelta;
 					}
 
 					

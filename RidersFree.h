@@ -1127,17 +1127,398 @@ struct struct_field_34
 	_BYTE byteC0;
 };
 
+typedef struct clsOOSystemHeap;
 
-
-struct struct_MBKinnectInput
+struct /*VFT*/ clsOOSystemHeap_vtbl
 {
-	_BYTE gap0[24];
-	struct_a1_4 *PclsXbox360System;
+	int (__fastcall *field_0)(clsOOSystemHeap *);
+	int (__fastcall *field_4)(clsOOSystemHeap *);
+	int (__fastcall *field_8)(clsOOSystemHeap *);
+	int (__fastcall *field_C)(clsOOSystemHeap *);
+	int (__fastcall *AllocMem)(clsOOSystemHeap *, int, int);
+};
+
+
+
+struct clsOOSystemHeap
+{
+	clsOOSystemHeap_vtbl *__vftable /*VFT*/;
+	int field_4;
+	int field_8;
+	int field_C;
+	int field_10;
+	int field_14;
+	int field_18;
+	int field_1C;
+	int field_20;
+	int field_24;
+	int field_28;
+};
+
+typedef struct clsOOTimer;
+struct /*VFT*/ clsOOTimer_vtbl
+{
+	int (__fastcall *DestroyObject)(clsOOTimer *, uint);
+	int (__fastcall *GetDeltaTime)(clsOOTimer *);
+	int (__fastcall *GetDeltaTime2)(clsOOTimer *);
+};
+
+
+struct clsOOTimer
+{
+	clsOOTimer_vtbl *__vftable /*VFT*/;
+	int TickCount;
+	int field_8;
+	int StartDeltaTime;
+	int field_10;
+	int field_14;
+	int field_18;
+	int field_1C;
+	int field_20;
+	int field_24;
+	int field_28;
+};
+
+
+typedef struct clsXbox360Timer;
+struct /*VFT*/ clsXbox360Timer_vtbl
+{
+	int (__fastcall *DestroyObject)(clsXbox360Timer *, uint);
+	int (__fastcall *GetDeltaTime)(clsXbox360Timer *);
+	int (__fastcall *GetDeltaTime2)(clsXbox360Timer *);
+};
+
+
+
+struct __declspec(align(4)) clsXbox360Timer : clsOOTimer
+{
+	float field_2C;
+	double TimerValue;
+};
+
+
+
+typedef struct clsXbox360System;
+
+struct /*VFT*/ clsXbox360System_vtbl
+{
+	int (__fastcall *DestroyObject)(clsXbox360System *, uint);
+	char (__fastcall *GetFlag5A)(clsXbox360System *);
+};
+
+
+
+struct clsXbox360System
+{
+	clsXbox360System_vtbl *__vftable /*VFT*/;
+	float GameSpeed;
+	int field_8;
+	int field_C;
+	int field_10;
+	float CameraSpeed;
+	int field_18;
+	int TickPerSecond;
+	float field_20;
+	float field_24;
+	float GameDelta;
+	float field_2C;
+	float field_30;
+	float field_34;
+	int field_38;
+	int field_3C;
+	int field_40;
+	int field_44;
+	int field_48;
+	int field_4C;
+	int field_50;
+	int field_54;
+	int field_58;
+	int field_5C;
+};
+
+
+typedef struct CamP0x1F0;
+typedef struct clsXbox360Camera;
+
+struct __declspec(align(4)) CamP0x1F0_vtbl
+{
+	int func0;
+	void (__fastcall *func4)(CamP0x1F0 *_this, int, int, int);
+	int func8;
+	void *(__fastcall *funcC)(CamP0x1F0 *_this);
+	void (__fastcall *func10)(CamP0x1F0 *);
+	int func14;
+	int func18;
+};
+
+struct CamP0x1F0
+{
+	CamP0x1F0_vtbl *__vftable /*VFT*/;
+	int field_4;
+	int field_8;
+	int field_C;
+	int field_10;
+	int field_14;
+	int field_18;
+	int field_1C;
+	clsXbox360Camera *Camera1;
+	clsXbox360Camera *Camera2;
+	int field_28;
+	int field_2C;
+	int field_30;
+	int field_34;
+	int field_38;
+	int field_3C;
+	int field_40;
+	int field_44;
+	int field_48;
+	int field_4C;
+	int field_50;
+	int field_54;
+	int field_58;
+	int field_5C;
+	int field_60;
+	int field_64;
+	int field_68;
+	int field_6C;
+	int field_70;
+	int field_74;
+	int field_78;
+	int field_7C;
+	int field_80;
+	int field_84;
+	int field_88;
+	int field_8C;
+	int field_90;
+	int field_94;
+	int field_98;
+	int field_9C;
+	int field_A0;
+	int field_A4;
+	int field_A8;
+	int field_AC;
+	int field_B0;
+	int field_B4;
+	int field_B8;
+	int field_BC;
+	int field_C0;
+	int field_C4;
+	int field_C8;
+	int field_CC;
+	int field_D0;
+	int field_D4;
+	int field_D8;
+	int field_DC;
+	int field_E0;
+	int field_E4;
+	int field_E8;
+	int field_EC;
+	int field_F0;
+	int field_F4;
+	int field_F8;
+	int field_FC;
+	int field_100;
+	int field_104;
+	int field_108;
+	int field_10C;
+	int field_110;
+	int field_114;
+	int field_118;
+	int field_11C;
+	int field_120;
+	int field_124;
+	int field_128;
+	int field_12C;
+	int field_130;
+	int field_134;
+	int field_138;
+	int field_13C;
+	int field_140;
+	int field_144;
+	int field_148;
+	int field_14C;
+	int field_150;
+	int field_154;
+	int field_158;
+	int field_15C;
+	int field_160;
+	int field_164;
+	int field_168;
+	int field_16C;
+	int field_170;
+	int field_174;
+	int field_178;
+	int field_17C;
+	int field_180;
+	int field_184;
+	int field_188;
+	int field_18C;
+	int field_190;
+	int field_194;
+	int field_198;
+	int field_19C;
+	int field_1A0;
+	int field_1A4;
+	int field_1A8;
+	int field_1AC;
+	int field_1B0;
+	int field_1B4;
+	int field_1B8;
+	int field_1BC;
+	int field_1C0;
+	int field_1C4;
+	int field_1C8;
+	int field_1CC;
+	int field_1D0;
+	int field_1D4;
+	int field_1D8;
+	int field_1DC;
+	int field_1E0;
+	int field_1E4;
+	int field_1E8;
+	int field_1EC;
+	int field_1F0;
+	int field_1F4;
+	int field_1F8;
+	int field_1FC;
+	int field_200;
+	int field_204;
+	int field_208;
+	int field_20C;
+	int field_210;
+	int field_214;
+	int field_218;
+	int field_21C;
+	float float_220;
+	int field_224;
+	int field_228;
+};
+
+
+
+typedef struct clsXbox360Camera;
+
+struct /*VFT*/ __declspec(align(4)) clsXbox360Camera_vtbl
+{
+	int (__fastcall *pfunc0)(clsXbox360Camera *_this);
+	int (__fastcall *pfunc4)(clsXbox360Camera *_this);
+	int (__fastcall *pfunc8)(clsXbox360Camera *_this);
+	int (__fastcall *pfuncC)(clsXbox360Camera *_this);
+	int (__fastcall *pfunc10)(clsXbox360Camera *_this, float);
+	CamP0x1F0 *(__fastcall *pfunc14)(clsXbox360Camera *_this);
+	CamP0x1F0 *(__fastcall *pfunc18)(clsXbox360Camera *_this);
+	void *(__fastcall *pfunc1c)(clsXbox360Camera *_this);
+	CamP0x1F0 *(__fastcall *pfunc20)(clsXbox360Camera *_this);
+	void *(__fastcall *pfunc24)(clsXbox360Camera *_this);
+	void *(__fastcall *pfunc28)(clsXbox360Camera *_this);
+};
+
+
+
+struct __declspec(align(4)) clsXbox360Camera
+{
+	clsXbox360Camera_vtbl *__vftable /*VFT*/;
+	int field_4;
+	int field_8;
+	int field_C;
+	int field_10;
+	int field_14;
+	int field_18;
+	int field_1C;
+	float field_20;
+	float field_24;
+	float field_28;
+	int field_2C;
+	float field_30;
+	float field_34;
+	float field_38;
+	int field_3C;
+	float field_40;
+	float field_44;
+	float field_48;
+	int field_4C;
+	int field_50;
+	int field_54;
+	int field_58;
+	int field_5C;
+	int field_60;
+	int field_64;
+	int field_68;
+	int field_6C;
+	int field_70;
+	int field_74;
+	int field_78;
+	int field_7C;
+	int field_80;
+	int field_84;
+	int field_88;
+	int field_8C;
+	int field_90;
+	int field_94;
+	_BYTE gap98[264];
+	_DWORD dword1A0;
+	_BYTE gap1A4[12];
+	float float1B0;
+	float float1B4;
+	float float1B8;
+	float float1BC;
+	float float1C0;
+	float float1C4;
+	float float1C8;
+	float float1CC;
+	_DWORD dword1D0;
+	_DWORD dword1D4;
+	_DWORD dword1D8;
+	_DWORD dword1DC;
+	float float1E0;
+	float float1E4;
+	float float1E8;
+	float float1EC;
+	CamP0x1F0 *PathCameraSettings;
+	int field_1F4;
+	int field_1F8;
+	int field_1FC;
+	int *field_200;
+	int field_204;
+	int field_208;
+	int field_20C;
+	int field_210;
+	int field_214;
+	int field_218;
+	int field_21C;
+	int field_220;
+	int field_224;
+	int field_228;
+	int field_22C;
+	_BYTE gap230[128];
+	float float2B0;
+	float float2B4;
+	float float2B8;
+	float float2BC;
+	_DWORD dword2C0;
+};
+
+
+struct mki0x74
+{
+	int field_0;
+	int field_4;
+	clsXbox360Camera **PlayerXbox360CameraArray;
+	int field_C;
+};
+
+
+
+struct __declspec(align(4)) struct_MBKinnectInput
+{
+	clsOOSystemHeap *clsOOSystemHeap;
+	_BYTE gap4[20];
+	clsXbox360System *PclsXbox360System;
 	struct_field_1C *field_1C;
 	int field_20;
 	int field_24;
 	int field_28;
-	int field_2C;
+	clsXbox360Timer *Xbox360Timer;
 	int field_30;
 	struct_field_34 *field_34;
 	int field_38;
@@ -1145,7 +1526,19 @@ struct struct_MBKinnectInput
 	int field_40;
 	int field_44;
 	int field_48;
+	int field_4C;
+	int field_50;
+	int field_54;
+	int field_58;
+	int field_5C;
+	int field_60;
+	int field_64;
+	int field_68;
+	int field_6C;
+	int field_70;
+	mki0x74 *PlayerData;
 };
+
 
 
 typedef struct struct_dword0 struct_dword0;
@@ -1830,38 +2223,6 @@ namespace Riders
 
 }
 
-typedef struct clsOOTimer;
-
-
-struct clsOOTimer_vtbl
-{
-	int (__fastcall *DestroyObject)(clsOOTimer *, uint);
-	int (__fastcall *func4)(clsOOTimer *);
-	int func8;
-};
-
-
-struct clsOOTimer
-{
-	clsOOTimer_vtbl *__vftable /*VFT*/;
-	int TickCount;
-	int field_8;
-	int field_C;
-	int field_10;
-	int field_14;
-	int field_18;
-	int field_1C;
-	int field_20;
-	int field_24;
-	int field_28;
-};
-
-
-struct  __declspec(align(4)) clsXbox360Timer : clsOOTimer
-{
-	float field_2C;
-	double TimerValue;
-};
 
 DataPointer(clsXbox360Timer,SclsOOTimer, 0x83E54930);
 

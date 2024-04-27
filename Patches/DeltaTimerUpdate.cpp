@@ -20,19 +20,18 @@ namespace DeltaTimerU{
 
 
 
-
-		QueryPerformanceCounter(&FrameStart);
-
+		GetDeltaFrameStart();
 
 
 
-		return 	BranchTo(   *( int*)((*(int*)&MBKinnectInput->PclsXbox360System->gap0) +0x4)     ,int,MBKinnectInput);
+
+		return  MBKinnectInput->PclsXbox360System->__vftable->GetFlag5A(MBKinnectInput->PclsXbox360System);
 
 
 
 
 	}
-	HOOK(int,__fastcall,GameSpeedControllerUpdate,0x824B1588,struct_a1_4 *a1){
+	HOOK(int,__fastcall,GameSpeedControllerUpdate,0x824B1588,clsXbox360System *a1){
 
 		double v3; // fp11
 		double v4; // fp0
@@ -40,38 +39,54 @@ namespace DeltaTimerU{
 		struct_v2* v2; // r3
 		v2 = (struct_v2*)sub_82211440();
 
-
 		v3 = a1->GameSpeed;                           // GameSpeed
 		v4 = a1->CameraSpeed; //Base Speed 
 
+		MBKinnectInput->Xbox360Timer->TimerValue = 1.0;
+		int StartTick = MBKinnectInput->Xbox360Timer->StartDeltaTime;
+		int EndTick = MBKinnectInput->Xbox360Timer->__vftable->GetDeltaTime(MBKinnectInput->Xbox360Timer);
+		float fixed_ticks = (float)(EndTick-StartTick)/1000000.0;
 
 
+	   //ShowXenonMessage(L"msg",(float)GetDeltaFrameCurrent(),0);
+	 //  ShowXenonMessage(L"msg",(float)fixed_ticks,0);
+
+		fixed_ticks*=1.25;
 
 
+		float step = fixed_ticks;
 
-		float step =     (GetDeltaFrameE() * 60.0) ;
-		float semi_step = step/60.0f;
-		a1->SpeedSome = step;
+
+		MBKinnectInput->Xbox360Timer->TickCount = (EndTick-StartTick) *0.016666668 *1.25;
+
+		//ShowXenonMessage(L"MSG",(int)MBKinnectInput->Xbox360Timer->TickCount,0);
+
+	
+		a1->GameDelta = step;
 		a1->GameSpeed = step;
 
 
-		//a1->CameraSpeed = step;
-
-		a1->gap18 = step * 10;
+		a1->CameraSpeed =step;
 
 
-		a1->float34 = a1->CameraSpeed * semi_step;
-		a1->float30 =a1->CameraSpeed * semi_step;
-		a1->float2C =  a1->CameraSpeed * semi_step * 1000.0f;
+		a1->field_34 = step * 0.016666668;
+		a1->field_30 =  step * 0.016666668;
+		a1->field_2C =  step * 0.016666668 * 1000.0 ;
 
 
 
-		a1->float24 = a1->CameraSpeed * semi_step;
-		a1->float20 = a1->CameraSpeed * semi_step* 1000.0f;
+		a1->field_24 =   step * 0.016666668;
 
+		//0.0166666666666667
 
+		//60 FPS
+		//16..??
 
-		//SclsOOTimer.TimerValue = -0.5;
+		a1->field_20 =  step * 0.016666668 * 1000.0 ;
+
+		//0.2
+		//0.1
+	
 	
 		//	a1->CameraSpeed = a1->SpeedSome;
 
@@ -145,7 +160,7 @@ namespace DeltaTimerU{
 			float* field_8F4 = (float*)&a1->field_8F4;
 
 
-			*field_8F4 = *field_8F4 - MBKinnectInput->PclsXbox360System->SpeedSome * 1;
+			*field_8F4 = *field_8F4 - MBKinnectInput->PclsXbox360System->GameDelta * 1.25;
 
 
 			float field_8F4_pre = *field_8F4;
@@ -188,6 +203,8 @@ namespace DeltaTimerU{
 
 		int v4 = *(int*)((char*)0x82B09D7C + (a1->byte644 * 4)) + 0x10 * (a1->byte646 +    (a1->byte646 * 2));
 
+		//ShowXenonMessage(L"MSG",v4,0);
+
 		if (a1->field_968 == 1){
 			//	ShowXenonMessage(L"MSG",*(float *)v4,0);
 
@@ -200,7 +217,7 @@ namespace DeltaTimerU{
 			float* field_8F4 = (float*)&a1->field_8F4;
 
 
-			*field_8F4 = *field_8F4 - MBKinnectInput->PclsXbox360System->SpeedSome * 1;
+			*field_8F4 = *field_8F4 - MBKinnectInput->PclsXbox360System->GameDelta * 1.25;
 
 
 			float field_8F4_pre = *field_8F4;
@@ -308,7 +325,7 @@ namespace DeltaTimerU{
 
 
 	
-		return CharacterBasePhysicsMoveR(thus,OutVector,(float*)&thus->float748,MBKinnectInput->PclsXbox360System->SpeedSome);
+		return CharacterBasePhysicsMoveR(thus,OutVector,(float*)&thus->float748,MBKinnectInput->PclsXbox360System->GameDelta);
 	}
 
 
@@ -322,17 +339,130 @@ namespace DeltaTimerU{
 
 
 
-
+	LARGE_INTEGER FrameStart = {0};
+	LARGE_INTEGER FrameStartfrequency = {0};
 	
+
+
+
+	HOOK(int,__fastcall,sub_82807008,0x82807008,float *a1, int a2, double a3, double a4, double a5){
+
+
+		int result; // r3
+		__int64 v6; // r11
+		double v7; // fp11
+		double v8; // fp11
+		int v9; // r11
+		__int64 v10; // r10
+
+		if ( (a2 & 0x40) != 0 )
+			goto LABEL_2;
+		HIDWORD(v6) = 0x40000;
+		LODWORD(v6) = a2 & 0x1F0000;
+		if ( (a2 & 0x1F0000u) > 0x40000 )
+		{
+			if ( (_DWORD)v6 != 0x80000 )
+			{
+LABEL_13:
+				*a1 = a5;
+				return 0;
+			}
+			v8 = (float)((float)((float)a5 - (float)a3) / (float)((float)a4 - (float)a3));
+			v9 = (int)v8;
+			if ( v8 < 0.0 )
+				--v9;
+			LODWORD(v10) = v9;
+			HIDWORD(v10) = v9 & 1;
+			if ( (v9 & 1) != 0 )
+				*a1 = (float)((float)((float)v10 + (float)1.0) * (float)((float)a4 - (float)a3))
+				+ (float)((float)a3 - (float)((float)a5 - (float)a3));
+			else
+				*a1 = -(float)((float)((float)v10 * (float)((float)a4 - (float)a3)) - (float)a5);
+			result = 1;
+		}
+		else
+		{
+			if ( (a2 & 0x1F0000) != 0x40000 )
+			{
+				if ( (_DWORD)v6 == 0x10000 )
+				{
+					if ( a3 <= a5 && a5 < a4 )
+						goto LABEL_2;
+				}
+				else if ( (_DWORD)v6 == 0x20000 )
+				{
+					if ( a3 > a5 )
+					{
+						*a1 = a3;
+						return 1;
+					}
+					if ( a4 <= a5 )
+					{
+						*a1 = a4;
+						return 1;
+					}
+LABEL_2:
+					*a1 = a5;
+					return 1;
+				}
+				goto LABEL_13;
+			}
+			if ( a3 <= a5 && a5 < a4 )
+				goto LABEL_2;
+			v7 = (float)((float)((float)a5 - (float)a3) / (float)((float)a4 - (float)a3));
+			LODWORD(v6) = (int)v7;
+			if ( v7 < 0.0 )
+				LODWORD(v6) = v6 - 1;
+			*a1 = -(float)((float)((float)v6 * (float)((float)a4 - (float)a3)) - (float)a5);
+			result = 1;
+		}
+		return result;
+	}
+
+
+	int __declspec( naked ) sub_82299600H(int result, int R4, int R5, double a4){
+		
+		__emit(0x1BE00774);
+		__asm{
+
+			
+
+				lis r11,0x8229
+				ori r11,r11,0x9610
+				mtctr r11
+			
+
+				lis       r11, -0x7DE8
+				lis       r10, -0x7DE9
+				lfs       fp0, 0x3DB4(r11)
+
+					bctr
+
+		}
+	}
+
+
+
+	HOOK(int,__fastcall,sub_82299600,0x82299600,int result, int R4, int R5, double a4){
+
+		return sub_82299600H(result,R4,R5,a4*MBKinnectInput->PclsXbox360System->GameDelta);
+
+	}
+
+
 	void Install()
 	{
+//
+	//	INSTALL_HOOK(sub_82299600);
+		//AnimationPlay
+//		INSTALL_HOOK(sub_82807008);
 
 		//INSTALL_HOOK(sub_82807008); --affec animatiosn pretty strange
 	//	INSTALL_HOOK(sub_822AB3B0);
 
 		
 	
-		INSTALL_HOOK(CharacterBasePhysicsMove);
+		//INSTALL_HOOK(CharacterBasePhysicsMove);
 
 		INSTALL_HOOKR(sub_82211C08);
 		WRITE_DWORD(0x82211EE4,0x419AFD20);

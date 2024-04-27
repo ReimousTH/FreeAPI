@@ -515,8 +515,8 @@ int __fastcall CrouschStateAddaptive(int a1, StateA2P *a2, _DWORD *a3){
 	if (_R3->field_8 > 0){
         auto v16 = MBKinnectInput->PclsXbox360System;
 		DWORD v15 = *(float *)(a1 + 72) < 6.0;
-		float v17 = (float)((float)(v16->SpeedSome * (float)v15) + *(float *)(a1 + 72));
-	    *(float *)(a1 + 72) = (float)(v16->SpeedSome * (float)v15) + *(float *)(a1 + 72);
+		float v17 = (float)((float)(v16->GameDelta * (float)v15) + *(float *)(a1 + 72));
+	    *(float *)(a1 + 72) = (float)(v16->GameDelta * (float)v15) + *(float *)(a1 + 72);
 		if ( v17 < 6.0 )
 		{
 			result = 0;

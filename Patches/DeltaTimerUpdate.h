@@ -19,38 +19,29 @@ namespace DeltaTimerU{
 
 #pragma region FPS_LIMIT
 
-	static int FrameDelay;
-	static LARGE_INTEGER FrameStart;
-	static LARGE_INTEGER FrameEnd;
-	static int FrameTime;
+
+	extern LARGE_INTEGER FrameStart;
+	extern LARGE_INTEGER FrameStartfrequency;
 
 
-	static double GetPerformanceFrequency(){
-		LARGE_INTEGER frame;
-		QueryPerformanceFrequency(&frame);
-		return (double)frame.QuadPart;
-	}
-	static unsigned long long GetPerformanceCounter(){
-		LARGE_INTEGER frame;
-		QueryPerformanceCounter(&frame);
-		return frame.QuadPart;
-	}
 
-	static double GetDeltaFrameStart(){
-		double secondsElapsed  = (GetPerformanceCounter()-FrameStart.QuadPart) /  GetPerformanceFrequency() * 1000.0f;
-		return secondsElapsed;
+	static void GetDeltaFrameStart(){
+
+		QueryPerformanceCounter(&FrameStart);
+		QueryPerformanceFrequency(&FrameStartfrequency);
 
 	}
-	static double GetDeltaFrameE(){
-		double secondsElapsed  = (GetPerformanceCounter()-FrameStart.QuadPart) /  GetPerformanceFrequency();
-		return secondsElapsed;
+
+	static double GetDeltaFrameCurrent(){
+
+		LARGE_INTEGER currentCount, frequency;
+		QueryPerformanceCounter(&currentCount);
+		QueryPerformanceFrequency(&frequency);
+
+		return static_cast<double>(currentCount.QuadPart - FrameStart.QuadPart) / frequency.QuadPart;
 
 	}
-	static double GetDeltaFrameEX(){
 
-		return GetDeltaFrameE() * 640.0f ;
-
-	}
 
 
 #pragma endregion FPS_LIMIT

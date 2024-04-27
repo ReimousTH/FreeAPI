@@ -594,6 +594,7 @@ namespace InputData{
 
 	
 
+		/*
 		if ( (gc->wPressedButtons & XINPUT_GAMEPAD_LEFT_THUMB ) &&   (gc->wLastButtons & XINPUT_GAMEPAD_DPAD_UP )){
 			ShowUI = !ShowUI;
 		}
@@ -610,6 +611,7 @@ namespace InputData{
 
 
 		}
+		*/
 
 		if ((gc->wPressedButtons & XINPUT_GAMEPAD_DPAD_UP) && GameRootStateController &&GameRootStateController->GameRootState == 1){
 			 //XINVITE_INFO* t = (XINVITE_INFO*)(XNLiveSomeStatic + 0x67);
