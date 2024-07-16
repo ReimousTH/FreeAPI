@@ -1,270 +1,28 @@
 #include "ModLoader.h"
-
+#include <locale>
+#include <codecvt>
+#include <string>
 
 namespace ModLoader{
 
 	std::vector<HANDLE> _Files = std::vector<HANDLE>();
+	std::map<HANDLE,std::vector<std::string>> _FilesMAP = std::map<HANDLE,std::vector<std::string>>();
+	std::map<HANDLE,std::string> _NTCFILE = std::map<HANDLE,std::string>();
 	
 
 
-	int __declspec( naked ) sub_8249D028H(int a1, int a2, int a3, int a4, int a5, int a6, int a7, int a8){
-		__asm{
-			mflr r12
-				std       r25, -0x30(r1)
-				std       r26, -0x38(r1)
-				std       r27, -0x30(r1)
-				std       r28, -0x28(r1)
-				std       r29, -0x20(r1)
-				std       r30, -0x18(r1)
-				std       r31, -0x10(r1)
-				stw       r12, -0x8(r1)
-				stwu      r1, -0x200(r1)
-				mr        r30, r8
-				lis r11,0x8249
-				ori r11,r11,0xD038
-				mtctr r11
-				bctr r11
-		}
-	}
 
-	int __declspec( naked ) sub_8249D028HX(int a1, int a2, int a3, int a4, int a5, int a6, int a7, int a8){
-		__asm{
-			mflr r12
-				std       r25, -0x30(r1)
-				std       r26, -0x38(r1)
-				std       r27, -0x30(r1)
-				std       r28, -0x28(r1)
-				std       r29, -0x20(r1)
-				std       r30, -0x18(r1)
-				std       r31, -0x10(r1)
-				stw       r12, -0x8(r1)
-				stwu      r1, -0x200(r1)
-				mr        r30, r8
-				lis r11,0x8249
-				ori r11,r11,0xD038
-				mtctr r11
-				bctr
-		}
-	}
-
-
-
-
-
-
-
-
-	int __declspec( naked ) sub_8249D028_Remade(int a1, int a2, int a3, int a4, int a5, int a6, int a7, int a8){
-
-		__asm{
-			mflr      r12
-
-
-				std       r25, -0x40(r1)
-				std       r26, -0x38(r1)
-				std       r27, -0x30(r1)
-				std       r28, -0x28(r1)
-				std       r29, -0x20(r1)
-				std       r30, -0x18(r1)
-				std       r31, -0x10(r1)
-				stw r12,-8(r1)
-
-				stwu      r1, -0x200(r1)
-				mr        r30, r8
-				mr        r25, r3
-				mr        r29, r4
-				mr        r28, r5
-				mr        r31, r6
-				mr        r27, r7
-				mr        r8, r9
-				mr        r26, r10
-				cmplwi    cr6, r9, 0
-				bne       cr6, loc_8249D064
-				//	bl        sub_82211440()
-
-				lis r11,0x8221
-				ori r11,r11,0x1440
-				mtctr r11
-				bctrl
-
-				lwz       r8, 4(r3)
-loc_8249D064:                           
-			cmplwi    cr6, r30, 0
-				beq       cr6, loc_8249D074
-				li        r11, 1
-				stw       r11, 0(r30)
-loc_8249D074:                           
-			li        r10, 1
-				stw       r30, 0x54(r1)
-				mr        r9, r26
-				mr        r7, r31
-				mr        r6, r28
-				mr        r5, r29
-				mr        r4, r27
-				addi      r3, r1, 0x70
-				//bl        sub_8249EC20
-				//qASMBranch(r11,0x8249,0xEC20)
-				lis r11,0x8249
-				ori r11,r11,0xEC20
-				mtctr r11
-				bctrl
-
-
-				rlwinm    r11, r31, 0,26,26
-				li        r10, 0
-				cmplwi    cr6, r11, 0
-				std       r10, 0x60(r1)
-				beq       cr6, loc_8249D0F0
-				lwz       r31, 0x8C(r25)
-				mr        r3, r31
-				lwz       r11, 0(r31)
-				lwz       r10, 8(r11)
-				mtctr     r10
-				bctrl
-				addi      r4, r1, 0x70
-				addi      r3, r25, 0x20
-				//	bl        loc_8249DD08
-				//qASMBranch(r11,0x8249,0xDD08)
-
-				lis r11,0x8249
-				ori r11,r11,0xDD08
-				mtctr r11
-				bctrl
-
-				lwz       r9, 0(r31)
-				mr        r3, r31
-				lwz       r8, 0xC(r9)
-				mtctr     r8
-				bctrl
-				ld        r3, 0x60(r1)
-				addi      r1, r1, 0x200
-				ld       r25, -0x40(r1)
-				ld       r26, -0x38(r1)
-				ld       r27, -0x30(r1)
-				ld       r28, -0x28(r1)
-				ld       r29, -0x20(r1)
-				ld       r30, -0x18(r1)
-				ld       r31, -0x10(r1)
-				lwz       r12, -8(r1)
-				mtlr r12
-				blr
-loc_8249D0F0:                          
-			lwz       r11, 0x1A0(r1)
-				addi      r4, r1, 0x70
-				mr        r3, r25
-				cmplwi    cr6, r11, 0
-				bne       cr6, loc_8249D11C
-				addi      r11, r1, 0x60
-				stw       r11, 0x1A0(r1)
-				//bl        loc_8249CEB0
-				//qASMBranch(r11,0x8249,0xCEB0)
-
-
-				lis r11,0x8249
-				ori r11,r11,0xCEB0
-				mtctr r11
-				bctrl
-
-				ld        r3, 0x60(r1)
-				addi      r1, r1, 0x200
-
-
-
-				ld       r25, -0x40(r1)
-				ld       r26, -0x38(r1)
-				ld       r27, -0x30(r1)
-				ld       r28, -0x28(r1)
-				ld       r29, -0x20(r1)
-				ld       r30, -0x18(r1)
-				ld       r31, -0x10(r1)
-				lwz       r12, -8(r1)
-				mtlr r12
-				blr
-
-loc_8249D11C:                           
-			//bl        loc_8249CEB0
-			//	qASMBranch(r11,0x8249,0xCEB0)
-
-			lis r11,0x8249
-				ori r11,r11,0xCEB0
-				mtctr r11
-				bctrl
-
-
-				lwz       r11, 0x1A0(r1)
-				ld        r3, 0(r11)
-				addi      r1, r1, 0x200
-				ld       r25, -0x40(r1)
-				ld       r26, -0x38(r1)
-				ld       r27, -0x30(r1)
-				ld       r28, -0x28(r1)
-				ld       r29, -0x20(r1)
-				ld       r30, -0x18(r1)
-				ld       r31, -0x10(r1)
-				lwz       r12, -8(r1)
-				mtlr r12
-				blr
-
-		}
-
-	}
-
-	int SaveParams[] = {0,0,0,0,0,0,0,0};
-	HOOK(int,__fastcall,sub_8249D028,0x8249D028,int a1, int a2, int a3, int a4, int a5, int a6, int a7, int a8){
-
-
-
-		DWORD result;
-
-
-		std::string stru = std::string((char*)a2);
-		stru.insert(6,"mods\\");
-
-
-
-		const char* full_path = stru.c_str();
-		if (stru.find(std::string("_ST")) !=std::string::npos){
-ShowXenonMessage(L"MSG",full_path);
-		}
-
-		
-
-		// Open the file for reading
-		HANDLE hFile = CreateFile( full_path, GENERIC_READ, 0, NULL,		OPEN_EXISTING, 0, NULL );
-		if (hFile != INVALID_HANDLE_VALUE){
-			
-			result = sub_8249D028_Remade(a1,(int)full_path,a3,a4,a5,a6,a7,a8);
-		}
-		else{
-
-			result = sub_8249D028_Remade(a1,a2,a3,a4,a5,a6,a7,a8);
-
-		}
-
-
-		
-
-
-
-
-
-
-
-
-		return result;
-
-	}
 
 	typedef struct _UNICODE_STRING {
 		USHORT Length;
 		USHORT MaximumLength;
-		PWSTR  Buffer;
+		char*  Buffer;
 	} UNICODE_STRING, *PUNICODE_STRING;
 
 	typedef struct _OBJECT_ATTRIBUTES {
-		ULONG Length;
-		HANDLE RootDirectory;
+		DWORD Length; //FLAG??
 		PUNICODE_STRING ObjectName;
+		HANDLE RootDirectory;
 		ULONG Attributes;
 		PVOID SecurityDescriptor;
 		PVOID SecurityQualityOfService;
@@ -272,184 +30,273 @@ ShowXenonMessage(L"MSG",full_path);
 
 
 
+	extern "C" int NtCreateFile(	PHANDLE Handle,
+		DWORD dwDesiredAccess,
+		POBJECT_ATTRIBUTES  attributes,
+		DWORD   IoStatusBlock,
+		PLARGE_INTEGER     AllocationSize,
+		ULONG              FileAttributes,
+		ULONG              ShareAccess,
+		ULONG              CreateDisposition,
+		ULONG              CreateOptions,
+		PVOID              EaBuffer,
+		ULONG              EaLength);
+
+
 
 	int NTCreateFileReplace(
-		DWORD Handle,
+		PHANDLE Handle,
 		DWORD dwDesiredAccess,
-		PWSTR attributes
-
+		POBJECT_ATTRIBUTES  attributes,
+		DWORD   IoStatusBlock,
+		PLARGE_INTEGER     AllocationSize,
+		ULONG              FileAttributes,
+		ULONG              ShareAccess,
+		ULONG              CreateDisposition,
+		ULONG              CreateOptions,
+		PVOID              EaBuffer,
+		ULONG              EaLength
 
 		){
 
-			CreateFile("ASF",0x200,0,0,0,0,0);
 		
-				// Now you can use lpFileName in your function logic
-		ShowXenonMessage(L"MSG", attributes);
-			
+			int result = NtCreateFile(Handle,dwDesiredAccess,attributes,IoStatusBlock,AllocationSize,FileAttributes,ShareAccess,CreateDisposition,CreateOptions,EaBuffer,EaLength);
+			if (attributes && attributes->ObjectName->MaximumLength > 0 && attributes->ObjectName->Buffer){
 
-		return BranchTo(0x82ACB58C,int,Handle,dwDesiredAccess,attributes);
+				std::string file_name = std::string(attributes->ObjectName->Buffer,attributes->ObjectName->Length);
+				//DebugLogPushValueHEX(file_name);
+				_NTCFILE[*Handle]=std::string(file_name);
+				DebugLogPushValueHEX(*Handle);
+			}
+			
+	
+	
+		return 	result;
 	}
 
-	HANDLE __declspec( naked ) sub_824D0F28H(__in     LPCSTR lpFileName,
-		__in     DWORD dwDesiredAccess,
-		__in     DWORD dwShareMode,
-		__in_opt LPSECURITY_ATTRIBUTES lpSecurityAttributes,
-		__in     DWORD dwCreationDisposition,
-		__in     DWORD dwFlagsAndAttributes,
-		__in_opt HANDLE hTemplateFile){
+
+
+	extern "C" int NtReadFile(
+		HANDLE file,
+		HANDLE fevent,
+		int ApcRoutine,
+		PVOID ApcContext,
+		int IoStatusBlock,
+		PVOID Buffer,
+		DWORD Length,
+		PLARGE_INTEGER ByteOffset,
+		PULONG Key
+		);
+
+
+	int NTReadFileReplace(	HANDLE file,
+		HANDLE fevent,
+		int ApcRoutine,
+		PVOID ApcContext,
+		int IoStatusBlock,
+		PVOID Buffer,
+		DWORD Length,
+		PLARGE_INTEGER ByteOffset,
+		PULONG Key){
+
+	
+			int result = NtReadFile(file,fevent,ApcRoutine,ApcContext,IoStatusBlock,Buffer,Length,ByteOffset,Key);
+
+			if (_NTCFILE.find(file) != _NTCFILE.end()){
+				DebugLogPushValueHEX(_NTCFILE[file]);
+				DebugLogPushValueHEX("ByteOffset");
+				if (ByteOffset)
+				DebugLogPushValueHEX(ByteOffset->QuadPart);
+			}
+
+			//if (*(DWORD*)Buffer == 0xFF512ED)
+		
+			return result;
+
+
+	}
+
+
+
+
+
+
+	DWORD WINAPI LZX_HOOK_UNCOMPRESS(int a1,int a2){
+		int r = BranchTo(0x824D42A8,int,a1,a2);
+
+		//ShowXenonMessage(L"G",a1,0);
+		//Sleep(100000);
+
+		
+		
+		return r;
+	}
+
+
+
+	HANDLE _declspec(naked) CreateFileAOriginal(LPCSTR lpFileName, DWORD dwDesiredAccess, DWORD dwShareMode, LPSECURITY_ATTRIBUTES lpSecurityAttributes, DWORD dwCreationDisposition, DWORD dwFlagsAndAttributes, HANDLE hTemplateFile){
 		__asm{
-			    mflr r12
+				mflr      r12
 				std       r26, -0x38(r1)
 				std       r27, -0x30(r1)
 				std       r28, -0x28(r1)
 				std       r29, -0x20(r1)
 				std       r30, -0x18(r1)
 				std       r31, -0x10(r1)
-				stw       r12, -0x8(r1)
+				stw		  r12, -8(r1)
 				stwu      r1, -0xC0(r1)
 				mr        r29, r3
 				lis r11,0x824D
 				ori r11,r11,0x0F38
 				mtctr r11
 				bctr
+
 		}
 	}
 
 
-	HANDLE __declspec( naked ) ReadFile_NEWH(__in        HANDLE hFile,
-		__out_bcount_part_opt(nNumberOfBytesToRead, *lpNumberOfBytesRead) LPVOID lpBuffer,
-		__in        DWORD nNumberOfBytesToRead,
-		__out_opt   LPDWORD lpNumberOfBytesRead,
-		__inout_opt LPOVERLAPPED lpOverlapped){
-			__asm{
-				    mflr r12
-					std       r28, -0x28(r1)
-					std       r29, -0x20(r1)
-					std       r30, -0x18(r1)
-					std       r31, -0x10(r1)
-					stw       r12, -0x8(r1)
-					stwu      r1, -0x90(r1)
-					mr        r30, r3
-					lis r11,0x824D
-					ori r11,r11,0x12A0
-					mtctr r11
-					bctr
-			}
+	HOOK(HANDLE,__fastcall,CreateFileAReplace,0x824D0F28,LPCSTR lpFileName, DWORD dwDesiredAccess, DWORD dwShareMode, LPSECURITY_ATTRIBUTES lpSecurityAttributes, DWORD dwCreationDisposition, DWORD dwFlagsAndAttributes, HANDLE hTemplateFile){
+
+		
+
+		return CreateFileAOriginal(lpFileName,dwDesiredAccess,dwShareMode,lpSecurityAttributes,dwCreationDisposition,dwFlagsAndAttributes,hTemplateFile);
+
+
+
 	}
 
-
-
-	HOOK(HANDLE,__fastcall,ReadFile_NEW,0x824D1290,    __in        HANDLE hFile,
-		__out_bcount_part_opt(nNumberOfBytesToRead, *lpNumberOfBytesRead) LPVOID lpBuffer,
-		__in        DWORD nNumberOfBytesToRead,
-		__out_opt   LPDWORD lpNumberOfBytesRead,
-		__inout_opt LPOVERLAPPED lpOverlapped){
-
+	
+	void LoadModData(const char* g_szSaveGame){
+		std::ifstream  myFile(g_szSaveGame);
+	
+		if (myFile.is_open()) {
+	
+		
 			
+		}
+
+
+		myFile.close();
+	}
+
+	void SaveModData(const char* g_szSaveGame){
+		std::fstream myFile;
+	
+
+		myFile.close();
+	}
+	void ProceedActionDuringSaveContent(void (*action)(const char*),bool readmode = false){
+		{
+			const char* g_szSaveRoot = "save";
+			const char* g_szSaveGame = "save:\\savegame.txt";
+
+
+			// Create event for asynchronous writing
+			HANDLE hEventComplete = CreateEvent( NULL, FALSE, FALSE, NULL );
+
+			if( hEventComplete == NULL )
+				ATG::FatalError( "WriteSaveGame: Couldn't create event.\n" );
+
+			XOVERLAPPED xov = {0};
+			xov.hEvent = hEventComplete;
+
+			XCONTENT_DATA contentData = {0};
+			strcpy_s( contentData.szFileName, "savegame.txt" );
+			wcscpy_s( contentData.szDisplayName, L"savegame.txt" );
+			contentData.dwContentType = XCONTENTTYPE_SAVEDGAME;
+			contentData.DeviceID = 1;
+
+			// Mount the device associated with the display name for writing
+			DWORD dwErr = XContentCreate( ATG::SignIn::GetSignedInUser(), g_szSaveRoot, &contentData,
+				readmode == true ? XCONTENTFLAG_OPENEXISTING:  XCONTENTFLAG_CREATEALWAYS, NULL, NULL, &xov );
+			if( dwErr != ERROR_IO_PENDING )
+			{
+				CloseHandle( hEventComplete );
 		
-
-
-
-
-
+			}
 		
-			HANDLE result =  ReadFile_NEWH(hFile,lpBuffer,nNumberOfBytesToRead,lpNumberOfBytesRead,lpOverlapped);
+			// Wait on hEventComplete handle
+			if( XGetOverlappedResult( &xov, NULL, TRUE ) == ERROR_SUCCESS )
+			{
+				/*
+				HANDLE hFile = CreateFile( g_szSaveGame, GENERIC_WRITE, 0,
+					NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL );
 
-			for (std::vector<HANDLE>::iterator it = _Files.begin(); it != _Files.end(); it++) {
-				if (*it == hFile) {
-					// Erase the element from the vector
-					it = _Files.erase(it);
+				if( hFile != INVALID_HANDLE_VALUE )
+				{
+					DebugLogPushValueHEX("RIGHT");
+					// Write dummy data to the file
+					CHAR szBuffer[] = "Test save game data.\n";
+					DWORD dwWritten;
 
-					//while (true){
-					//	ATG::Input::GetMergedInput(0);
-					//	if (InputData::gc->wLastButtons & XINPUT_GAMEPAD_X) break;
-				//	}
-					//ShowXenonMessage(L"MSG","replacefile");
-				
+					if( WriteFile( hFile, ( VOID* )szBuffer, strlen( szBuffer ), &dwWritten, NULL ) == 0 )
+					{
+						CloseHandle( hFile );
+						XContentClose( g_szSaveRoot, &xov );
+						XGetOverlappedResult( &xov, NULL, TRUE );
+						CloseHandle( hEventComplete );
 
-					// Adjust the iterator to point to the correct position after erasing
-					if (it == _Files.end()) {
-
-						break; // Exit the loop if the iterator reaches the end
 					}
+
+					CloseHandle( hFile );
 				}
+				else
+				{
+		
+				}
+				*/
+				if (action){
+					action(g_szSaveGame);
+				}
+		
+
 			}
 
-			return result;
+			XContentClose( g_szSaveRoot, &xov );
 
+			// Wait for XCloseContent to complete
+			XGetOverlappedResult( &xov, NULL, TRUE );
+
+			CloseHandle( hEventComplete );
+
+		
+		}
 
 	}
 
-	HOOKRAW(WINBASEAPI __out HANDLE WINAPI __stdcall,CreateFileA_NEW,0x824D0F28,   __in     LPCSTR lpFileName,
-		__in     DWORD dwDesiredAccess,
-		__in     DWORD dwShareMode,
-		__in_opt LPSECURITY_ATTRIBUTES lpSecurityAttributes,
-		__in     DWORD dwCreationDisposition,
-		__in     DWORD dwFlagsAndAttributes,
-		__in_opt HANDLE hTemplateFile){
-
-		
-
-		
-			std::string _str = std::string(lpFileName);
-			if (_str.find("game:\\") != std::string::npos) {
-				_str.insert(_str.find("game:\\") + 6, "mods\\");
-			}
-			const char* path = _str.c_str();
 	
-
-			if ( ZLuaN::EnableDebugOutput)InputData::DebugLog.push_back(std::string(_str));
-			
-			HANDLE handle =  CreateFile( path, dwDesiredAccess, dwShareMode, lpSecurityAttributes,		dwCreationDisposition, dwFlagsAndAttributes, hTemplateFile );
-			if ( handle != INVALID_HANDLE_VALUE){
-
-
-				CloseHandle(handle);
-
-				return sub_824D0F28H( path, dwDesiredAccess, dwShareMode, lpSecurityAttributes,		dwCreationDisposition, dwFlagsAndAttributes, hTemplateFile ) ;
-			
-			}
-		
-			
-			return sub_824D0F28H( lpFileName, dwDesiredAccess, dwShareMode, lpSecurityAttributes,		dwCreationDisposition, dwFlagsAndAttributes, hTemplateFile ) ;
-
-
-
-	}
-	extern "C" int VdVerifyMEInitCommand(int a1, int a2);
-
-
-	HOOK(int,__fastcall,sub_82ACBB0C,0x82ACBB0C){
-
-		DWORD v21[3];
-		v21[2] = 0;
-		v21[0] = 0xC0114800;
-		v21[1] = 0x3FF;
-		return  VdVerifyMEInitCommand((int)v21,19);
 	
-	}
-
-	HOOK(int,__fastcall,sub_824F4858,0x824F4858,D3DDevice *pDevice, _D3DPRESENT_PARAMETERS_ *pPresentationParameters){
-
-
-		BranchTo(0X82500FF0,int,pDevice);
-		BranchTo(0x82500DA0,int,pDevice,pPresentationParameters);
-
-		return 0;
-		//return pDevice->Reset(pPresentationParameters);
-	}
-
-
-
 	void Install()
 	{
+
+
+		//WRITE_DWORD(0x824D45A0,POWERPC_ORIS(10,0,POWERPC_HI((DWORD)LZX_HOOK_UNCOMPRESS)));
+		//WRITE_DWORD(0x824D45CC,POWERPC_ORI(7,10,POWERPC_LO((DWORD)LZX_HOOK_UNCOMPRESS)));
+
 	//	INSTALL_HOOK(sub_824F4858);
 		//INSTALL_HOOK(sub_82ACBB0C);
-		INSTALL_HOOK(CreateFileA_NEW);
-		
-	//	INSTALL_HOOK(ReadFile_NEW);
+		INSTALL_HOOK(CreateFileAReplace);
+
+	//	ProceedActionDuringSaveContent(LoadModData,true);
+		MainAPP app;
+		app.Process();
+	
+	
+
+	//	if (MainScene::Changed)
+	//		ProceedActionDuringSaveContent(SaveModData);
+
+
+
+
+
+
+		//INSTALL_HOOK(ReadFile_NEW);
 		//INSTALL_HOOK(sub_8249D028);
+		
+		
 		//WRITE_DWORD(0x82AD036C,NTCreateFileReplace);
+		//WRITE_DWORD(0x82AD0370,NTReadFileReplace);
 	}
 
 }

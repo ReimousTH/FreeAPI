@@ -45,7 +45,3 @@ Debug
 *.obj
 *.pdb
 *.idb
-*.ncb
-DLLModule2008.ncb
-*.suo
-DLLModule2008.suo

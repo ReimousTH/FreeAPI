@@ -14,6 +14,15 @@
 #include "xbox.h"
 #include "xonline.h"
 
+#include "InputData.h"
+#include "DLL_LUA.h"
+
+
+#include <string>
+#include <vector>
+#include <list>
+
+
 namespace NetplayRFIX{
 	
 

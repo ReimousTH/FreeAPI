@@ -22,11 +22,12 @@ struct __declspec(align(4)) XNLive
 	_BYTE gap8[48];
 	_DWORD dword38;
 	_BYTE gap3C[8];
-	LiveU1 *dword44;
+	_XSESSION_SEARCHRESULT_HEADER *XSessionSearchResuts;
 	_BYTE gap48[16];
 	_DWORD dword58;
 	XNQOS *XNQOS;
 };
+
 
 
 
@@ -1213,10 +1214,10 @@ struct clsXbox360System
 	clsXbox360System_vtbl *__vftable /*VFT*/;
 	float GameSpeed;
 	int field_8;
-	int field_C;
-	int field_10;
+	float RawFPS;
+	float field_10;
 	float CameraSpeed;
-	int field_18;
+	float field_18;
 	int TickPerSecond;
 	float field_20;
 	float field_24;
@@ -1226,9 +1227,9 @@ struct clsXbox360System
 	float field_34;
 	int field_38;
 	int field_3C;
-	int field_40;
+	float field_40;
 	int field_44;
-	int field_48;
+	float field_48;
 	int field_4C;
 	int field_50;
 	int field_54;
@@ -1243,13 +1244,14 @@ typedef struct clsXbox360Camera;
 struct __declspec(align(4)) CamP0x1F0_vtbl
 {
 	int func0;
-	void (__fastcall *func4)(CamP0x1F0 *_this, int, int, int);
+	void (__fastcall *func4)(CamP0x1F0 *thiss, int, int, int);
 	int func8;
-	void *(__fastcall *funcC)(CamP0x1F0 *_this);
+	void *(__fastcall *funcC)(CamP0x1F0 *thiss);
 	void (__fastcall *func10)(CamP0x1F0 *);
 	int func14;
 	int func18;
 };
+
 
 struct CamP0x1F0
 {
@@ -1394,8 +1396,6 @@ struct CamP0x1F0
 	int field_228;
 };
 
-
-
 typedef struct clsXbox360Camera;
 
 struct /*VFT*/ __declspec(align(4)) clsXbox360Camera_vtbl
@@ -1537,6 +1537,7 @@ struct __declspec(align(4)) struct_MBKinnectInput
 	int field_6C;
 	int field_70;
 	mki0x74 *PlayerData;
+	int field_78;
 };
 
 
@@ -2011,6 +2012,55 @@ struct NUIP_RUNTIME_STATE
 
 
 
+
+struct EngineGlobalParams
+{
+	clsOOSystemHeap *clsOOSystemHeap;
+	int clsOOMain360Heap;
+	int field_8;
+	int clsOOVramHeap;
+	int field_10;
+	int field_14;
+	clsXbox360System *clsXbox360FPSSystem;
+	int field_1C;
+	int field_20;
+	int field_24;
+	int field_28;
+	clsOOTimer *clsOO360Timer;
+	int clsXbox360VecCalc;
+	int field_34;
+	int field_38;
+	int field_3C;
+	int field_40;
+	int field_44;
+	int field_48;
+	int field_4C;
+	int field_50;
+	int field_54;
+	int field_58;
+	int field_5C;
+	int field_60;
+	int field_64;
+	int clsOO360Print;
+	int field_6C;
+	int field_70;
+	int field_74;
+	int field_78;
+	int field_7C;
+	int field_80;
+	int field_84;
+	int field_88;
+	int field_8C;
+};
+
+struct HStruct
+{
+	std::string field_0;
+	XSESSION_SEARCHRESULT *SearchResult;
+	int field_20;
+};
+
+
 DataPointer(XGuidMenu*,KinnectGuidInstanceSome,0x83E52F80);
 DataPointer(char,byte_83E515E7,0x83E515E7);
 DataPointer(char,MainMenuCursorSome,0x83E515F6);
@@ -2067,6 +2117,8 @@ DataPointer(float,flt_82B3BCE0, 0x82B3BCE0);
 DataPointer(int*,dword_82B3FFF8, 0x82B3FFF8);
 DataPointer(int*,dword_8218FFB4, 0x8218FFB4);
 
+DataPointer(int *,D3D__CDevice__GAME, 0x83E50B30);
+
 
 
 
@@ -2091,7 +2143,7 @@ FastcallFunctionPointer(int,SwapOutWithinNextPlayerMSG,(),0x824636A8);
 FastcallFunctionPointer(int*,sub_8246E7E8,(int),0x8246E7E8);
 
 FastcallFunctionPointer(int*,sub_82240838,(int a1, int a2, __int64 a3),0x82240838);
-FastcallFunctionPointer(int*,sub_82211440,(),0x82211440);	
+FastcallFunctionPointer(EngineGlobalParams *,GetEngineGlobalParams,(),0x82211440);	
 FastcallFunctionPointer(int*,RidersMemAlloc,(size_t a1),0x82497D68 );	
 FastcallFunctionPointer(int*,ChrChangeState,(struct_v1 *a1, int a2),0x822B1818);	
 FastcallFunctionPointer(int*,MAINMENUBIGSUB,(int a1, ItemNRElement *a2, int a3),0x82460668);	

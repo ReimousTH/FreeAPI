@@ -28,9 +28,12 @@ namespace InputData{
 
 	void SetSessionIP(){
 
+		
+	
+
 		const char* str =CommonLua.GetGlobalString("ConnectSessionID");
 		std::vector<byte> IP_VEC = GetIPHelper(CommonLua.GetGlobalString("ConnectIP"));
-
+	
 
 		std::stringstream conv;
 		const char* ByteArrayString = str;
@@ -61,6 +64,9 @@ namespace InputData{
 
 		XINVITE_INFO* t = (XINVITE_INFO*)(XNLiveSomeStatic + 0x67);
 		memcpy((void*)t->hostInfo.sessionID.ab,bt,8);
+
+
+
 		t->dwTitleID = 0x5345084D;
 		t->hostInfo.hostAddress.ina.S_un.S_un_b.s_b1 = IP_VEC[0];
 		t->hostInfo.hostAddress.ina.S_un.S_un_b.s_b2 = IP_VEC[1];
@@ -350,6 +356,7 @@ namespace InputData{
 				NuiFakeDevice->field_110 = 0.0;
 
 			}
+			
 
 
 			if (gc->wPressedButtons & XINPUT_GAMEPAD_A){
@@ -519,6 +526,9 @@ namespace InputData{
 	byte Gamemode690H[0x300]  = {0};
 	byte Gamemode690H1[0x300] = {0};
 
+	bool StartS = false;
+
+	DWORD ShowUI = true;
 
 
 	LPCWSTR XButtons[1] = { L"------------OK----------------" };
@@ -540,23 +550,6 @@ namespace InputData{
 	}
 
 	HOOK(int,__fastcall,SelfViewUpdate,0x82438930,int a1){
-	
-		if (onceX == false && Static_8219FB14){
-			onceX = !onceX;
-
-//			*(_DWORD *)(NearKinnectNuiBox::Instance + 0x9C) = 1;
-
-		//	*(_DWORD *)(*(_DWORD *)(InputSomeUnkStatic + 0x24) + 0) = (_DWORD)&Expo1;
-		
-		//	BranchTo(0X823B7C08,INT,seg_83E52F84);
-
-			//BranchTo(0x823B87A0,int,seg_83E52F84+4,*(_DWORD *)(InputSomeUnkStatic + 0x14));
-			//BranchTo(0x8226D940,int,Static_8219FB14,0,1,&Expo);
-			//BranchTo(0x8226D940,int,Static_8219FB14,1,1,&Expo);
-		//	BranchTo(0x8226D940,int,Static_8219FB14,0,0,&Gamemode690H,0);
-	
-
-		}
 	
 		if (MainGameRooOrEnginetStaticInstance){
 			*(char*)(MainGameRooOrEnginetStaticInstance + 0x7F23) = 1; //Update Device Status
@@ -589,15 +582,17 @@ namespace InputData{
 			
 
 			XShowMessageBoxUI(ATG::SignIn::GetSignedInUser(),L"DebugLog V2.0",ConcatenateStrings(DebugLog).c_str(),1,XButtons,1,XMB_ALERTICON,&result,&m_Overlapped);
+			DebugLog.clear();
 
 		}
 
 	
 
-		/*
-		if ( (gc->wPressedButtons & XINPUT_GAMEPAD_LEFT_THUMB ) &&   (gc->wLastButtons & XINPUT_GAMEPAD_DPAD_UP )){
+		
+		if ( (gc->wPressedButtons & XINPUT_GAMEPAD_DPAD_UP )){
 			ShowUI = !ShowUI;
 		}
+		/*
 		if ( (gc->wPressedButtons & XINPUT_GAMEPAD_RIGHT_THUMB )) {
 
 			ForcePauseGame = !ForcePauseGame;
@@ -612,112 +607,6 @@ namespace InputData{
 
 		}
 		*/
-
-		if ((gc->wPressedButtons & XINPUT_GAMEPAD_DPAD_UP) && GameRootStateController &&GameRootStateController->GameRootState == 1){
-			 //XINVITE_INFO* t = (XINVITE_INFO*)(XNLiveSomeStatic + 0x67);
-
-			if ( *(_BYTE *)(XNLiveSomeStatic + 0x66) )
-				*(_BYTE *)(XNLiveSomeStatic + 0x61) = 1;
-				SetSessionIP();
-
-			
-
-			 *(_BYTE *)(XNLiveSomeStatic + 0x65) = 1;
-			 *(_BYTE *)(XNLiveSomeStatic + 0x66) = 0;
-			 *(_BYTE *)(XNLiveSomeStatic + 0xBB) = 0;
-		}
-
-
-		if (ForcePauseGame){
-		DWORD t1 = (_DWORD )MBKinnectInput[1].field_28;
-
-		DWORD tl_cam = **(int**)(t1 + 0x8);
-
-		float* CameraPosition = (float*)(tl_cam + 0x50);
-		float* CameraPositionCenter = (float*)(tl_cam + 0x60); //Center
-
-
-	
-
-		float* CameraRotation = (float*)(tl_cam + 0x40);
-			CameraPosition[0] += gc->fX1;
-
-			if (gc->wLastButtons & XINPUT_GAMEPAD_A){
-				CameraPosition[1] += 0.1;
-			}
-			if (gc->wLastButtons & XINPUT_GAMEPAD_B){
-				CameraPosition[1] -= 0.1;
-			}
-
-			CameraPosition[2] += gc->fY1;
-
-
-
-				float* CameraMetric = (float*)(tl_cam + 0x20);
-
-		
-
-	
-
-		if (gc->wPressedButtons & XINPUT_GAMEPAD_Y){
-	
-
-		
-
-			//CameraPositionCenter[0] = CameraPosition[0];
-			//CameraPositionCenter[1] = CameraPosition[1];
-			//CameraPositionCenter[2] = CameraPosition[2];
-			//CameraPositionCenter[3] = CameraPosition[3];
-
-
-		//	t->setTranslation(pos_camera);
-	
-		//	t->setRotationCenter(TTT,pos_camera.invert());
-			//t->setTextureTranslate()
-		
-		
-			//t->setRotationCenter(pos_camera,t->getTranslation());
-		}
-	
-
-	
-
-
-
-
-
-			//CameraRotation[0] = clamp(CameraRotation[0] + gc->fX2 * 0.01,-1.0,1.0);
-
-			//CameraRotation[1] = clamp(CameraRotation[1] + gc->fY2 * 0.01,-1.0,1.0);
-
-			//CameraRotation[2] = clamp(CameraRotation[2] + gc->fY2 * 0.01,-1.0,1.0);
-		}
-
-
-
-
-
-
-		//WriteVirtualBytes("0x8229A6D4","60000000")
-	    //WriteVirtualBytes("0x8229A6EC","60000000")
-		if (seg_83E52F84){
-//			*(_DWORD *)(4 * 0 + *(_DWORD *)(seg_83E52F84 + 4)) = (DWORD)&seg_83E52F84Fake;
-//			*(_DWORD *)(4 * 1 + *(_DWORD *)(seg_83E52F84 + 4)) = (DWORD)&seg_83E52F84Fake;
-
-
-//			DWORD v5 = *(_DWORD *)(4 * 0 + *(_DWORD *)(seg_83E52F84 + 4));
-//			DWORD v6 = *(_DWORD *)(4 * 1 + *(_DWORD *)(seg_83E52F84 + 4));
-
-//			*(_DWORD **)(v5 + 0x4C) = (DWORD*)&seg_83E52F84Fake;
-//			*(_DWORD **)(v6 + 0x4C) = (DWORD*)&seg_83E52F84Fake;
-
-
-		}
-	
-	
-		//*(byte*)((int)MainTitlev144Actions + 0x1558)=1; //GlobalInputLock
-
-
 
 
 		if (!once){
@@ -749,7 +638,10 @@ namespace InputData{
 	return SelfViewUpdateH(a1);
 }
 
-	
+
+bool LuaBehaviour = false;
+int P1SLOT = 0;
+int P2SLOT = 1;
 ATG::GAMEPAD* gc =  &ATG::Input::m_Gamepads[P1SLOT];
 ATG::GAMEPAD* gc2P =  &ATG::Input::m_Gamepads[P2SLOT];
 

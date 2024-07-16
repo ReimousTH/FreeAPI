@@ -251,6 +251,41 @@ extern "C" int LUA__GLOBAL__WriteVirtualHOOK(lua_State* L){
 	return 0;
 }
 
+template <typename T> int PushMesage(T value){
+	DebugLogPushValueHEX(value);
+	return 0;
+}
+
+extern "C" int Message(lua_State* L){
+	
+	const int type = lua_type(L,1);
+	switch (type)
+	{
+	case  LUA_TLIGHTUSERDATA:
+		PushMesage((int)lua_touserdata(L,1));
+		break;
+	case LUA_TNUMBER:
+		PushMesage(lua_tonumber(L,1));
+		break;
+	case LUA_TBOOLEAN:
+		PushMesage(lua_toboolean(L,1));
+		break;
+	case LUA_TSTRING:
+		PushMesage(lua_tostring(L,1));
+		break;
+	}
+
+	
+
+
+	return 0;
+}
+extern "C" int ForceDebugOutput(lua_State* L){
+	ZLuaN::EnableDebugOutput = 	lua_toboolean(L,1);
+	return 0;
+
+}
+
 
 
 void ZLuaN::OpenLuaRaw()
@@ -261,6 +296,7 @@ void ZLuaN::OpenLuaRaw()
 void ZLuaN::OpenLua()
 {
 	L = lua_open();
+	
 	luaopen_base(L);
 	luaopen_math(L);
 	luaopen_table(L);
@@ -283,6 +319,10 @@ void ZLuaN::OpenLuaMy()
 	lua_register(L,"HEX",LUA__GLOBAL__HEX);
 	lua_register(L,"WriteASM",LUA__GLOBAL__WriteVirtualASM);
 
+	DebugLogV2::MemoryLIB_GlobalInstall(this->L);
+
+	lua_register(L,"ForceDebugOutput",ForceDebugOutput);
+	lua_register(L,"Message",Message);
 
 
 
@@ -291,28 +331,48 @@ void ZLuaN::OpenLuaMy()
 
 void ZLuaN::LoadLua(const char* file)
 {
-	
+	DWORD ret;
+
 
 	int error = luaL_loadfile(L,file);
 
 	if (error != 0){
 		error_msg = lua_tostring(L,-1);
+		//this->error = true;
 		lua_pop(L,1);
-		ShowXenonMessage(L"MSG",error_msg);
+		ShowXenonMessage(L"MSG",this->error_msg);
 		while (true) {}
-		
+	
 	}
 	else{
 		lua_pcall(L,0,LUA_MULTRET,0);
 	}
 
-	
+
 
 
 	return;
 }
 
+void ZLuaN::Close()
+{
+	lua_close(this->L);
+
+
+}
+
 const char* ZLuaN::GetGlobalString(const char* str)
+{
+	lua_getglobal(L,str);
+	if (lua_isstring(L,-1)){
+		return lua_tostring(L,-1);
+	}
+	else{
+		return "";
+	}
+}
+
+const std::string ZLuaN::GetGlobalSString(const char* str)
 {
 	lua_getglobal(L,str);
 	if (lua_isstring(L,-1)){
@@ -333,6 +393,7 @@ bool ZLuaN::GetGlobalBoolean(const char* str)
 		return false;
 	}
 }
+
 
 int ZLuaN::GetGlobalIntNew(const char* st,bool useglobal = true)
 {
@@ -375,7 +436,73 @@ int ZLuaN::GetGlobalIntNew(const char* st,bool useglobal = true)
 
 }
 
+void ZLuaN::RegisterFunction(const char* name, lua_CFunction fn)
+{
+	lua_pushcfunction(L, fn);
+	lua_setglobal(L, name);
+}
+
+//lua.CallFunction("myFunction", LUA_TSTRING, "hello", LUA_TNUMBER, 42.5, LUA_TBOOLEAN, true, LUA_TNIL)
+void ZLuaN::CallFunction(const char* name,...)
+{
+	lua_getglobal(L, name);  // Push the function onto the stack
+
+	// Push the arguments onto the stack
+	va_list args;
+	va_start(args, name);
+	int i = 0;
+	while (true) {
+		int type = va_arg(args, int);
+		if (type == LUA_TNIL) {
+			break;
+		}
+
+		switch (type) {
+			case LUA_TSTRING: {
+				const char* str = va_arg(args, const char*);
+				lua_pushstring(L, str);
+				break;
+							  }
+			case LUA_TNUMBER: {
+				double num = va_arg(args, double);
+				lua_pushnumber(L, num);
+				break;
+							  }
+			case LUA_TBOOLEAN: {
+				bool boolean = va_arg(args, int);
+				lua_pushboolean(L, boolean);
+				break;
+							   }
+			case LUA_TLIGHTUSERDATA:
+				{
+					void* data = va_arg(args, void*);
+					lua_pushlightuserdata(L, data);
+					break;
+				}
+			default:
+				// Handle other types if needed
+				break;
+		}
+		i++;
+	}
+	va_end(args);
+
+	int nargs = i;
+	int nresults = 0;  // Number of return values expected
+
+	if (lua_pcall(L, nargs, nresults, 0)) {
+		// Handle error
+		const char* error = lua_tostring(L, -1);
+		lua_pop(L, 1);  // Pop the error message
+		// Handle the error
+	}
+}
+
 bool ZLuaN::EnableDebugOutput = false;
+
+
+
+bool ZLuaN::TogeableHud = false;
 
 ZLuaN CommonLua = ZLuaN();
 void DLL_LUA_INSTALL()
@@ -383,7 +510,7 @@ void DLL_LUA_INSTALL()
 	
 	CommonLua.OpenLua();
 	CommonLua.OpenLuaMy();
-	CommonLua.LoadLua("game:\\common\\test.lua");
+	CommonLua.LoadLua("game:\\common\\Machine.lua");
 
 	
 }

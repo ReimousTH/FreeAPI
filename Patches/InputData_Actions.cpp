@@ -191,7 +191,7 @@ HOOK(int*,__fastcall,sub_823FAEC0,0x823FAEC0,int a1)
 
 	v1 = 0;
 	v3 = *(_DWORD *)(a1 + 4);
-	result = sub_82211440();
+	result = (int*)GetEngineGlobalParams();
 	v5 = *(_DWORD *)(a1 + 0x44);
 	if ( v5 == 2 )
 	{
@@ -210,12 +210,23 @@ HOOK(int*,__fastcall,sub_823FAEC0,0x823FAEC0,int a1)
 		else
 			v7 = 8;
 
-		if (ShowUI){
+
+	
+
+
+
+		v8 = *(_DWORD *)(a1 + 0x7C);
+
+		if (!ShowUI){
 			v7 = 0;
 		}
-		v8 = *(_DWORD *)(a1 + 0x7C);
+
+
+
 		if ( v7 != v8 )
 		{
+
+
 			if ( v7 == 8 )
 			{
 				if ( *(_BYTE *)(a1 + 0x80) )
@@ -283,7 +294,8 @@ LABEL_27:
 
 
 		INSTALL_HOOK(sub_8224C6F8); // +
-		//INSTALL_HOOK(sub_823FAEC0); //+
+
+		if (ZLuaN::TogeableHud) INSTALL_HOOK(sub_823FAEC0); //+
 
 
 

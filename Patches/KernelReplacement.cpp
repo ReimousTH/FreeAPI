@@ -31,6 +31,13 @@ namespace KernelR{
 
 
 
+	HOOK(int,__fastcall,EtxProducerUnRegistersFake,0x82ACC29C,int Array1, int Array2, int Flag1, int Flag2, int Flag3, _ETX_PRODUCER* ETX){
+
+		//*a6 = 0x1;
+
+		return 0;
+	}
+
 
 	HOOK(DWORD,__stdcall,XamShowNuiDeviceSelectorUI,0x82ACB3EC,__in    DWORD dwTrackingID,__in    DWORD dwUserIndex,__in    DWORD dwContentType,__in    DWORD dwContentFlags,__in    ULARGE_INTEGER uliBytesRequested,__out   PXCONTENTDEVICEID pDeviceID,__inout PXOVERLAPPED pOverlapped){
 
@@ -59,6 +66,16 @@ namespace KernelR{
 		return XamContentOpenFile(a1,name,path,Flags1,Flags2,Flags3,Flags4);
 	}
 
+	HOOK(int,__fastcall,XamXStudioRequestReplace,0x82ACBEDC){
+
+		return 0;
+	}
+
+	HOOK(int,__fastcall,XamNuiCameraTiltSetCallback,0x82ACBECC){
+
+		return 0;
+	}
+
 	void Install()
 	{
 		if (!HookV2::IsNotEmulatedHardWare){
@@ -69,7 +86,10 @@ namespace KernelR{
 		WRITE_DWORD(0x8222CA38,0x4E800020); //ShowKinectRequieredMessage
 		INSTALL_HOOK(sub_82ACB43C); //Fake XamNuiGetDeviceStatus
 	
-		//INSTALL_HOOK(EtxProducerRegistersFake);
+		INSTALL_HOOK(XamXStudioRequestReplace);
+		INSTALL_HOOK(EtxProducerRegistersFake);
+		INSTALL_HOOK(EtxProducerUnRegistersFake);
+		INSTALL_HOOK(XamNuiCameraTiltSetCallback);
 	
 		INSTALL_HOOK(XamShowNuiSigninUIE);
 		INSTALL_HOOK(XamShowNuiDeviceSelectorUI);

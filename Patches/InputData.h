@@ -3,8 +3,10 @@
 #ifndef __InputData__
 #define __InputData__
 
-#define P1SLOT 0
-#define P2SLOT 1
+
+
+
+
 
 
 #include "../HookV2.h"
@@ -14,6 +16,8 @@
 #include "AtgInput.h"
 #include "AtgSignIn.h"
 
+#include "AtgSignIn.h"
+#include "AtgSessionManager.h"
 
 #include "DLL_LUA.h"
 
@@ -28,6 +32,11 @@ namespace InputData{
 
 	extern ATG::GAMEPAD* gc;
 	extern ATG::GAMEPAD* gc2P;
+
+	extern int P1SLOT;
+	extern int P2SLOT;
+
+	extern bool LuaBehaviour;
 
 
 	struct NukFakeDeviceHelpers{
@@ -94,7 +103,7 @@ namespace InputData{
 
 
 	//Debug
-	static DWORD ShowUI;
+	extern DWORD ShowUI;
 	static DWORD ForcePauseGame;
 	static bool once;
 

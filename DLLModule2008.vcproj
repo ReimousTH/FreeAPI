@@ -816,7 +816,7 @@
 				AssemblerOutput="0"
 				ProgramDataBaseFileName="$(IntDir)\vc80.pdb"
 				WarningLevel="0"
-				DebugInformationFormat="3"
+				DebugInformationFormat="0"
 				Stalls="false"
 			/>
 			<Tool
@@ -831,11 +831,11 @@
 			<Tool
 				Name="VCX360LinkerTool"
 				AdditionalOptions="/ignore:4089 /dll /entry:&quot;_DllMainCRTStartup&quot; /include:&quot;XboxKrnlBuildNumber&quot;&#x0D;&#x0A;/FORCE:MULTIPLE"
-				AdditionalDependencies="d3d9.lib d3dx9.lib xgraphics.lib xapilib.lib xaudio2.lib x3daudio.lib xmcore.lib xboxkrnl.lib xbdm.lib libcmt.lib xonlined.lib"
+				AdditionalDependencies="xgraphics.lib xapilib.lib xaudio2.lib x3daudio.lib xmcore.lib xboxkrnl.lib xbdm.lib libcmt.lib xonlined.lib d3d9d.lib d3dx9d.lib xgraphicsd.lib xapilibd.lib xaudiod2.lib x3daudiod.lib xmcored.lib xactd3.lib xuirund.lib xuirenderd.lib xmediad2.lib"
 				OutputFile="$(ProjectDir)\..\..\TEST.dll"
 				ModuleDefinitionFile="DllModule.def"
 				GenerateDebugInformation="true"
-				OptimizeReferences="1"
+				OptimizeReferences="2"
 				EnableCOMDATFolding="2"
 				SetChecksum="true"
 			/>
@@ -1314,11 +1314,27 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Patches\LuaExtension_Memory.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Patches\LuaExtension_Memory.h"
+				>
+			</File>
+			<File
 				RelativePath=".\Patches\ModLoader.cpp"
 				>
 			</File>
 			<File
 				RelativePath=".\Patches\ModLoader.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Patches\ModLoaderScene.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Patches\ModLoaderScene.h"
 				>
 			</File>
 			<File
@@ -1344,6 +1360,10 @@
 		</Filter>
 		<File
 			RelativePath=".\Basics.h"
+			>
+		</File>
+		<File
+			RelativePath=".\ClassDiagram1.cd"
 			>
 		</File>
 		<File

@@ -4,6 +4,8 @@
 #define DLL_LUA
 #endif
 
+#include "InputData.h"
+
 extern "C" {
 #include "lua.h"
 #include "lualib.h"
@@ -25,6 +27,8 @@ extern "C" {
 #include <xtl.h>
 #include <map>
 
+#include "LuaExtension_Memory.h"
+
 
 
 
@@ -39,15 +43,30 @@ public:
 	void OpenLua();
 	void OpenLuaMy();
 	void LoadLua(const char* file);
+	void Close();
 
 	//work with lua
 
 	const char* GetGlobalString(const char* str);
+	const std::string GetGlobalSString(const char* str);
+
+
 	bool GetGlobalBoolean(const char* str);
 
 	int GetGlobalIntNew(const char* st,bool useglobal);
 
+
+	void RegisterFunction(const char* name,lua_CFunction fn);
+	void CallFunction(const char* name,...);
+
+
 	static bool EnableDebugOutput;
+	static bool TogeableHud;
+
+	static std::vector<std::string> _file_redirect_;
+
+
+
 
 
 };

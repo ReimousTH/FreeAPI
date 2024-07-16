@@ -116,6 +116,8 @@ static void __declspec( naked ) restgprl_H(){
 #include <time.h>
 
 
+#include "math/quaternion.h"
+#include "math/matrix4.h"
 
 // first unsigned macros:
 
@@ -345,6 +347,7 @@ public:
 
 
 
+
 static LPCWSTR g_pwstrButtonsX[1] = { L"------------OK----------------" };
 
 static void ShowXenonMessage(LPCWSTR Title,LPCWSTR wTitle){
@@ -354,6 +357,24 @@ static void ShowXenonMessage(LPCWSTR Title,LPCWSTR wTitle){
 	XShowMessageBoxUI(ATG::SignIn::GetSignedInUser(),Title,wTitle,1,g_pwstrButtonsX,1,XMB_ALERTICON,&result,&m_Overlapped);
 	
 }
+
+template <typename T>
+static void DebugLogPushValueHEX(T value){
+
+	std::stringstream ss;
+	ss << std::hex << value;
+	std::string hexString = ss.str();
+	if ( ZLuaN::EnableDebugOutput) InputData::DebugLog.push_back(std::string(hexString));
+}
+template <typename T>
+static void DebugLogPushValue(T value){
+
+	std::stringstream ss;
+	ss << value;
+	std::string hexString = ss.str();
+	if ( ZLuaN::EnableDebugOutput) InputData::DebugLog.push_back(std::string(hexString));
+}
+
 
 static wchar_t *convertCharArrayToLPCWSTR(const char* charArray)
 {
@@ -385,14 +406,28 @@ static MESSAGEBOX_RESULT* ShowXenonMessage(LPCWSTR Title,const char* wTitle){
 static void ShowXenonMessage(LPCWSTR Title,int value,char*){
 
 
-	int vIn = value;;
-	wchar_t vOut [12];
-	_itow_s(vIn,vOut,sizeof(vOut)/2,10);
+	std::wstringstream ss;
+	ss << std::hex << value;
+	std::wstring hexString = ss.str();
 
-	ShowXenonMessage(Title,vOut);
+	ShowXenonMessage(Title,hexString.c_str());
 
 }
 
+template <typename T>
+static void PushXenonMessage(T value){
+
+	std::wstringstream ss;
+	ss <<std::hex << value;
+
+
+	MESSAGEBOX_RESULT result;
+	XOVERLAPPED m_Overlapped; 
+
+	XShowMessageBoxUI(ATG::SignIn::GetSignedInUser(),L"MSG",ss.str().c_str(),1,g_pwstrButtonsX,1,XMB_ALERTICON,&result,&m_Overlapped);
+
+
+}
 
 
 static void ShowXenonMessage(LPCWSTR Title,float value,char*){
