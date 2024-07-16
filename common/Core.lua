@@ -1,7 +1,452 @@
-local shown = false
-param0 = 3.0
-param1 = 3.0
-param2 = 4.0
+
+function DashPanelsNowAddSpeed(Multiplier)
+
+--------------------DASH PANELS------------
+--822EFB98 Store Speed
+
+
+WriteVirtualBytes("0x82600E78","4E800020") -- Void function
+-- .set start,0x82600E7C
+-- lfs       f0, 0x1AC(r29) # DashSpeed
+-- lfs       f13, 0x77C(r31) #CurrentSpeed
+-- fadd f12,f0,f13 # Current + Set
+-- fdiv f12,f0,f12 # Multiplier
+-- lis r11,(start+tfloat)@ha
+-- lfs f0,(start+tfloat)@l(r11)
+-- fmul f12,f12,f0 # Cut Multiplier
+-- fmul f12,f12,f13 # M*CS
+-- fadd f12,f12,f13 # M +(M*CS)
+-- lfs       f0, 0x1AC(r29) 
+-- fcmpu     cr6, f12, f0
+-- // If (CurrentSpeed + Modifers) <= DashSpeed
+-- blt cr6,sub_store
+-- // If CurrentSpeed >= DashSpeed
+-- bge cr6,sub_store2
+-- sub_store:
+-- stfs f0,0x77c(r31)
+-- blr
+-- sub_store2:
+-- #reworkTime
+-- stfs f12,0x77C(r31) # Store
+-- blr
+-- tfloat:.float 0.16
+WriteVirtualBytes("0x822EFB98","483112E5") -- BR function
+WriteVirtualBytes("0x82600E7C","C0 1D 01 AC C1 BF 07 7C FD 80 68 2A FD 80 60 24 3D 60 82 60 C0 0B 0E C0 FD 8C 00 32 FD 8C 03 72 FD 8C 68 2A C0 1D 01 AC FF 0C 00 00 41 98 00 08 40 98 00 0C D0 1F 07 7C 4E 80 00 20 D1 9F 07 7C 4E 80 00 20 3E 23 D7 0A")
+WriteVirtualFloat(HEX("0x82600E7C")+HEX("0x44"),Multiplier)
+
+
+end
+
+
+function KickDashNowAddSpeed(Multiplier)
+
+
+--------------KICK DASH SPEED LIMIT BREAK----------------
+--822b2cc0(need to think)
+WriteVirtualBytes("0x82601168","4E800020")
+--8260116C
+-- bl -(0x822B2CC0-0x8260116C)
+WriteVirtualBytes("0x822B2CC0","4834E4AD")
+-- .set start,0x8260116C
+-- fmr f0,f1
+-- lfs       f13, 0x71C(r31) #CurrentSpeed
+-- fadd f12,f0,f13 # Current + Set
+-- fdiv f12,f0,f12 # Multiplier
+-- lis r11,(start+tfloat)@ha
+-- lfs f0,(start+tfloat)@l(r11)
+-- fmul f12,f12,f0 # Cut Multiplier
+-- fmul f12,f12,f13 # M*CS
+-- fadd f12,f12,f13 # M +(M*CS)
+-- fcmpu     cr6, f12, f1
+-- // If (CurrentSpeed + Modifers) <= DashSpeed
+-- blt cr6,sub_store
+-- // If CurrentSpeed >= DashSpeed
+-- bge cr6,sub_store2
+-- sub_store:
+-- fmr f0,f1
+-- stfs f0,0x71C(r31)
+-- blr
+-- sub_store2:
+-- #reworkTime
+-- stfs f12,0x71C(r31) # Store
+-- blr
+-- tfloat:.float 0.16
+-- tfloatX:.float 1.0
+WriteVirtualBytes("0x8260116C","FC 00 08 90 C1 BF 07 1C FD 80 68 2A FD 80 60 24 3D 60 82 60 C0 0B 11 B0 FD 8C 00 32 FD 8C 03 72 FD 8C 68 2A FF 0C 08 00 41 98 00 08 40 98 00 10 FC 00 08 90 D0 1F 07 1C 4E 80 00 20 D1 9F 07 1C 4E 80 00 20 3E 23 D7 0A")
+WriteVirtualFloat(HEX("0x8260116C")+HEX("0x44"),Multiplier)
+end
+
+
+function SkipTrainingMoveAction(result)
+
+
+--WriteVirtualBytes("0x822A8C10","60000000")
+--WriteVirtualBytes("0x822B7648","39 20 00 07")
+
+--WriteASM("0x822B7648","li r3,0x1\nli r4,0x1")
+--bl
+
+--822C3428 (STW INPUT 0x310, trainign should be)
+--822C33EC
+--822C7D18 (HIP seems after preap)
+
+--822A8B3C move 
+--WriteVirtualBytes("0x822C62E8","60000000")
+--822A4520
+--82240C14
+--822C8974
+--822c6944
+--822c77bc
+--WriteVirtualBytes("0x822C67F8","4E800020")
+--WriteVirtualBytes("0x822C8958","4E800020") --block move but that does not block other
+
+WriteVirtualBytes("0x822C3424","38C00001")
+
+
+if (result) then WriteVirtualBytes("0x822B746C","39 60 00 07")    end -- Force straight to move
+
+WriteVirtualBytes("0x82240AB8","4E800020") --Remove Calibarion UI and seems actions too
+
+end
+
+--Works only at story mode
+function DisableTrainingMode()
+if (IsXbox360())  then return end
+WriteVirtualBytes("0x8245E6F8","60000000") -- No Training Mode (full skip) (dont recomment use with story mode)
+end
+
+function AlwaysShowHidedButtons()
+---------------[Always Show Hided Buttons]-------------
+WriteVirtualBytes("0X8245F0CC","60000000") 
+-------------------------------------------------------
+end
+
+function UnlockAllGearToSelect()
+------------[Unlock All Gear To Select]-------------
+WriteVirtualBytes("0x8247CB60","386000014E800020") --Butons
+WriteVirtualBytes("0x8228B2F0","60000000") --Breaks Bike Character Only XD
+--WriteVirtualBytes("0x8245E494","60000000") -- Remove Gear ReChanger only for players
+----------------------------------------------------
+end
+
+function EveryBoxGivesRandomItem()
+------------Every Box Random and give Random Item always-------------
+WriteVirtualBytes("0x82308294","3960000B")
+WriteVirtualBytes("0x823082A0","4800")
+WriteVirtualBytes("0x8230857C","60000000")
+WriteVirtualBytes("0x82308528","60000000")
+WriteVirtualBytes("0x823085B0","60000000")
+----------------------------------------------------------------------
+end
+
+
+function EveryRandomBoxGivesTrueRandomItem()
+------------[Every Box Give Abosulute Random Item, example]--------------
+-- .set rand,0x82A54FD0
+-- mflr      r12
+-- stw       r12, -8(r1)
+-- stwu      r1, -0x60(r1)
+-- lis r11,rand@ha
+-- ori r11,r11,rand@l
+-- mtctr r11
+-- bctrl
+-- li        r11, 0x11
+-- divw      r11, r3, r11
+-- mulli     r11, r11, 0x11
+-- subf      r11, r11, r3
+-- addi      r3, r11, 5
+-- addi      r1, r1, 0x60
+-- lwz       r12, -8(r1)
+-- mtlr      r12
+-- blr
+WriteVirtualBytes("0x82306F00","7D 88 02 A6 91 81 FF F8 94 21 FF A0 3D 60 82 A5 61 6B 4F D0 7D 69 03 A6 4E 80 04 21 39 60 00 11 7D 63 5B D6 1D 6B 00 11 7D 6B 18 50 38 6B 00 05 38 21 00 60 81 81 FF F8 7D 88 03 A6 4E 80 00 20")
+------------------------------------------------------------------------------------
+end
+
+
+--enables 720P
+function F720PMode()
+
+	WriteVirtualBytes("0x82B3484C","00000500")
+	WriteVirtualBytes("0x82B34850","00000000") -- suck only 0 
+	WriteVirtualBytes("0X821A8BA8","00000500")
+	WriteVirtualBytes("0X821A8BB8","00000500")
+
+end
+
+
+
+function Xenia_StuckFIX_Test_ENABLED(mode)
+
+if (IsXbox360())  then return end
+--WriteVirtualBytes("0x8244C368","4E800020") --(can fix soft locks but cause majors issues) , from far,wow it not stucking anymore o-o cool i wonder if i could fix it now
+--WriteVirtualBytes("0x8244C3B8","4800") ----seems they GONE O_O (at least with protect_zero = true but for xenia it fine, and xbox 360 works fine without it)
+
+--WriteVirtualBytes("0x8244C4A8","60000000") --THIS ONLY
+--WriteVirtualBytes("0x8244C5D0","60000000") -- -
+--WriteVirtualBytes("0X8244C530","60000000") --THIS ONLY
+
+--183E53BE8
+--183E53CA8
+--183E53D04
+--83E53CA8
+
+--WriteVirtualBytes("0x8244C508","60000000")
+--WriteVirtualBytes("0x8249AECC ","39 00 02 D0")
+
+--WriteVirtualBytes("0x824F4858","4E800020")
+--WriteVirtualBytes("0x8249AED0","38C00500")
+
+
+
+
+--WriteVirtualBytes("0x82B34850","00000002")
+--WriteVirtualBytes("0x8244C530","60000000")
+
+
+
+--WriteVirtualBytes("0X82B3484C","0000050000000000")
+
+if (mode == "FixedD3DReset") then
+WriteVirtualBytes("0x824F4878","60000000") -- disable   D3DDevice_SetRingBufferParameters
+WriteVirtualBytes("0x824F4888","60000000") -- disable   D3DDevice_BlockUntilIdle
+WriteVirtualBytes("0x824F4880","60000000") -- bypass ==
+end
+if (mode == "IgnoreD3DReset") then
+--
+WriteVirtualBytes("0x8244C508","60000000")
+end
+
+end
+
+
+function ForceJPDUB()
+WriteVirtualBytes("0x8222AEE4","38800001") -- IsJapaneseDub
+end
+
+function ForceJPTEXT()
+WriteVirtualBytes("0x8222AEE0","38A0004A") -- (45 = english,4a = JP)
+end
+
+--Supporte (EJGFSI)
+function ForceTEXT(region)
+if (region == "A") then return end
+--WriteVirtualBytes("0x8222AEE0",Memory("38A00000"):OR(string.byte(region)):GetPTRHEX()) -- (45 = english,4a = JP)
+end
+
+
+function OFFKinectGuyICON()
+WriteVirtualBytes("0x82432598","4E800020")
+end
+
+function CDisableHUD()
+WriteVirtualBytes("0x823FAEC0","4E800020")
+WriteVirtualBytes("0X823FB128","4E800020")
+WriteVirtualBytes("0x8224A08C","60000000")	
+
+end
+
+
+function DeltaTimerFixes()
+
+--THREE FOR DELTRA 
+WriteVirtualBytes("0x824BB718","4E800020")
+WriteVirtualBytes("0x824BB7C0","4E800020")
+WriteVirtualBytes("0x82211E8C","60000000")
+WriteVirtualBytes("0x82211E40","60000000")
+WriteVirtualBytes("0x82211E10","60000000")
+WriteVirtualBytes("0x824E8218","4E800020")
+WriteVirtualBytes("0X824B0CF0","817F002C") --ye can breka camera ( yet neee float pls)
+--824e5b98
+
+
+
+--WriteVirtualBytes("0x82321370","4E800020") --Disable UP POOl
+--WriteVirtualBytes("0x82321928","60000000") --ARMS UP TIMEr
+--WriteVirtualBytes("0x82321BD8","4E800020") --HERE RORATE
+
+--
+--lfsx f12,r26,r31
+--lfs f13,0X82183DC4@l(r11) # 95.0
+--fcmpu cr6, f12, f13
+--stfd f13,0x50(r1) 
+--
+
+
+
+
+
+
+
+--UPPOOL
+WriteVirtualBytes("0x82321C88","7D9AFC2EC1AB3DC4FF0C6800D9A10050") -- lfsx f12,r26,r31
+WriteVirtualBytes("0x82321C9C","C1AB3DC4") -- lfs f13,0X82183DC4@l(r11) # 95.0
+
+WriteVirtualBytes("0x82321D1C","60000000")
+WriteVirtualBytes("0x82321D2C","FD800090") -- fmr f12,f0
+WriteVirtualBytes("0x82321D4C","7D1AFC2E") --lfsx f8,r26,r31
+WriteVirtualBytes("0x82321D74","60000000")	
+WriteVirtualBytes("0x82321D9C","7C5AFC2E")	 --lfsx f2,r26,r31
+
+WriteVirtualBytes("0x8232207C","FDA00090") -- fmr f13,f0
+	
+WriteVirtualBytes("0x82322084","7D9AFC2E")	--lfsx f12,r26,r31
+WriteVirtualBytes("0x82322088","FDAC682A")	--fadd f13,f12,f13
+WriteVirtualBytes("0x8232208C","7DBAFD2E")	--stfsx f13,r26, r31
+
+
+WriteVirtualBytes("0x8232211C","60000000")	
+WriteVirtualBytes("0x8232212C","C0CB3DA0") --lfs f6,0x82183DA0@l(r11)
+WriteVirtualBytes("0x82322140","7CBEFC2E") --lfsx f5,r30,r31
+WriteVirtualBytes("0x82322144","FCA62828") --fsub f5,f6,f5
+WriteVirtualBytes("0x82322150","FC802890") --fmr f4,f5
+
+
+WriteVirtualBytes("0x82322134","3D008218")--lis r8,0x8218
+--Because r8 need to load float
+--lwz       r7, 8(r5)
+--stw       r7, 8(r11)
+
+WriteVirtualBytes("0x823221A8","80E5000890EB0008")
+	
+WriteVirtualBytes("0x823221C0","7CBEFC2E") --lfsx f5,r30,r31
+WriteVirtualBytes("0x823221C4","C0C83DB8") --lfs f6,0x82183DA0@l(r8)
+WriteVirtualBytes("0x823221C8","FF053000") --fcmpu cr6,f5,f6
+
+WriteVirtualBytes("0x82322230","7CBEFC2E") --lfsx f5,r30,r31
+WriteVirtualBytes("0x8232223C","FDA00090") --fmr f13,f0
+WriteVirtualBytes("0x82322248","FDAD282A") --fadd f13,f13,f5
+WriteVirtualBytes("0x8232224C","7DBEFD2E") --stfsx f13,r30,r31
+
+--lis r11,0x82183F80@ha
+--lfs f6,0x82183F80@l(r11)
+
+WriteVirtualBytes("0x82322284","3D608218C0CB3F80") 
+WriteVirtualBytes("0x8232228C","FF0D3000") --fcmpu cr6,f13,f6
+
+--EXTRA
+--WriteVirtualBytes("0x82322278","60000000") -- why? failed (temp disabled)
+
+--LEFT RIGHT POLE (CRAZY)
+--8231F5F8
+
+WriteVirtualBytes("0x8231F7B4","7D6AFC2E") --     lfsx      f11, r10, r31
+WriteVirtualBytes("0x8231F7C4","C1054060") --     lfs f8,0x82184060@l(r5)
+WriteVirtualBytes("0x8231F7D4","FD685828") --     fsub f11,f8,f11
+WriteVirtualBytes("0x8231F7F0","60000000") --     f11,
+WriteVirtualBytes("0x8231F824","FD005890") --     fmr f8,f11,
+WriteVirtualBytes("0x8231F830","FC804090") --     fmr f4,f8
+WriteVirtualBytes("0x8231F8BC","7D6AF92E") --     stwx      r11, r10, r31
+WriteVirtualBytes("0x8231F8C4","7D6AFC2E") --     lfsx      f11, r10, r31
+WriteVirtualBytes("0x8231F8C8","C11C06D4") --     lfs f8,0x82197104-  0x82196A30(r28) 
+WriteVirtualBytes("0x8231F8CC","FF0B4000") --     fcmpu cr6,f11,f8
+WriteVirtualBytes("0x8231F8CC","FF0B4000") --     fcmpu cr6,f11,f8
+WriteVirtualBytes("0x8231F8D8","C1A90028") --     lfs       f13, 0x28(r9)
+WriteVirtualBytes("0x8231F8DC","60000000") --    
+WriteVirtualBytes("0x8231F8E0","60000000") --    
+WriteVirtualBytes("0x8231F8E8","FD6D582A") --   fadd f11,f13,f11 
+WriteVirtualBytes("0x8231F8EC","7D6AFD2E") --   stfsx      f11, r10, r31
+
+WriteVirtualBytes("0x8231F810","60000000") -- r6 (keep)
+WriteVirtualBytes("0x8231F82C","C0A60028") -- lfs f5,0x28(r6)
+--WriteVirtualBytes("0x8231F830","C0860028") -- lfs f4,0x28(r6)
+
+
+--8240E4D0(INTERESTING)
+
+--WriteVirtualBytes("0x8240E388","4E800020") -- For Clean Screen Used
+
+
+--Play & Stop Character SFX 
+--WriteVirtualBytes("0x8223075C","60000000") -- SOUND LVL PALY
+--WriteVirtualBytes("0x822306F4","60000000") -- SOUND LVL PALY
+
+
+
+--8240AD30 (Play Rank SFX END)
+
+--RANK SFX CONTROLLER UI TOO
+--WriteVirtualBytes("0x8240AB98","4E800020")
+--822B38EC
+
+--WriteVirtualBytes("0x822B3610","4E800020") --SPLINE MOVE CORRECTION (OR SOME??)
+
+--0x822B6C28 ???? maybe this
+--WriteVirtualBytes("0x822B68E8","4E800020") --Trick Perform JUMP ^^>^>^>
+
+--822B9CB0  (LEFT RIGHT,ROTATION CONTROLLER MOVING)
+
+--WriteVirtualBytes("0x822B9F48","4E800020")
+
+
+
+
+end
+
+
+
+
+
+
+--Get Rid of NUI Anyoing (XBOX 360 ONLY)
+if (IsXbox360()) then 
+WriteVirtualBytes("824D0D40","4E800020") --XMsgInProcessCall
+WriteVirtualBytes("0x822130F0","39600001")
+WriteVirtualBytes("0x8229AF6C","4800") --check once more later
+WriteVirtualBytes("0x82222908","4E800020")
+WriteVirtualBytes("0x82495950","60000000")
+WriteVirtualBytes("0x8249595C","60000000")
+end
+
+--also this for xenia because :)
+WriteVirtualBytes("0x82495950","60000000")
+WriteVirtualBytes("0x8249595C","60000000")
+
+
+dofile("game:\\common\\Core_INIT.lua")
+
+
+
+--ItemNR States Table
+--00000000 00000100 10001000 00100000  (Selected, ON)
+--00000000 00000000 10001000 00100000  (Selected, OFF)
+
+
+--00000000 00000101 10001000 10100101  (Selected, ON, CursorPlacedON
+
+--00000000 00000001 10001000 10100101  (Selected, OFF, CursorPlacedON
+
+--00000000 00000000 00001000 00101000  (NotSelected, OFF)
+
+
+--0x4 << 16 - ON
+
+
+--00008820
+--00048820
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 --5 Woah Respawn
 --6 Speed Max ???
 --7
@@ -491,8 +936,11 @@ param2 = 4.0
 --WriteVirtualBytes("0x823E07E4","60000000")
 --WriteVirtualBytes("0x8222AEA8","38600001") -- Real (language hand)
 
+
 --WriteVirtualBytes("0x8222AEE0","38A0004A") --TextFormat (45 = english,4a = JP)
---WriteVirtualBytes("0x8222AEE4","38800000") -- IsJapaneseDub
+--WriteVirtualBytes("0x8222AEE4","38800001") -- IsJapaneseDub
+
+
 --WriteVirtualBytes("0x82A54FD0","3C603E804E800020") -- IsJapaneseDub
 
 --WriteVirtualBytes("0x8226086C","60000000") -- fix free hand timer (DLL)
@@ -513,8 +961,8 @@ param2 = 4.0
 
 
 
---WriteVirtualBytes("0x82438CC8","4E800020") -- Disable Crash Func
-WriteVirtualBytes("0X82438CF4","4800") -- Disable Crash Func(alternative)
+--WriteVirtualBytes("0x82438CC8","4E800020") -- Disable Crash Func (DLL)
+--WriteVirtualBytes("0X82438CF4","4800") -- Disable Crash Func(alternative)
 
 
 
@@ -547,6 +995,11 @@ WriteVirtualBytes("0X82438CF4","4800") -- Disable Crash Func(alternative)
 ------------------[Remove Calibarion]--------------------
 --WriteVirtualBytes("0x822A4768","4E800020")
 --WriteVirtualBytes("0x822A4770","4E800020")
+
+--WriteVirtualBytes("0x822A4774","60000000")
+
+
+
 ------------------[------------------]--------------------
 
 
@@ -606,15 +1059,6 @@ WriteVirtualBytes("0X82438CF4","4800") -- Disable Crash Func(alternative)
 --TrainingModeFinally
 --8245E710
 
-
-function SkipTrainingMoveAction()
-WriteVirtualBytes("0x8227E410","38600001") -- Free From Gamepad Action ( Ready-Set-Go and Complete with be an instant and you dont have to rotate stick anymore)
-end
-
---Works only at story mode
-function DisableTrainingMode()
-WriteVirtualBytes("0x8245E6F8","60000000") -- No Training Mode (full skip) (dont recomment use with story mode)
-end
 
 
 
@@ -772,11 +1216,7 @@ end
 
 
 
-function AlwaysShowHidedButtons()
----------------[Always Show Hided Buttons]-------------
-WriteVirtualBytes("0X8245F0CC","60000000") 
--------------------------------------------------------
-end
+
 
 
 --WriteVirtualBytes("0x8245551C","60000000")
@@ -812,6 +1252,31 @@ end
 --8245DDE0
 
 --83E506A4 SelectedGearTable(Also)
+--8245D1B0
+--82454648
+--8245DDE0
+--8245E434
+
+--selected gear final
+--WriteVirtualBytes("0x8245E440","60000000")
+
+--from final
+
+--82289ce4
+--8227f7b0
+--8227f7d0
+--8227f7e4
+--8222efc4
+--8228893c
+--82289ef4
+
+--WriteVirtualBytes("0x82289CE4","39200000")
+--WriteVirtualBytes("0X8227F7B0","38E00000")
+
+
+--WriteVirtualBytes("0x8227F7D0","38800000")
+--WriteVirtualBytes("0x8227F7F4","60000000")
+
 
 --WriteVirtualBytes("0X8245E434","38C00001")
 
@@ -822,14 +1287,13 @@ end
 
 
 
+--store gear part 1 8245DE50
+--8245E460 load it	
+--82288948
+--82289CAC
+--82288938
 
-function UnlockAllGearToSelect()
-------------[Unlock All Gear To Select]-------------
-WriteVirtualBytes("0x8247CB60","386000014E800020") --Butons
---WriteVirtualBytes("0x8228B2F0","60000000") --Breaks Bike Character Only XD
-WriteVirtualBytes("0x8245E494","60000000") -- Remove Gear ReChanger only for players
-----------------------------------------------------
-end
+
 
 
 
@@ -884,39 +1348,6 @@ end
 
 
 
-function EveryBoxGivesRandomItem()
-------------Every Box Random and give Random Item always-------------
-WriteVirtualBytes("0x82308294","3960000B")
-WriteVirtualBytes("0x8230857C","60000000")
-----------------------------------------------------------------------
-end
-
-
-
-function EveryRandomBoxGivesTrueRandomItem()
-------------[Every Box Give Abosulute Random Item, example]--------------
--- .set rand,0x82A54FD0
--- mflr      r12
--- stw       r12, -8(r1)
--- stwu      r1, -0x60(r1)
--- lis r11,rand@ha
--- ori r11,r11,rand@l
--- mtctr r11
--- bctrl
--- li        r11, 0x11
--- divw      r11, r3, r11
--- mulli     r11, r11, 0x11
--- subf      r11, r11, r3
--- addi      r3, r11, 5
--- addi      r1, r1, 0x60
--- lwz       r12, -8(r1)
--- mtlr      r12
--- blr
-WriteVirtualBytes("0x82306F00","7D 88 02 A6 91 81 FF F8 94 21 FF A0 3D 60 82 A5 61 6B 4F D0 7D 69 03 A6 4E 80 04 21 39 60 00 11 7D 63 5B D6 1D 6B 00 11 7D 6B 18 50 38 6B 00 05 38 21 00 60 81 81 FF F8 7D 88 03 A6 4E 80 00 20")
-------------------------------------------------------------------------------------
-end
-
-
 
 
 --back to crashsesh agains
@@ -939,7 +1370,7 @@ end
 
 
 
---WriteVirtualBytes("0x8244C368","4E800020") (can fix soft locks but cause majors issues)
+--WriteVirtualBytes("0x8244C368","4E800020") --(can fix soft locks but cause majors issues)
 
 
 
@@ -1023,10 +1454,4 @@ end
 
 
 
-function test(arg1)
-
-
-
-
-end
 --test(0)
