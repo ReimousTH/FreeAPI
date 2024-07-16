@@ -116,8 +116,6 @@ static void __declspec( naked ) restgprl_H(){
 #include <time.h>
 
 
-#include "math/quaternion.h"
-#include "math/matrix4.h"
 
 // first unsigned macros:
 

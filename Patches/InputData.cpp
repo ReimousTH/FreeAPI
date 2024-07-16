@@ -657,17 +657,12 @@ namespace InputData{
 
 		
 
-		auto t = ( irr::core::CMatrix4<float>*)(tl_cam + 0x20);
-		auto rot = t->getRotationDegrees();
+	
 
 		if (gc->wPressedButtons & XINPUT_GAMEPAD_Y){
-			irr::core::vector3d<float> pos_camera;
-			irr::core::vector3d<float> TTT;
+	
 
-
-			pos_camera.X = CameraPosition[0];
-			pos_camera.Y = CameraPosition[1];
-			pos_camera.Z = CameraPosition[2];
+		
 
 			//CameraPositionCenter[0] = CameraPosition[0];
 			//CameraPositionCenter[1] = CameraPosition[1];
@@ -685,19 +680,7 @@ namespace InputData{
 		}
 	
 
-		rot.X+=gc->fX2;
-		rot.Z += gc->fY2;
-
 	
-		rot.Y +=gc->bLastLeftTrigger;
-		rot.Y -=gc->bLastRightTrigger;
-
-		
-
-
-
-
-		t->setRotationDegrees(rot);
 
 
 
