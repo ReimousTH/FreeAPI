@@ -231,7 +231,7 @@ end
 --Supporte (EJGFSI)
 function ForceTEXT(region)
 if (region == "A") then return end
---WriteVirtualBytes("0x8222AEE0",Memory("38A00000"):OR(string.byte(region)):GetPTRHEX()) -- (45 = english,4a = JP)
+WriteVirtualBytes("0x8222AEE0",Memory("38A00000"):OR(string.byte(region)):GetPTRHEX()) -- (45 = english,4a = JP)
 end
 
 
