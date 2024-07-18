@@ -84,7 +84,7 @@ namespace DeltaTimerU{
 		//uselee mb
 		a1->TickPerSecond = MBKinnectInput->Xbox360Timer->TickCount;
 		a1->field_10 = 1.0/IN_GAME_FRAMERATE;
-		a1->RawFPS =  IN_GAME_FRAMERATE;
+	 	a1->RawFPS =  FRAMERATE; //822ACA28 IT ACTUALLY USED
 
 		//
 		DebugLogPushValue(MBKinnectInput->Xbox360Timer->TickCount);
@@ -107,7 +107,7 @@ namespace DeltaTimerU{
 
 		a1->field_20 =  normalized_ticks * FRAMERATE_PER_FRAME * 1000.0 ;
 
-		a1->field_58 = 1;
+		a1->field_58 = 0;
 		a1->field_5C |=0x01000000;
 
 		//field_44 ???????

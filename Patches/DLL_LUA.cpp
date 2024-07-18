@@ -374,12 +374,14 @@ const char* ZLuaN::GetGlobalString(const char* str)
 
 const std::string ZLuaN::GetGlobalSString(const char* str)
 {
+	
+
 	lua_getglobal(L,str);
 	if (lua_isstring(L,-1)){
-		return lua_tostring(L,-1);
+		return std::string(lua_tostring(L,-1));
 	}
 	else{
-		return "";
+		return std::string("");
 	}
 }
 

@@ -204,8 +204,8 @@ namespace InputData{
 				{
 					//buy 
 					if (IsShopButton ){
-						BranchTo(0x8245FD38,int,PItemNRElement->ParentOrMainMenuNRInstance,PItemNRElement);
-						BranchTo(0x8245FD38,int,PItemNRElement->ParentOrMainMenuNRInstance,SomeByteIGuess);
+						BranchTo(0X8245FD38,int,PItemNRElement->ParentOrMainMenuNRInstance,PItemNRElement);
+						BranchTo(0x824574D0,int,PItemNRElement->ParentOrMainMenuNRInstance,SomeByteIGuess);
 					}
 					else{
 						*(_DWORD *)(4 * (((PItemNRElement->ParentUIRingController->Flag0x140 >> 4) & 1) + 0x20) + PItemNRElement->ParentOrMainMenuNRInstance) = (DWORD)PItemNRElement;
