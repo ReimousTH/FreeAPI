@@ -45,3 +45,4 @@ Debug
 *.obj
 *.pdb
 *.idb
+*.ncb

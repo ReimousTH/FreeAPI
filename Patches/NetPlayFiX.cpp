@@ -86,6 +86,7 @@ namespace NetplayRFIX{
 
 					
 					XSESSION_SEARCHRESULT* SS = &XNLive->XSessionSearchResuts->pResults[i];
+
 					/*
 			
 					SS->cProperties = 0x10;
