@@ -279,17 +279,17 @@ namespace InputData{
 					ItemNRElement* PItemNRElement = (ItemNRElement*)jt->get();
 					if ((PItemNRElement->ItemState & 0xF) == 0){
 
-						if (gc->wPressedButtons  & XINPUT_GAMEPAD_DPAD_UP)
+						if (gc->PressedButtons  & XINPUT_GAMEPAD_DPAD_UP)
 						{
 							BranchTo(0x824698D0,int,PItemNRElement,0,0);
 
 						}
-						else if (gc->wPressedButtons  & XINPUT_GAMEPAD_DPAD_DOWN)
+						else if (gc->PressedButtons  & XINPUT_GAMEPAD_DPAD_DOWN)
 						{
 
 							BranchTo(0x824698D0,int,PItemNRElement,1,0);
 						}
-						else if (gc->wPressedButtons  & XINPUT_GAMEPAD_X)
+						else if (gc->PressedButtons  & XINPUT_GAMEPAD_X)
 						{
 
 
@@ -323,7 +323,7 @@ namespace InputData{
 						for ( int j = RingElement->dword12C; j != RingElement->dword130; j += 8 ){
 							auto NR = *(ItemNRElement**)j;
 							DWORD result = (DWORD)NR->ParentUIRingController;
-							if (gc2P->wPressedButtons & XINPUT_GAMEPAD_A){
+							if (gc2P->PressedButtons & XINPUT_GAMEPAD_A){
 								if ((NR->ItemState & 0xF) == 0){
 
 									*(_DWORD *)(4 * (((*(_DWORD *)(NR->ParentUIRingController + 0x140) >> 4) & 1) + 0x20) + NR->ParentOrMainMenuNRInstance) = (DWORD)NR;
@@ -341,7 +341,7 @@ namespace InputData{
 							auto NR = *(ItemNRElement**)j;
 							DWORD result = (DWORD)NR->ParentUIRingController;
 
-							if (gc->wPressedButtons & XINPUT_GAMEPAD_A){
+							if (gc->PressedButtons & XINPUT_GAMEPAD_A){
 
 								if ((NR->ItemState & 0xF) == 0){
 

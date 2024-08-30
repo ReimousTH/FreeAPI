@@ -10,7 +10,7 @@ namespace InputData{
 
 		DWORD result = 0;
 		if (gc){
-			if (gc->wLastButtons & XINPUT_GAMEPAD_START  | (gc->wLastButtons  & XINPUT_GAMEPAD_X) ){
+			if (gc->HoldButtons & XINPUT_GAMEPAD_START  | (gc->HoldButtons  & XINPUT_GAMEPAD_X) ){
 
 				if (  *(_DWORD *)(a1 + 0x3AC)  == 0)   *(_DWORD *)(a1 + 0x3AC) = 1;
 

@@ -130,7 +130,7 @@ namespace InputData{
 
 
 
-	DWORD ProcessSingleDpadExtra(ATG::GAMEPAD* gc,bool* DPAD_LEFT_RING,short* DPAD_LEFT_RING_COUNT,short* DPAD_LEFT_RING_COUNT_PRE,float* DPAD_LEFT_RING_TIME,bool* DPAD_LEFT_RING_RELEASED,WORD ControlDPAD){
+	DWORD ProcessSingleDpadExtra(FTG::GAMEPAD* gc,bool* DPAD_LEFT_RING,short* DPAD_LEFT_RING_COUNT,short* DPAD_LEFT_RING_COUNT_PRE,float* DPAD_LEFT_RING_TIME,bool* DPAD_LEFT_RING_RELEASED,WORD ControlDPAD){
 
 
 		
@@ -138,7 +138,7 @@ namespace InputData{
 		
 
 		//if HOLD
-		if ((gc->wLastButtons & ControlDPAD) != 0){
+		if ((gc->HoldButtons & ControlDPAD) != 0){
 
 			*DPAD_LEFT_RING_TIME = *DPAD_LEFT_RING_TIME +  MBKinnectInput->PclsXbox360System->GameSpeed;
 
@@ -158,7 +158,7 @@ namespace InputData{
 		}
 
 		//released
-		if ((gc->wLastButtons & ControlDPAD) == 0 && *DPAD_LEFT_RING_COUNT > 0){
+		if ((gc->HoldButtons & ControlDPAD) == 0 && *DPAD_LEFT_RING_COUNT > 0){
 
 			*DPAD_LEFT_RING = true;
 		}
@@ -168,7 +168,7 @@ namespace InputData{
 
 		return 0;
 	}
-	DWORD ProcessSingleDpadsExtra(ATG::GAMEPAD* gc,NukFakeDeviceHelpers* HP,struct_v35* Device){
+	DWORD ProcessSingleDpadsExtra(FTG::GAMEPAD* gc,NukFakeDeviceHelpers* HP,struct_v35* Device){
 
 
 		ProcessSingleDpadExtra(gc,&HP->DPAD_LEFT_RING,
@@ -190,7 +190,7 @@ namespace InputData{
 
 
 
-	DWORD  ProcessSingleInput(struct_v35* NuiFakeDevice,struct_dword300 * NuiFakeDeviceExtra,NukFakeDeviceHelpers* HP,ATG::GAMEPAD* gc,int index){
+	DWORD  ProcessSingleInput(struct_v35* NuiFakeDevice,struct_dword300 * NuiFakeDeviceExtra,NukFakeDeviceHelpers* HP,FTG::GAMEPAD* gc,int index){
 
 
 		auto t = (int)(int*)&KinnectNuiBox::Instance->dword78;
@@ -200,7 +200,7 @@ namespace InputData{
 		auto z1 = (float*)(t1+(index*4));
 
 
-		if (gc->wLastButtons & XINPUT_GAMEPAD_BACK){
+		if (gc->HoldButtons & XINPUT_GAMEPAD_BACK){
 			HP->SelectHoldTime += 1.0 * MBKinnectInput->PclsXbox360System->GameSpeed;
 			if (HP->SelectHoldTime > 2.0){
 				*z = 0;
@@ -213,7 +213,7 @@ namespace InputData{
 		}
 
 
-		if (gc->bConnected == false){
+		if (gc->xConnected == false){
 			if (*z != 0){
 				*z = 0;
 			}
@@ -236,9 +236,9 @@ namespace InputData{
 
 		{
 			//ShowXenonMessage(L"MSG","B");
-			HP->StickForceX =(-gc->fX1+1)/2;
+			HP->StickForceX =(-gc->left_stick_x+1)/2;
 			HP->StickForceX = clamp(HP->StickForceX,0.0,1.0);
-			HP->StickForceY = (gc->fY1);
+			HP->StickForceY = (gc->left_stick_y);
 			//StickForceY = clamp(StickForceY,0.0,1.0);
 			if (NuiFakeDevice->field_4 != 0){
 				NuiFakeDevice->field_4 = 0;
@@ -254,8 +254,8 @@ namespace InputData{
 
 
 
-			if (NuiFakeDevice->field_58 != gc->fX1){
-				NuiFakeDevice->field_58 = gc->fX1;
+			if (NuiFakeDevice->field_58 != gc->left_stick_x){
+				NuiFakeDevice->field_58 = gc->left_stick_x;
 			}
 			if (NuiFakeDevice->field_284 != HP->StickForceX)
 			{
@@ -264,7 +264,7 @@ namespace InputData{
 				//0x258
 				//0x118
 				NuiFakeDevice->field_284 = HP->StickForceX;
-				NuiFakeDevice->field_20 = -gc->fX1; // left right
+				NuiFakeDevice->field_20 = -gc->left_stick_x; // left right
 				NuiFakeDevice->dword310 = (NuiFakeDevice->dword310) == 0 ? 1 : 0;
 			}
 			if (NuiFakeDevice->field_28 != HP->StickForceY)
@@ -284,15 +284,15 @@ namespace InputData{
 			}
 
 
-			if (NuiFakeDevice->field_10 != gc->fX2){
-				NuiFakeDevice->field_10 = gc->fX2;
+			if (NuiFakeDevice->field_10 != gc->right_stick_x){
+				NuiFakeDevice->field_10 = gc->right_stick_x;
 			}
 
 
 
 
 
-			if (gc->bLastRightTrigger){
+			if (gc->HoldRightTrigger){
 				NuiFakeDevice->field_5C = 1.0;
 			}
 			else{
@@ -302,12 +302,12 @@ namespace InputData{
 
 
 
-			if (NuiFakeDevice->field_60 != gc->fY2){
-				NuiFakeDevice->field_60 = gc->fY2;
+			if (NuiFakeDevice->field_60 != gc->right_stick_y){
+				NuiFakeDevice->field_60 = gc->right_stick_y;
 
 			}
 
-			if (gc->wLastButtons & XINPUT_GAMEPAD_X){
+			if (gc->HoldButtons & XINPUT_GAMEPAD_X){
 				NuiFakeDevice->field_0 += MBKinnectInput->PclsXbox360System->GameSpeed;
 			}
 			else{
@@ -316,26 +316,26 @@ namespace InputData{
 			}
 
 
-			if ((gc->wPressedButtons & XINPUT_GAMEPAD_X) && HP->Button_X_Hold == false){
+			if ((gc->PressedButtons & XINPUT_GAMEPAD_X) && HP->Button_X_Hold == false){
 
 				NuiFakeDevice->field_30 = 1.0; //Ready
 				HP->Button_X_Hold = true;
 
 			}
 
-			if (!(gc->wLastButtons & XINPUT_GAMEPAD_X) && HP->Button_X_Hold == true){
+			if (!(gc->HoldButtons & XINPUT_GAMEPAD_X) && HP->Button_X_Hold == true){
 				NuiFakeDevice->field_34 = 1.0; //Do Kick
 				HP->Button_X_Hold = false;
 			}
 
 
-			if ((gc->wLastButtons & XINPUT_GAMEPAD_A) && HP->Button_A_Hold == false){
+			if ((gc->HoldButtons & XINPUT_GAMEPAD_A) && HP->Button_A_Hold == false){
 				HP->Button_A_Hold = true;
 				//OnEnterAction
 				NuiFakeDevice->field_2F4 = 2;
 				NuiFakeDevice->field_8 = 1.0;	
 			}
-			if (!(gc->wLastButtons & XINPUT_GAMEPAD_A) && HP->Button_A_Hold == true){
+			if (!(gc->HoldButtons & XINPUT_GAMEPAD_A) && HP->Button_A_Hold == true){
 				HP->Button_A_Hold = false;
 				NuiFakeDevice->field_8 = 0.0;
 				NuiFakeDevice->field_2F4 = 0;
@@ -344,13 +344,13 @@ namespace InputData{
 				NuiFakeDevice->field_24 = 1.0;
 			}
 
-			if ((gc->wLastButtons & XINPUT_GAMEPAD_B) && HP->Button_B_Hold == false){
+			if ((gc->HoldButtons & XINPUT_GAMEPAD_B) && HP->Button_B_Hold == false){
 				HP->Button_B_Hold = true;
 				//OnEnterAction	
 				NuiFakeDevice->field_10C = 1.0;	
 				NuiFakeDevice->field_110 = 1.0;	
 			}
-			if (!(gc->wLastButtons & XINPUT_GAMEPAD_B) && HP->Button_B_Hold == true){
+			if (!(gc->HoldButtons & XINPUT_GAMEPAD_B) && HP->Button_B_Hold == true){
 				HP->Button_B_Hold = false;
 				NuiFakeDevice->field_10C = 0.0;
 				NuiFakeDevice->field_110 = 0.0;
@@ -359,11 +359,11 @@ namespace InputData{
 			
 
 
-			if (gc->wPressedButtons & XINPUT_GAMEPAD_A){
+			if (gc->PressedButtons & XINPUT_GAMEPAD_A){
 				NuiFakeDevice->field_58 = 1.0;
 			}
 
-			if ((gc->wPressedButtons & XINPUT_GAMEPAD_Y)){
+			if ((gc->PressedButtons & XINPUT_GAMEPAD_Y)){
 				NuiFakeDevice->field_48 = 1.0;
 
 			}
@@ -373,22 +373,22 @@ namespace InputData{
 
 
 
-			if ((gc->bLastLeftTrigger) && HP->Button_LT_Hold == false){
+			if ((gc->HoldLeftTrigger) && HP->Button_LT_Hold == false){
 				HP->Button_LT_Hold = true;
 				//OnEnterAction
 				NuiFakeDevice->field_100 = 1.0;	
 			}
-			if (!(gc->bLastLeftTrigger) && HP->Button_LT_Hold == true){
+			if (!(gc->HoldLeftTrigger) && HP->Button_LT_Hold == true){
 				HP->Button_LT_Hold = false;
 				NuiFakeDevice->field_100 = 0.0;
 			}
 
 
-			if (gc->wPressedButtons & XINPUT_GAMEPAD_LEFT_SHOULDER){
+			if (gc->PressedButtons & XINPUT_GAMEPAD_LEFT_SHOULDER){
 
 				NuiFakeDevice->field_104 = 1.0;
 			}
-			if (gc->wPressedButtons & XINPUT_GAMEPAD_RIGHT_SHOULDER){
+			if (gc->PressedButtons & XINPUT_GAMEPAD_RIGHT_SHOULDER){
 
 				NuiFakeDevice->field_108 = 1.0;
 			}
@@ -425,18 +425,18 @@ namespace InputData{
 
 
 		
-		if (gc->wLastButtons & XINPUT_GAMEPAD_A){
+		if (gc->HoldButtons & XINPUT_GAMEPAD_A){
 			HP->MENU_BUTTON_A_HOLD = true;
 		}
-		if ((gc->wLastButtons & XINPUT_GAMEPAD_A) ==0  && HP->MENU_BUTTON_A_HOLD){
+		if ((gc->HoldButtons & XINPUT_GAMEPAD_A) ==0  && HP->MENU_BUTTON_A_HOLD){
 			HP->MENU_BUTTON_A_RELEASE = true;
 			HP->MENU_BUTTON_A_HOLD = false;
 		}
 
-		if (gc->wLastButtons & XINPUT_GAMEPAD_X){
+		if (gc->HoldButtons & XINPUT_GAMEPAD_X){
 			HP->MENU_BUTTON_X_HOLD = true;
 		}
-		if ((gc->wLastButtons & XINPUT_GAMEPAD_X) ==0  && HP->MENU_BUTTON_X_HOLD){
+		if ((gc->HoldButtons & XINPUT_GAMEPAD_X) ==0  && HP->MENU_BUTTON_X_HOLD){
 			HP->MENU_BUTTON_X_RELEASE = true;
 			HP->MENU_BUTTON_X_HOLD = false;
 		}
@@ -448,37 +448,37 @@ namespace InputData{
 
 
 
-		if (gc->wPressedButtons & XINPUT_GAMEPAD_B){
+		if (gc->PressedButtons & XINPUT_GAMEPAD_B){
 			HP->MENU_BUTTON_B = true;
 		}
-		if (gc->wPressedButtons & XINPUT_GAMEPAD_Y){
+		if (gc->PressedButtons & XINPUT_GAMEPAD_Y){
 			HP->MENU_BUTTON_Y = true;
 			*(DWORD*)((INT)&NuiFakeDevice->dword300->gap0+0x17C)  = *(DWORD*)((int)&NuiFakeDevice->dword300->gap0+0x17C) == 0 ? 2 : 0;
 		}
-		if (gc->wPressedButtons & XINPUT_GAMEPAD_BACK){
+		if (gc->PressedButtons & XINPUT_GAMEPAD_BACK){
 
 			ResetInputParams(NuiFakeDevice,index);
 
 		}
 		float accelle = 1.0;
-		if (gc->wLastButtons & XINPUT_GAMEPAD_X){
+		if (gc->HoldButtons & XINPUT_GAMEPAD_X){
 			accelle = 2.0;
 		}
 
 	
-		if (gc->wLastButtons & XINPUT_GAMEPAD_DPAD_UP){
+		if (gc->HoldButtons & XINPUT_GAMEPAD_DPAD_UP){
 			HP->Menu_DPAD_UP_HOLD = true;
 		}
-		if ((gc->wLastButtons & XINPUT_GAMEPAD_DPAD_UP) ==0  && HP->Menu_DPAD_UP_HOLD){
+		if ((gc->HoldButtons & XINPUT_GAMEPAD_DPAD_UP) ==0  && HP->Menu_DPAD_UP_HOLD){
 			HP->Menu_DPAD_UP_RELEASE = true;
 			HP->Menu_DPAD_UP_HOLD = false;
 		}
 
 
-		if (gc->wLastButtons & XINPUT_GAMEPAD_DPAD_DOWN){
+		if (gc->HoldButtons & XINPUT_GAMEPAD_DPAD_DOWN){
 			HP->Menu_DPAD_DOWN_HOLD = true;
 		}
-		if ((gc->wLastButtons & XINPUT_GAMEPAD_DPAD_DOWN) ==0  && HP->Menu_DPAD_DOWN_HOLD){
+		if ((gc->HoldButtons & XINPUT_GAMEPAD_DPAD_DOWN) ==0  && HP->Menu_DPAD_DOWN_HOLD){
 			HP->Menu_DPAD_DOWN_RELEASE = true;
 			HP->Menu_DPAD_DOWN_HOLD = false;
 		}
@@ -490,8 +490,8 @@ namespace InputData{
 
 
 
-		NuiFakeDevice->field_B0 += -gc->fX2 * MBKinnectInput->PclsXbox360System->GameSpeed /100.0 * accelle;
-		NuiFakeDevice->field_B4 += -gc->fY2 * MBKinnectInput->PclsXbox360System->GameSpeed /100.0 * accelle;
+		NuiFakeDevice->field_B0 += -gc->right_stick_x * MBKinnectInput->PclsXbox360System->GameSpeed /100.0 * accelle;
+		NuiFakeDevice->field_B4 += -gc->right_stick_y * MBKinnectInput->PclsXbox360System->GameSpeed /100.0 * accelle;
 		//*(float*)((INT)&NuiFakeDevice->dword300->gap0+0x17C+0x4+0x20) += gc->fY2 *MBKinnectInput->dword18->GameSpeed /100.0;
 
 
@@ -556,7 +556,7 @@ namespace InputData{
 	
 		}
 
-	ATG::Input::GetMergedInput();
+	FTG::Input::ProcessAllInput();
 
 
 	if (KinnectNuiBox::Instance){
@@ -577,11 +577,11 @@ namespace InputData{
 		
 
 
-		if (gc->wPressedButtons & XINPUT_GAMEPAD_Y && ZLuaN::EnableDebugOutput){
+		if (gc->PressedButtons & XINPUT_GAMEPAD_Y && ZLuaN::EnableDebugOutput){
 
 			
 
-			XShowMessageBoxUI(ATG::SignIn::GetSignedInUser(),L"DebugLog V2.0",ConcatenateStrings(DebugLog).c_str(),1,XButtons,1,XMB_ALERTICON,&result,&m_Overlapped);
+			XShowMessageBoxUI(FTG::SignIn::GetSignedInUser(),L"DebugLog V2.0",ConcatenateStrings(DebugLog).c_str(),1,XButtons,1,XMB_ALERTICON,&result,&m_Overlapped);
 			DebugLog.clear();
 
 		}
@@ -589,11 +589,11 @@ namespace InputData{
 	
 
 		
-		if ( (gc->wPressedButtons & XINPUT_GAMEPAD_DPAD_UP )){
+		if ( (gc->PressedButtons & XINPUT_GAMEPAD_DPAD_UP )){
 			ShowUI = !ShowUI;
 		}
 		/*
-		if ( (gc->wPressedButtons & XINPUT_GAMEPAD_RIGHT_THUMB )) {
+		if ( (gc->PressedButtons & XINPUT_GAMEPAD_RIGHT_THUMB )) {
 
 			ForcePauseGame = !ForcePauseGame;
 
@@ -642,8 +642,8 @@ namespace InputData{
 bool LuaBehaviour = false;
 int P1SLOT = 0;
 int P2SLOT = 1;
-ATG::GAMEPAD* gc =  &ATG::Input::m_Gamepads[P1SLOT];
-ATG::GAMEPAD* gc2P =  &ATG::Input::m_Gamepads[P2SLOT];
+FTG::GAMEPAD* gc =  &FTG::Input::m_Gamepads[P1SLOT];
+FTG::GAMEPAD* gc2P =  &FTG::Input::m_Gamepads[P2SLOT];
 
 
 NukFakeDeviceHelpers NuiFakeDeviceHP1 = NukFakeDeviceHelpers();

@@ -355,7 +355,7 @@ static void ShowXenonMessage(LPCWSTR Title,LPCWSTR wTitle){
 
 	MESSAGEBOX_RESULT result;
 	XOVERLAPPED m_Overlapped; 
-	XShowMessageBoxUI(ATG::SignIn::GetSignedInUser(),Title,wTitle,1,g_pwstrButtonsX,1,XMB_ALERTICON,&result,&m_Overlapped);
+	XShowMessageBoxUI(FTG::SignIn::GetSignedInUser(),Title,wTitle,1,g_pwstrButtonsX,1,XMB_ALERTICON,&result,&m_Overlapped);
 	
 }
 
@@ -391,7 +391,7 @@ static void ShowXenonMessage(LPCWSTR Title,char* wTitle){
 
 
 
-	XShowMessageBoxUI(ATG::SignIn::GetSignedInUser(),Title,convertCharArrayToLPCWSTR(wTitle),1,g_pwstrButtonsX,1,XMB_ALERTICON,&result,&m_Overlapped);
+	XShowMessageBoxUI(FTG::SignIn::GetSignedInUser(),Title,convertCharArrayToLPCWSTR(wTitle),1,g_pwstrButtonsX,1,XMB_ALERTICON,&result,&m_Overlapped);
 }
 
 static MESSAGEBOX_RESULT* ShowXenonMessage(LPCWSTR Title,const char* wTitle){
@@ -399,7 +399,7 @@ static MESSAGEBOX_RESULT* ShowXenonMessage(LPCWSTR Title,const char* wTitle){
 	MESSAGEBOX_RESULT result;
 	XOVERLAPPED m_Overlapped; 
 	
-	XShowMessageBoxUI(ATG::SignIn::GetSignedInUser(),Title,convertCharArrayToLPCWSTR(wTitle),1,g_pwstrButtonsX,1,XMB_ALERTICON,&result,&m_Overlapped);
+	XShowMessageBoxUI(FTG::SignIn::GetSignedInUser(),Title,convertCharArrayToLPCWSTR(wTitle),1,g_pwstrButtonsX,1,XMB_ALERTICON,&result,&m_Overlapped);
 	return &result;
 }
 
@@ -425,7 +425,7 @@ static void PushXenonMessage(T value){
 	MESSAGEBOX_RESULT result;
 	XOVERLAPPED m_Overlapped; 
 
-	XShowMessageBoxUI(ATG::SignIn::GetSignedInUser(),L"MSG",ss.str().c_str(),1,g_pwstrButtonsX,1,XMB_ALERTICON,&result,&m_Overlapped);
+	XShowMessageBoxUI(FTG::SignIn::GetSignedInUser(),L"MSG",ss.str().c_str(),1,g_pwstrButtonsX,1,XMB_ALERTICON,&result,&m_Overlapped);
 
 
 }

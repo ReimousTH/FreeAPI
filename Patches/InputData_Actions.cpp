@@ -35,7 +35,7 @@ HOOK(int,__fastcall,sub_82494658,0x82494658,int result){
 
 	 
 	 sub_82494658HH(result);
-	 if (gc->wPressedButtons & XINPUT_GAMEPAD_Y){
+	 if (gc->PressedButtons & XINPUT_GAMEPAD_Y){
 		 //	int some = *(int*)( off_83E52FA0 + 0xD4);
 		//	*(int*)( some + 0x7C) = 0;
 
@@ -55,17 +55,17 @@ HOOK(int,__fastcall,sub_82494658,0x82494658,int result){
 		 }
 		 if (pass)
 		 {
-			 if (gc->wPressedButtons & XINPUT_GAMEPAD_START){
+			 if (gc->PressedButtons & XINPUT_GAMEPAD_START){
 
 				 *(_DWORD *)(MainTitlev144Actions + 0x1540)=(DWORD)L"pauseopen";
 			 }
 
-			 if (gc->wPressedButtons & XINPUT_GAMEPAD_A)
+			 if (gc->PressedButtons & XINPUT_GAMEPAD_A)
 			 {
 				 *(_DWORD *)(result + 5440) = (DWORD)L"ok";
 	
 			 }
-			 if (gc->wPressedButtons & XINPUT_GAMEPAD_B)
+			 if (gc->PressedButtons & XINPUT_GAMEPAD_B)
 			 {
 				 *(_DWORD *)(result + 5440) = (DWORD)L"back";
 			 }
@@ -92,23 +92,23 @@ HOOK(int,__fastcall,sub_82494658,0x82494658,int result){
 		}
 		if (pass)
 		{
-			if (gc->wPressedButtons & XINPUT_GAMEPAD_A)
+			if (gc->PressedButtons & XINPUT_GAMEPAD_A)
 			{
 				//*(_DWORD *)(result + 5440) = (DWORD)L"ok";
 			}
-			if (gc->wPressedButtons & XINPUT_GAMEPAD_B)
+			if (gc->PressedButtons & XINPUT_GAMEPAD_B)
 			{
 			//	*(_DWORD *)(result + 5440) = (DWORD)L"back";
 			}
 
-			if (gc->wPressedButtons & XINPUT_GAMEPAD_START){
+			if (gc->PressedButtons & XINPUT_GAMEPAD_START){
 				*(_DWORD *)(result + 5440)=(DWORD)L"start";
 
 
 			}
 			
 
-			if (gc->wPressedButtons & XINPUT_GAMEPAD_X){
+			if (gc->PressedButtons & XINPUT_GAMEPAD_X){
 //				*(_DWORD *)(result + 5440)=(DWORD)L"rulesetting";
 
 			}
@@ -122,7 +122,7 @@ HOOK(int,__fastcall,sub_82494658,0x82494658,int result){
 	
 
 
-		if (gc->wLastButtons & XINPUT_GAMEPAD_START){
+		if (gc->HoldButtons & XINPUT_GAMEPAD_START){
 			hold_start_time+=MBKinnectInput->PclsXbox360System->GameSpeed;;
 		}
 		else{
@@ -131,7 +131,7 @@ HOOK(int,__fastcall,sub_82494658,0x82494658,int result){
 
 
 
-		//if (gc->wPressedButtons & XINPUT_GAMEPAD_Y ){
+		//if (gc->PressedButtons & XINPUT_GAMEPAD_Y ){
 		//	*(_DWORD *)(result + 5440)=(DWORD)L"pause";
 			//  ShowXenonMessage(L"Paause","	");
 		//	hold_start_time = 0.0;

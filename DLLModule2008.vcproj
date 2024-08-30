@@ -802,7 +802,7 @@
 				InlineFunctionExpansion="2"
 				EnableIntrinsicFunctions="true"
 				FavorSizeOrSpeed="2"
-				AdditionalIncludeDirectories="..\..\Common;..\..\..\Modules;ATG;..\Lua500\src;Lua500\src;D:\boost_1_66_0\boost_1_66_0"
+				AdditionalIncludeDirectories="..\..\Common;..\..\..\Modules;FTG;..\Lua500\src;Lua500\src;D:\boost_1_66_0\boost_1_66_0"
 				PreprocessorDefinitions="NDEBUG;_XBOX;XBOX;XBOX_SAMPLE;_XBOX_CRT_DEPRECATE_INSECURE;LUA_BUILD_AS_DLL;_WIN32;BOOST_USE_WINDOWS_H"
 				StringPooling="true"
 				ExceptionHandling="1"
@@ -1355,22 +1355,22 @@
 			</Filter>
 		</Filter>
 		<Filter
-			Name="ATG"
+			Name="FTG"
 			>
 			<File
-				RelativePath=".\ATG\AtgInput.cpp"
+				RelativePath=".\FTG\AtgInput.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\ATG\AtgInput.h"
+				RelativePath=".\FTG\AtgInput.h"
 				>
 			</File>
 			<File
-				RelativePath=".\ATG\AtgSignIn.cpp"
+				RelativePath=".\FTG\AtgSignIn.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\ATG\AtgSignIn.h"
+				RelativePath=".\FTG\AtgSignIn.h"
 				>
 			</File>
 		</Filter>

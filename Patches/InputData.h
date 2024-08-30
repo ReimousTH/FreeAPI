@@ -24,8 +24,8 @@
 namespace InputData{
 	
 
-	extern ATG::GAMEPAD* gc;
-	extern ATG::GAMEPAD* gc2P;
+	extern FTG::GAMEPAD* gc;
+	extern FTG::GAMEPAD* gc2P;
 
 	extern int P1SLOT;
 	extern int P2SLOT;
