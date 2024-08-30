@@ -1160,10 +1160,6 @@
 			ReferencedProjectIdentifier="{C58532CF-EF1E-42FA-BFD8-B26BDEB47439}"
 			RelativePathToProject=".\Lua500\Lua500.vcproj"
 		/>
-		<ProjectReference
-			ReferencedProjectIdentifier="{91D208A6-9936-47FD-9659-67205C3EB0AB}"
-			RelativePathToProject=".\ATG\AtgFramework2008.vcproj"
-		/>
 	</References>
 	<Files>
 		<Filter
@@ -1357,6 +1353,26 @@
 					>
 				</File>
 			</Filter>
+		</Filter>
+		<Filter
+			Name="ATG"
+			>
+			<File
+				RelativePath=".\ATG\AtgInput.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\ATG\AtgInput.h"
+				>
+			</File>
+			<File
+				RelativePath=".\ATG\AtgSignIn.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\ATG\AtgSignIn.h"
+				>
+			</File>
 		</Filter>
 		<File
 			RelativePath=".\Basics.h"

@@ -6,8 +6,8 @@
 // Xbox Advanced Technology Group.
 // Copyright (C) Microsoft Corporation. All rights reserved.
 //--------------------------------------------------------------------------------------
-#include "stdafx.h"
-#include <xbdm.h>
+
+
 #include "AtgInput.h"
 
 namespace ATG

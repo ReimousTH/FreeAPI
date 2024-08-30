@@ -194,8 +194,8 @@ namespace ModLoader{
 			// Create event for asynchronous writing
 			HANDLE hEventComplete = CreateEvent( NULL, FALSE, FALSE, NULL );
 
-			if( hEventComplete == NULL )
-				ATG::FatalError( "WriteSaveGame: Couldn't create event.\n" );
+		//	if( hEventComplete == NULL )
+			//	ATG::FatalError( "WriteSaveGame: Couldn't create event.\n" );
 
 			XOVERLAPPED xov = {0};
 			xov.hEvent = hEventComplete;

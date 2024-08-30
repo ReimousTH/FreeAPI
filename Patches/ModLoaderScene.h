@@ -4,10 +4,6 @@
 
 #include "../HookV2.h"
 #include "../RidersFree.h"
-#include "AtgConsole.h"
-#include "AtgUtil.h"
-#include "AtgInput.h"
-#include "AtgSignIn.h"
 
 
 #include <string>
@@ -26,18 +22,7 @@
 #include <stdio.h>
 #include <assert.h>
 #include <xaudio2.h>
-#include <AtgApp.h>
-#include <AtgFont.h>
-#include <AtgHelp.h>
-#include <AtgInput.h>
-#include <AtgAudio.h>
-#include <AtgMesh.h>
-#include <AtgResource.h>
-#include <AtgUtil.h>
-#include <AtgSimpleShaders.h>
-#include <AtgDebugDraw.h>
-#include <AtgSceneAll.h>
-#include <AtgCollision.h>
+
 
 
 #include <xbdm.h>

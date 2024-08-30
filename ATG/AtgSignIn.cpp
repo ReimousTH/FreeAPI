@@ -6,9 +6,9 @@
 // Xbox Advanced Technology Group.
 // Copyright (C) Microsoft Corporation. All rights reserved.
 //--------------------------------------------------------------------------------------
-#include "stdafx.h"
+
 #include "AtgSignIn.h"
-#include "AtgUtil.h"
+
 
 namespace ATG
 {
@@ -43,9 +43,7 @@ VOID SignIn::Initialize( DWORD dwMinUsers,
                          BOOL bRequireOnlineUsers,
                          DWORD dwSignInPanes )
 {
-    // Sanity check inputs
-    assert( dwMaxUsers <= 4 && dwMinUsers <= dwMaxUsers );
-    assert( dwSignInPanes <= 4 && dwSignInPanes != 3 );
+
 
     // Assign variables
     m_dwMinUsers = dwMinUsers;
@@ -57,7 +55,7 @@ VOID SignIn::Initialize( DWORD dwMinUsers,
     m_hNotification = XNotifyCreateListener( XNOTIFY_SYSTEM | XNOTIFY_LIVE );
     if( m_hNotification == NULL || m_hNotification == INVALID_HANDLE_VALUE )
     {
-        ATG::FatalError( "Failed to create state notification listener.\n" );
+       
     }
 
     // Query who is signed in
@@ -117,150 +115,7 @@ VOID SignIn::QuerySigninStatus()
 //--------------------------------------------------------------------------------------
 DWORD SignIn::Update()
 {
-    assert( m_hNotification != NULL );  // ensure Initialize() was called
-
-    DWORD dwRet = 0;
-
-    // Check for system notifications
-    DWORD dwNotificationID;
-    ULONG_PTR ulParam;
-
-    //
-    // For XN_SYS_SIGNINCHANGED, handle the case where the system sends a spurious
-    // notification. See  the FAQ on 
-    // Xbox 360 Central: https://xds.xbox.com/xbox360/nav.aspx?Page=devsupport/sitefaq.htm#misc17
-    // for a description of the workaround
-    //
-    static const DWORD dwTimeBeforeTrustingSignInChangedNotif = 1000;
-    static DWORD dwQuestionableSigninChangeNotifReceived = GetTickCount();
-    static UINT  cQuestionableSigninChangeNotifReceived = 0;
-
-    if( XNotifyGetNext( m_hNotification, 0, &dwNotificationID, &ulParam ) )
-    {
-        switch( dwNotificationID )
-        {
-            case XN_SYS_SIGNINCHANGED:
-
-                // Query who is signed in
-                QuerySigninStatus();
-
-                //
-                // Might be a "spurious notification". See comments above.
-                if( m_dwSignedInUserMask == 0 )
-                {
-                    ++cQuestionableSigninChangeNotifReceived;
-                    if( cQuestionableSigninChangeNotifReceived == 1 )
-                    {
-                        // If a second signin changed notification arrives within dwTimeBeforeTrustingSignInChangedNotif,
-                        // trust it instead of this one
-                        dwQuestionableSigninChangeNotifReceived = GetTickCount();
-                    }
-                    else if( ( cQuestionableSigninChangeNotifReceived > 1 )  && 
-                             ( GetTickCount() - dwQuestionableSigninChangeNotifReceived <= dwTimeBeforeTrustingSignInChangedNotif ) )
-                    {
-                        dwRet |= SIGNIN_USERS_CHANGED;
-                    }
-                }
-                else
-                {
-                    dwRet |= SIGNIN_USERS_CHANGED;
-                }
-
-                // Reset dwQuestionableSigninChangeNotifReceived to 0 if the notification is valid
-                if( dwRet & SIGNIN_USERS_CHANGED )
-                {
-                    cQuestionableSigninChangeNotifReceived = 0;
-                }
-
-                break;
-
-            case XN_SYS_UI:
-                dwRet |= SYSTEM_UI_CHANGED;
-                m_bSystemUIShowing = static_cast<BOOL>( ulParam );
-
-                // check to see if we need to invoke the signin UI
-                m_bNeedToShowSignInUI = !AreUsersSignedIn();
-                break;
-
-            case XN_LIVE_CONNECTIONCHANGED:
-                dwRet |= CONNECTION_CHANGED;
-                break;
-
-        } // switch( dwNotificationID )
-    } // if( XNotifyGetNext() )
-
-    // If there are not enough or too many profiles signed in, display an 
-    // error message box prompting the user to either sign in again or exit the sample
-    if( !m_bMessageBoxShowing && !m_bSystemUIShowing && m_bSigninUIWasShown && !AreUsersSignedIn() )
-    {
-        DWORD dwResult;
-
-        ZeroMemory( &m_Overlapped, sizeof( XOVERLAPPED ) );
-
-        WCHAR strMessage[512];
-        swprintf_s( strMessage, L"Incorrect number of profiles signed in. You must sign in at least %d"
-                    L" and at most %d profiles. Currently there are %d profiles signed in.",
-                    m_dwMinUsers, m_dwMaxUsers, m_dwNumSignedInUsers );
-
-        dwResult = XShowMessageBoxUI( XUSER_INDEX_ANY,
-                                      L"Signin Error",   // Message box title
-                                      strMessage,                 // Message
-                                      ARRAYSIZE( m_pwstrButtons ),// Number of buttons
-                                      m_pwstrButtons,             // Button captions
-                                      0,                          // Button that gets focus
-                                      XMB_ERRORICON,              // Icon to display
-                                      &m_MessageBoxResult,        // Button pressed result
-                                      &m_Overlapped );
-
-        if( dwResult != ERROR_IO_PENDING )
-            ATG::FatalError( "Failed to invoke message box UI, error %d\n", dwResult );
-
-        m_bSystemUIShowing = TRUE;
-        m_bMessageBoxShowing = TRUE;
-    }
-
-    // Wait until the message box is discarded, then either exit or show the signin UI again
-    if( m_bMessageBoxShowing && XHasOverlappedIoCompleted( &m_Overlapped ) )
-    {
-        m_bMessageBoxShowing = FALSE;
-
-        if( XGetOverlappedResult( &m_Overlapped, NULL, TRUE ) == ERROR_SUCCESS )
-        {
-            switch( m_MessageBoxResult.dwButtonPressed )
-            {
-                case 0:     // Reboot to the launcher
-                    XLaunchNewImage( "", 0 );
-                    break;
-
-                case 1:     // Show the signin UI again
-                    ShowSignInUI();
-                    m_bSigninUIWasShown = FALSE;
-                    break;
-            }
-        }
-    }
-
-    // Check to see if we need to invoke the signin UI
-    if( !m_bMessageBoxShowing && m_bNeedToShowSignInUI && !m_bSystemUIShowing )
-    {
-        m_bNeedToShowSignInUI = FALSE;
-
-        DWORD ret = XShowSigninUI(
-            m_dwSignInPanes,
-            m_bRequireOnlineUsers ? XSSUI_FLAGS_SHOWONLYONLINEENABLED : 0 );
-
-        if( ret != ERROR_SUCCESS )
-        {
-            ATG::FatalError( "Failed to invoke signin UI, error %d\n", ret );
-        }
-        else
-        {
-            m_bSystemUIShowing = TRUE;
-            m_bSigninUIWasShown = TRUE;
-        }
-    }
-
-    return dwRet;
+	return 0;
 }
 
 //--------------------------------------------------------------------------------------
@@ -269,11 +124,7 @@ DWORD SignIn::Update()
 //--------------------------------------------------------------------------------------
 BOOL SignIn::CheckPrivilege( DWORD dwController, XPRIVILEGE_TYPE priv )
 {
-    BOOL bResult;
-
-    return
-        ( XUserCheckPrivilege( dwController, priv, &bResult ) == ERROR_SUCCESS ) &&
-        bResult;
+	return FALSE;
 }
 
 } // namespace ATG

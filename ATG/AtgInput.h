@@ -9,6 +9,7 @@
 #pragma once
 #ifndef ATGINPUT_H
 #define ATGINPUT_H
+#include <xtl.h>
 
 namespace ATG
 {
