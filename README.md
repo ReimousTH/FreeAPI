@@ -8,8 +8,7 @@
 
 <h1>How To Build</h1>
 <ul>
-<li>Open DLLModule2008.sln</li>
-<li>Copy from XboxSDK Folder /Source/Samples/Common to FreeAPI/ATG</li>
+<li>Open DLLModule2008.sln</li>=
 <li>Build It</li>
 </ul>
 
