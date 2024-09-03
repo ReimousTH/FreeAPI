@@ -9,7 +9,6 @@
 #pragma once
 #ifndef ATGSIGNIN_H
 #define ATGSIGNIN_H
-#include <xtl.h>
 
 namespace ATG
 {

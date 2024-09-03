@@ -2,9 +2,6 @@
 #ifndef Basics_H
 #define Basics_H
 
-#include <xtl.h>
-#include "AtgInput.h"
-#include "AtgSignIn.h"
 
 #define BranchTo(offset,rtype,...) \
 	((rtype (__fastcall *)(...))offset)(__VA_ARGS__) \
@@ -109,9 +106,10 @@ static void __declspec( naked ) restgprl_H(){
 
 #include <ctime>
 
-
+#include "AtgConsole.h"
+#include "AtgUtil.h"
 #include "AtgInput.h"
-
+#include "AtgSignIn.h"
 #include <map>
 #include <Xboxmath.h>
 
