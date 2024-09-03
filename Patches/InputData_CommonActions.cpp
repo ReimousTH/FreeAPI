@@ -99,10 +99,10 @@ namespace InputData{
 
 		DWORD result = 3;
 
-		if (gc->PressedButtons & XINPUT_GAMEPAD_B){
+		if (gc->wPressedButtons & XINPUT_GAMEPAD_B){
 			result= 1;
 		}
-		else if (gc->PressedButtons & XINPUT_GAMEPAD_X){
+		else if (gc->wPressedButtons & XINPUT_GAMEPAD_X){
 			result= 0;
 		}
 		if (result == 3){

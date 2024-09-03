@@ -16,7 +16,7 @@ namespace CIStateActions{
 	int Z1 = *(DWORD*)(Z + 0x160);
 	int s1 = *(DWORD*)(s+0xC);
 	int s2 = *(DWORD*)(s+0x14);
-	if (InputData::gc->PressedButtons & XINPUT_GAMEPAD_B){
+	if (InputData::gc->wPressedButtons & XINPUT_GAMEPAD_B){
 		//*(_BYTE *)(v1 + 0xAA8) = *(_BYTE *)(v1 + 0xAA8) == 0 ? 1 :0;
 		//*(_BYTE *)(v1 + 0xAA4) = 1;
 	

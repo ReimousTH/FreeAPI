@@ -211,7 +211,7 @@ namespace NetplayRFIX{
 				MESSAGEBOX_RESULT result;
 				result.dwButtonPressed = -1;
 				XOVERLAPPED m_Overlapped; 
-				XShowMessageBoxUI(FTG::SignIn::GetSignedInUser(),L"Lobby",sessionID.c_str(),XNLive->XSessionSearchResuts->dwSearchResults + 1,g_pwstrButtonsX,XNLive->XSessionSearchResuts->dwSearchResults,XMB_ALERTICON,&result,&m_Overlapped); 
+				XShowMessageBoxUI(ATG::SignIn::GetSignedInUser(),L"Lobby",sessionID.c_str(),XNLive->XSessionSearchResuts->dwSearchResults + 1,g_pwstrButtonsX,XNLive->XSessionSearchResuts->dwSearchResults,XMB_ALERTICON,&result,&m_Overlapped); 
 		
 				
 				while (!( XHasOverlappedIoCompleted( &m_Overlapped ) )){					

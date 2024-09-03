@@ -195,7 +195,7 @@ namespace ModLoader{
 			HANDLE hEventComplete = CreateEvent( NULL, FALSE, FALSE, NULL );
 
 		//	if( hEventComplete == NULL )
-			//	FTG::FatalError( "WriteSaveGame: Couldn't create event.\n" );
+			//	ATG::FatalError( "WriteSaveGame: Couldn't create event.\n" );
 
 			XOVERLAPPED xov = {0};
 			xov.hEvent = hEventComplete;
@@ -207,7 +207,7 @@ namespace ModLoader{
 			contentData.DeviceID = 1;
 
 			// Mount the device associated with the display name for writing
-			DWORD dwErr = XContentCreate( FTG::SignIn::GetSignedInUser(), g_szSaveRoot, &contentData,
+			DWORD dwErr = XContentCreate( ATG::SignIn::GetSignedInUser(), g_szSaveRoot, &contentData,
 				readmode == true ? XCONTENTFLAG_OPENEXISTING:  XCONTENTFLAG_CREATEALWAYS, NULL, NULL, &xov );
 			if( dwErr != ERROR_IO_PENDING )
 			{
