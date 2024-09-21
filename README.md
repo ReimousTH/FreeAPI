@@ -1,4 +1,9 @@
-<h1 align="center"><img src="./misc/Logo.png" width="512" align="center"></h1>
+<h1 align="center">
+
+  <img src="./misc/Logo.png" width="512" align="center">
+  <img src="./misc/Version.png" width="512" align="center">
+
+</h1>
 
 <h1>Requirements</h1>
 <ul>
